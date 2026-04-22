@@ -1,0 +1,5 @@
+Por equipo: 
+    FG% (Field Goal %) → tiros de campo
+    3P% → triples
+    FT% → tiros libres
+    posesion de balon%
