@@ -1,2 +1,7 @@
 .DS_Store
 *.csv
+comm*.csv
+env
+.matplotlib-cache/
+reporte_*.html
+

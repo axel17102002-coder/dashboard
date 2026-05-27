@@ -1,0 +1,5964 @@
+{
+  "l_box_score": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_box_score.csv",
+    "filas": 127084,
+    "columnas": 32,
+    "duplicados": 0,
+    "total_nulos": 10,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "game_player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 127084,
+        "top_valores": {
+          "E2007_205_PBDE": 1,
+          "E2007_205_PAHT": 1,
+          "E2007_205_PJCC": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4957,
+        "top_valores": {
+          "E2007_205": 26,
+          "E2007_169": 26,
+          "E2007_035": 26
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1373,
+        "top_valores": {
+          "OLY-IST": 596,
+          "PAN-BAR": 570,
+          "MAD-OLY": 568
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 15.01,
+        "mediana": 14.0,
+        "std": 9.69
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 7,
+        "top_valores": {
+          "REGULAR SEASON": 100531,
+          "TOP 16": 17177,
+          "PLAYOFFS": 6383
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2023": 8545,
+          "E2024": 8523,
+          "E2022": 8441
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2428,
+        "top_valores": {
+          "MAD": 580,
+          "OLY": 579,
+          "BAR": 578
+        }
+      },
+      "is_starter": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.39,
+        "mediana": 0.0,
+        "std": 0.49
+      },
+      "is_playing": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.91,
+        "mediana": 1.0,
+        "std": 0.29
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "MAD": 7490,
+          "OLY": 7488,
+          "BAR": 7472
+        }
+      },
+      "dorsal": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 72,
+        "top_valores": {
+          "TOTAL": 9914,
+          "10": 5687,
+          "9": 5637
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2518,
+        "top_valores": {
+          "REAL MADRID": 580,
+          "OLYMPIACOS PIRAEUS": 534,
+          "LLULL, SERGIO": 483
+        }
+      },
+      "minutes": {
+        "tipo": "str",
+        "nulos": 10,
+        "pct_nulos": 0.0,
+        "unicos": 2573,
+        "top_valores": {
+          "DNP": 11926,
+          "200:00": 9278,
+          "225:00": 408
+        }
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 125,
+        "min": 0.0,
+        "max": 134.0,
+        "media": 12.33,
+        "mediana": 6.0,
+        "std": 20.53
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 39,
+        "min": 0.0,
+        "max": 38.0,
+        "media": 3.12,
+        "mediana": 1.0,
+        "std": 5.36
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "min": 0.0,
+        "max": 66.0,
+        "media": 5.89,
+        "mediana": 3.0,
+        "std": 9.86
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 24,
+        "min": 0.0,
+        "max": 24.0,
+        "media": 1.3,
+        "mediana": 0.0,
+        "std": 2.47
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 47,
+        "min": 0.0,
+        "max": 52.0,
+        "media": 3.6,
+        "mediana": 2.0,
+        "std": 6.26
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 39,
+        "min": 0.0,
+        "max": 42.0,
+        "media": 2.18,
+        "mediana": 0.0,
+        "std": 4.13
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 48,
+        "min": 0.0,
+        "max": 49.0,
+        "media": 2.86,
+        "mediana": 1.0,
+        "std": 5.31
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 28,
+        "min": 0.0,
+        "max": 30.0,
+        "media": 1.48,
+        "mediana": 0.0,
+        "std": 2.95
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 44,
+        "min": 0.0,
+        "max": 43.0,
+        "media": 3.5,
+        "mediana": 2.0,
+        "std": 6.16
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 60,
+        "min": 0.0,
+        "max": 62.0,
+        "media": 4.98,
+        "mediana": 2.0,
+        "std": 8.79
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 38,
+        "min": 0.0,
+        "max": 38.0,
+        "media": 2.57,
+        "mediana": 1.0,
+        "std": 4.62
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 25,
+        "min": 0.0,
+        "max": 29.0,
+        "media": 1.03,
+        "mediana": 0.0,
+        "std": 1.99
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 31,
+        "min": 0.0,
+        "max": 31.0,
+        "media": 1.95,
+        "mediana": 1.0,
+        "std": 3.51
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 13,
+        "min": 0.0,
+        "max": 12.0,
+        "media": 0.4,
+        "mediana": 0.0,
+        "std": 0.97
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 13,
+        "min": 0.0,
+        "max": 12.0,
+        "media": 0.4,
+        "mediana": 0.0,
+        "std": 0.93
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 37,
+        "min": 0.0,
+        "max": 38.0,
+        "media": 3.23,
+        "mediana": 2.0,
+        "std": 5.36
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 36,
+        "min": 0.0,
+        "max": 36.0,
+        "media": 3.2,
+        "mediana": 1.0,
+        "std": 5.44
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 173,
+        "min": -14.0,
+        "max": 163.0,
+        "media": 13.16,
+        "mediana": 6.0,
+        "std": 23.17
+      },
+      "plus_minus": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 91,
+        "min": -47.0,
+        "max": 48.0,
+        "media": 0.0,
+        "mediana": 0.0,
+        "std": 8.94
+      }
+    }
+  },
+  "l_comparison": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_comparison.csv",
+    "filas": 4957,
+    "columnas": 49,
+    "duplicados": 0,
+    "total_nulos": 858,
+    "pct_completo": 99.6,
+    "columnas_detalle": {
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4957,
+        "top_valores": {
+          "E2007_001": 1,
+          "E2007_002": 1,
+          "E2007_003": 1
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1373,
+        "top_valores": {
+          "OLY-IST": 23,
+          "PAN-BAR": 22,
+          "MAD-OLY": 22
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 14.98,
+        "mediana": 14.0,
+        "std": 9.68
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 7,
+        "top_valores": {
+          "REGULAR SEASON": 3921,
+          "TOP 16": 673,
+          "PLAYOFFS": 247
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2023": 331,
+          "E2024": 330,
+          "E2020": 328
+        }
+      },
+      "team_id_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "BAR": 293,
+          "MAD": 293,
+          "OLY": 289
+        }
+      },
+      "team_id_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "OLY": 290,
+          "MAD": 287,
+          "BAR": 285
+        }
+      },
+      "fast_break_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 31,
+        "min": 0.0,
+        "max": 32.0,
+        "media": 4.45,
+        "mediana": 2.0,
+        "std": 5.11
+      },
+      "fast_break_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 31,
+        "min": 0.0,
+        "max": 33.0,
+        "media": 4.14,
+        "mediana": 2.0,
+        "std": 4.95
+      },
+      "turnover_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 40,
+        "min": 0.0,
+        "max": 44.0,
+        "media": 9.62,
+        "mediana": 10.0,
+        "std": 8.63
+      },
+      "turnover_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 36,
+        "min": 0.0,
+        "max": 36.0,
+        "media": 8.61,
+        "mediana": 9.0,
+        "std": 7.8
+      },
+      "second_chance_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 33,
+        "min": 0.0,
+        "max": 35.0,
+        "media": 7.05,
+        "mediana": 7.0,
+        "std": 6.57
+      },
+      "second_chance_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 32,
+        "min": 0.0,
+        "max": 31.0,
+        "media": 6.72,
+        "mediana": 7.0,
+        "std": 6.36
+      },
+      "defensive_rebounds_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 32,
+        "min": 8.0,
+        "max": 41.0,
+        "media": 23.63,
+        "mediana": 24.0,
+        "std": 4.46
+      },
+      "offensive_rebounds_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 1.0,
+        "max": 30.0,
+        "media": 10.13,
+        "mediana": 10.0,
+        "std": 3.65
+      },
+      "offensive_rebounds_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 1.0,
+        "max": 26.0,
+        "media": 10.34,
+        "mediana": 10.0,
+        "std": 3.67
+      },
+      "defensive_rebounds_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 34,
+        "min": 8.0,
+        "max": 43.0,
+        "media": 22.95,
+        "mediana": 23.0,
+        "std": 4.46
+      },
+      "turnovers_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 20,
+        "min": 0.0,
+        "max": 19.0,
+        "media": 6.93,
+        "mediana": 7.0,
+        "std": 2.81
+      },
+      "turnovers_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 17,
+        "min": 0.0,
+        "max": 17.0,
+        "media": 5.39,
+        "mediana": 5.0,
+        "std": 2.45
+      },
+      "turnovers_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 23,
+        "min": 0.0,
+        "max": 23.0,
+        "media": 7.47,
+        "mediana": 7.0,
+        "std": 2.9
+      },
+      "turnovers_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 16,
+        "min": 0.0,
+        "max": 15.0,
+        "media": 5.77,
+        "mediana": 6.0,
+        "std": 2.57
+      },
+      "steals_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "min": 0.0,
+        "max": 22.0,
+        "media": 4.02,
+        "mediana": 4.0,
+        "std": 2.27
+      },
+      "steals_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 15,
+        "min": 0.0,
+        "max": 20.0,
+        "media": 2.83,
+        "mediana": 3.0,
+        "std": 1.94
+      },
+      "steals_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 15,
+        "min": 0.0,
+        "max": 17.0,
+        "media": 3.8,
+        "mediana": 4.0,
+        "std": 2.12
+      },
+      "steals_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 14,
+        "min": 0.0,
+        "max": 14.0,
+        "media": 2.62,
+        "mediana": 2.0,
+        "std": 1.86
+      },
+      "assists_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 0.0,
+        "max": 26.0,
+        "media": 10.45,
+        "mediana": 10.0,
+        "std": 3.89
+      },
+      "assists_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 23,
+        "min": 0.0,
+        "max": 22.0,
+        "media": 6.6,
+        "mediana": 6.0,
+        "std": 3.47
+      },
+      "assists_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 0.0,
+        "max": 25.0,
+        "media": 9.76,
+        "mediana": 9.0,
+        "std": 3.85
+      },
+      "assists_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 21,
+        "min": 0.0,
+        "max": 20.0,
+        "media": 6.15,
+        "mediana": 6.0,
+        "std": 3.29
+      },
+      "points_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 78,
+        "min": 13.0,
+        "max": 121.0,
+        "media": 48.24,
+        "mediana": 48.0,
+        "std": 11.8
+      },
+      "points_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 75,
+        "min": 1.0,
+        "max": 78.0,
+        "media": 32.67,
+        "mediana": 32.0,
+        "std": 11.71
+      },
+      "points_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 77,
+        "min": 10.0,
+        "max": 90.0,
+        "media": 46.08,
+        "mediana": 46.0,
+        "std": 11.93
+      },
+      "points_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 74,
+        "min": 2.0,
+        "max": 78.0,
+        "media": 31.03,
+        "mediana": 30.0,
+        "std": 11.01
+      },
+      "max_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 22,
+        "min": 4.0,
+        "max": 25.0,
+        "media": 9.67,
+        "mediana": 9.0,
+        "std": 2.77
+      },
+      "minute_prev_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 45,
+        "min": 1.0,
+        "max": 50.0,
+        "media": 17.4,
+        "mediana": 17.0,
+        "std": 10.85
+      },
+      "prev_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2033,
+        "top_valores": {
+          "0-0": 75,
+          "0-2": 71,
+          "2-2": 31
+        }
+      },
+      "minute_str_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 46,
+        "min": 1.0,
+        "max": 55.0,
+        "media": 20.18,
+        "mediana": 19.0,
+        "std": 10.99
+      },
+      "str_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2164,
+        "top_valores": {
+          "8-2": 22,
+          "10-0": 18,
+          "10-2": 17
+        }
+      },
+      "max_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 21,
+        "min": 4.0,
+        "max": 25.0,
+        "media": 8.99,
+        "mediana": 9.0,
+        "std": 2.57
+      },
+      "minute_prev_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 17.98,
+        "mediana": 17.0,
+        "std": 11.02
+      },
+      "prev_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2073,
+        "top_valores": {
+          "0-0": 88,
+          "2-0": 61,
+          "2-2": 31
+        }
+      },
+      "minute_str_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 45,
+        "min": 1.0,
+        "max": 45.0,
+        "media": 20.53,
+        "mediana": 20.0,
+        "std": 11.15
+      },
+      "str_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2210,
+        "top_valores": {
+          "0-9": 22,
+          "0-8": 19,
+          "2-8": 19
+        }
+      },
+      "max_lead_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 52,
+        "min": 0.0,
+        "max": 56.0,
+        "media": 12.77,
+        "mediana": 11.0,
+        "std": 8.9
+      },
+      "max_lead_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 48,
+        "min": 0.0,
+        "max": 51.0,
+        "media": 8.78,
+        "mediana": 7.0,
+        "std": 7.33
+      },
+      "minute_max_lead_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 50,
+        "min": 0.0,
+        "max": 55.0,
+        "media": 22.51,
+        "mediana": 24.0,
+        "std": 13.81
+      },
+      "minute_max_lead_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 47,
+        "min": 0.0,
+        "max": 49.0,
+        "media": 16.22,
+        "mediana": 13.0,
+        "std": 13.78
+      },
+      "points_max_lead_a": {
+        "tipo": "str",
+        "nulos": 276,
+        "pct_nulos": 5.6,
+        "unicos": 1931,
+        "top_valores": {
+          "2-0": 88,
+          "3-0": 47,
+          "4-0": 32
+        }
+      },
+      "points_max_lead_b": {
+        "tipo": "str",
+        "nulos": 582,
+        "pct_nulos": 11.7,
+        "unicos": 1583,
+        "top_valores": {
+          "0-2": 215,
+          "0-3": 83,
+          "0-4": 63
+        }
+      }
+    }
+  },
+  "l_header": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_header.csv",
+    "filas": 4957,
+    "columnas": 43,
+    "duplicados": 0,
+    "total_nulos": 42731,
+    "pct_completo": 80.0,
+    "columnas_detalle": {
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4957,
+        "top_valores": {
+          "E2007_001": 1,
+          "E2007_002": 1,
+          "E2007_003": 1
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1373,
+        "top_valores": {
+          "OLY-IST": 23,
+          "PAN-BAR": 22,
+          "MAD-OLY": 22
+        }
+      },
+      "date": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1261,
+        "top_valores": {
+          "2012-11-15": 10,
+          "2008-11-13": 9,
+          "2010-12-23": 9
+        }
+      },
+      "time": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 55,
+        "top_valores": {
+          "20:45:00": 905,
+          "20:30:00": 779,
+          "19:00:00": 618
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 14.98,
+        "mediana": 14.0,
+        "std": 9.68
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 7,
+        "top_valores": {
+          "REGULAR SEASON": 3921,
+          "TOP 16": 673,
+          "PLAYOFFS": 247
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2023": 331,
+          "E2024": 330,
+          "E2020": 328
+        }
+      },
+      "score_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 79,
+        "min": 40.0,
+        "max": 134.0,
+        "media": 80.91,
+        "mediana": 81.0,
+        "std": 11.25
+      },
+      "score_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 75,
+        "min": 37.0,
+        "max": 126.0,
+        "media": 77.11,
+        "mediana": 77.0,
+        "std": 11.27
+      },
+      "team_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 149,
+        "top_valores": {
+          "REAL MADRID": 293,
+          "OLYMPIACOS PIRAEUS": 268,
+          "ANADOLU EFES ISTANBUL": 235
+        }
+      },
+      "team_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 145,
+        "top_valores": {
+          "REAL MADRID": 287,
+          "OLYMPIACOS PIRAEUS": 266,
+          "ANADOLU EFES ISTANBUL": 235
+        }
+      },
+      "team_id_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "BAR": 293,
+          "MAD": 293,
+          "OLY": 289
+        }
+      },
+      "team_id_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "OLY": 290,
+          "MAD": 287,
+          "BAR": 285
+        }
+      },
+      "coach_a": {
+        "tipo": "str",
+        "nulos": 1836,
+        "pct_nulos": 37.0,
+        "unicos": 158,
+        "top_valores": {
+          "LASO, PABLO": 152,
+          "BARTZOKAS, GEORGIOS": 139,
+          "ITOUDIS, DIMITRIS": 125
+        }
+      },
+      "coach_b": {
+        "tipo": "str",
+        "nulos": 1835,
+        "pct_nulos": 37.0,
+        "unicos": 221,
+        "top_valores": {
+          "BARTZOKAS, GEORGIOS": 161,
+          "ATAMAN, ERGIN": 131,
+          "LASO, PABLO": 130
+        }
+      },
+      "game_time": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 9,
+        "top_valores": {
+          "40:00": 4686,
+          "45:00": 208,
+          "41:00": 37
+        }
+      },
+      "remaining_partial_time": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3,
+        "top_valores": {
+          "00:00": 4951,
+          "04:00": 5,
+          "04:59": 1
+        }
+      },
+      "referee_1": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 93,
+        "top_valores": {
+          "LAMONICA, LUIGI": 339,
+          "BELOSEVIC, ILIJA": 335,
+          "PUKL,SASA": 333
+        }
+      },
+      "referee_2": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 149,
+        "top_valores": {
+          "LATISEVS, OLEGS": 201,
+          "JOVCIC, MILIVOJE": 195,
+          "ROCHA, FERNANDO": 177
+        }
+      },
+      "referee_3": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 182,
+        "top_valores": {
+          "LATISEVS, OLEGS": 120,
+          "VYKLICKY, ROBERT": 113,
+          "KOWALSKI, MARCIN": 105
+        }
+      },
+      "stadium": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 176,
+        "top_valores": {
+          "PALAU BLAUGRANA": 282,
+          "PEACE AND FRIENDSHIP STADIUM": 277,
+          "ZALGIRIO ARENA": 213
+        }
+      },
+      "capacity": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2905,
+        "min": 0.0,
+        "max": 22567.0,
+        "media": 7387.84,
+        "mediana": 6866.0,
+        "std": 4582.22
+      },
+      "w_id": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 6,
+        "min": 76.0,
+        "max": 92.0,
+        "media": 80.44,
+        "mediana": 80.0,
+        "std": 2.02
+      },
+      "fouls_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 28,
+        "min": 9.0,
+        "max": 37.0,
+        "media": 20.37,
+        "mediana": 20.0,
+        "std": 3.64
+      },
+      "fouls_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 29,
+        "min": 9.0,
+        "max": 38.0,
+        "media": 21.03,
+        "mediana": 21.0,
+        "std": 3.79
+      },
+      "timeouts_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 8,
+        "min": 0.0,
+        "max": 7.0,
+        "media": 3.18,
+        "mediana": 3.0,
+        "std": 1.35
+      },
+      "timeouts_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 9,
+        "min": 0.0,
+        "max": 8.0,
+        "media": 3.49,
+        "mediana": 4.0,
+        "std": 1.28
+      },
+      "score_quarter_1_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 36,
+        "min": 2.0,
+        "max": 38.0,
+        "media": 20.27,
+        "mediana": 20.0,
+        "std": 4.98
+      },
+      "score_quarter_2_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 49,
+        "min": 17.0,
+        "max": 65.0,
+        "media": 40.41,
+        "mediana": 40.0,
+        "std": 7.31
+      },
+      "score_quarter_3_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 64,
+        "min": 29.0,
+        "max": 96.0,
+        "media": 60.09,
+        "mediana": 60.0,
+        "std": 9.26
+      },
+      "score_quarter_4_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 77,
+        "min": 40.0,
+        "max": 125.0,
+        "media": 80.34,
+        "mediana": 80.0,
+        "std": 11.03
+      },
+      "score_quarter_1_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 38,
+        "min": 3.0,
+        "max": 41.0,
+        "media": 19.17,
+        "mediana": 19.0,
+        "std": 5.01
+      },
+      "score_quarter_2_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 52,
+        "min": 9.0,
+        "max": 68.0,
+        "media": 38.33,
+        "mediana": 38.0,
+        "std": 7.32
+      },
+      "score_quarter_3_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 65,
+        "min": 22.0,
+        "max": 94.0,
+        "media": 57.08,
+        "mediana": 57.0,
+        "std": 9.14
+      },
+      "score_quarter_4_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 73,
+        "min": 37.0,
+        "max": 123.0,
+        "media": 76.55,
+        "mediana": 76.0,
+        "std": 10.9
+      },
+      "score_extra_time_1_a": {
+        "tipo": "float64",
+        "nulos": 4685,
+        "pct_nulos": 94.5,
+        "unicos": 51,
+        "min": 45.0,
+        "max": 114.0,
+        "media": 86.72,
+        "mediana": 86.0,
+        "std": 11.26
+      },
+      "score_extra_time_2_a": {
+        "tipo": "float64",
+        "nulos": 4934,
+        "pct_nulos": 99.5,
+        "unicos": 18,
+        "min": 67.0,
+        "max": 122.0,
+        "media": 95.22,
+        "mediana": 95.0,
+        "std": 12.78
+      },
+      "score_extra_time_3_a": {
+        "tipo": "float64",
+        "nulos": 4955,
+        "pct_nulos": 100.0,
+        "unicos": 2,
+        "min": 111.0,
+        "max": 134.0,
+        "media": 122.5,
+        "mediana": 122.5,
+        "std": 16.26
+      },
+      "score_extra_time_4_a": {
+        "tipo": "float64",
+        "nulos": 4956,
+        "pct_nulos": 100.0,
+        "unicos": 1,
+        "min": 130.0,
+        "max": 130.0,
+        "media": 130.0,
+        "mediana": 130.0,
+        "std": NaN
+      },
+      "score_extra_time_1_b": {
+        "tipo": "float64",
+        "nulos": 4685,
+        "pct_nulos": 94.5,
+        "unicos": 53,
+        "min": 49.0,
+        "max": 112.0,
+        "media": 85.84,
+        "mediana": 86.0,
+        "std": 11.61
+      },
+      "score_extra_time_2_b": {
+        "tipo": "float64",
+        "nulos": 4934,
+        "pct_nulos": 99.5,
+        "unicos": 16,
+        "min": 74.0,
+        "max": 122.0,
+        "media": 95.04,
+        "mediana": 97.0,
+        "std": 11.46
+      },
+      "score_extra_time_3_b": {
+        "tipo": "float64",
+        "nulos": 4955,
+        "pct_nulos": 100.0,
+        "unicos": 2,
+        "min": 111.0,
+        "max": 124.0,
+        "media": 117.5,
+        "mediana": 117.5,
+        "std": 9.19
+      },
+      "score_extra_time_4_b": {
+        "tipo": "float64",
+        "nulos": 4956,
+        "pct_nulos": 100.0,
+        "unicos": 1,
+        "min": 126.0,
+        "max": 126.0,
+        "media": 126.0,
+        "mediana": 126.0,
+        "std": NaN
+      }
+    }
+  },
+  "l_play_by_play": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_play_by_play.csv",
+    "filas": 2558071,
+    "columnas": 21,
+    "duplicados": 0,
+    "total_nulos": 7324220,
+    "pct_completo": 86.4,
+    "columnas_detalle": {
+      "game_play_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2558071,
+        "top_valores": {
+          "E2007_001_002": 1,
+          "E2007_001_003": 1,
+          "E2007_001_004": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4957,
+        "top_valores": {
+          "E2025_168": 793,
+          "E2025_008": 754,
+          "E2023_170": 741
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1373,
+        "top_valores": {
+          "OLY-IST": 11752,
+          "PAN-BAR": 11481,
+          "MAD-OLY": 11175
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 15.04,
+        "mediana": 14.0,
+        "std": 9.71
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 7,
+        "top_valores": {
+          "REGULAR SEASON": 2031033,
+          "TOP 16": 339106,
+          "PLAYOFFS": 127677
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2025": 178033,
+          "E2024": 176483,
+          "E2023": 172265
+        }
+      },
+      "quarter": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 5,
+        "top_valores": {
+          "q4": 665119,
+          "q2": 659424,
+          "q3": 638239
+        }
+      },
+      "type": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1,
+        "min": 0.0,
+        "max": 0.0,
+        "media": 0.0,
+        "mediana": 0.0,
+        "std": 0.0
+      },
+      "number_of_play": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1219,
+        "min": 2.0,
+        "max": 1225.0,
+        "media": 289.18,
+        "mediana": 287.0,
+        "std": 166.95
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 44500,
+        "pct_nulos": 1.7,
+        "unicos": 66,
+        "top_valores": {
+          "BAR": 147359,
+          "MAD": 146741,
+          "OLY": 144799
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 119714,
+        "pct_nulos": 4.7,
+        "unicos": 2202,
+        "top_valores": {
+          "P005985": 14360,
+          "P001926": 13226,
+          "P000925": 12902
+        }
+      },
+      "play_type": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 39,
+        "top_valores": {
+          "OUT": 269974,
+          "IN": 269973,
+          "D": 230921
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 120754,
+        "pct_nulos": 4.7,
+        "unicos": 2197,
+        "top_valores": {
+          "JAMES, MIKE": 14360,
+          "SLOUKAS, KOSTAS": 13226,
+          "VESELY, JAN": 12902
+        }
+      },
+      "team": {
+        "tipo": "str",
+        "nulos": 44500,
+        "pct_nulos": 1.7,
+        "unicos": 179,
+        "top_valores": {
+          "Real Madrid": 126168,
+          "Olympiacos Piraeus": 121927,
+          "Zalgiris Kaunas": 117757
+        }
+      },
+      "dorsal": {
+        "tipo": "float64",
+        "nulos": 121617,
+        "pct_nulos": 4.8,
+        "unicos": 69,
+        "min": 0.0,
+        "max": 99.0,
+        "media": 17.31,
+        "mediana": 13.0,
+        "std": 15.75
+      },
+      "minute": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 61,
+        "min": 1.0,
+        "max": 61.0,
+        "media": 21.38,
+        "mediana": 21.0,
+        "std": 11.51
+      },
+      "marker_time": {
+        "tipo": "str",
+        "nulos": 33354,
+        "pct_nulos": 1.3,
+        "unicos": 606,
+        "top_valores": {
+          "00:00": 60068,
+          "09:00": 59146,
+          "10:00": 46920
+        }
+      },
+      "points_a": {
+        "tipo": "float64",
+        "nulos": 2138603,
+        "pct_nulos": 83.6,
+        "unicos": 132,
+        "min": 0.0,
+        "max": 134.0,
+        "media": 42.39,
+        "mediana": 42.0,
+        "std": 24.79
+      },
+      "points_b": {
+        "tipo": "float64",
+        "nulos": 2138603,
+        "pct_nulos": 83.6,
+        "unicos": 126,
+        "min": 0.0,
+        "max": 126.0,
+        "media": 40.3,
+        "mediana": 40.0,
+        "std": 23.78
+      },
+      "comment": {
+        "tipo": "float64",
+        "nulos": 2558071,
+        "pct_nulos": 100.0,
+        "unicos": 0,
+        "min": NaN,
+        "max": NaN,
+        "media": NaN,
+        "mediana": NaN,
+        "std": NaN
+      },
+      "play_info": {
+        "tipo": "str",
+        "nulos": 4504,
+        "pct_nulos": 0.2,
+        "unicos": 10429,
+        "top_valores": {
+          "Out": 269974,
+          "In": 269973,
+          "Def Rebound (1)": 85822
+        }
+      }
+    }
+  },
+  "l_players": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_players.csv",
+    "filas": 6303,
+    "columnas": 50,
+    "duplicados": 0,
+    "total_nulos": 0,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "season_player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 6303,
+        "top_valores": {
+          "E2017_P003733_PAM": 1,
+          "E2019_P003733_PAM": 1,
+          "E2020_P003733_MAD": 1
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2007": 376,
+          "E2014": 375,
+          "E2008": 371
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2362,
+        "top_valores": {
+          "PTGB": 19,
+          "P001255": 16,
+          "P001926": 16
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2361,
+        "top_valores": {
+          "LLULL, SERGIO": 19,
+          "PAPANIKOLAOU, KOSTAS": 16,
+          "SLOUKAS, KOSTAS": 16
+        }
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "OLY": 326,
+          "ULK": 318,
+          "PAN": 313
+        }
+      },
+      "games_played": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 42,
+        "min": 0.0,
+        "max": 41.0,
+        "media": 16.7,
+        "mediana": 16.0,
+        "std": 10.97
+      },
+      "games_started": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 42,
+        "min": 0.0,
+        "max": 41.0,
+        "media": 7.86,
+        "mediana": 4.0,
+        "std": 9.09
+      },
+      "minutes": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4108,
+        "min": 0.0,
+        "max": 1243.8,
+        "media": 316.68,
+        "mediana": 264.9,
+        "std": 263.53
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 524,
+        "min": 0.0,
+        "max": 802.0,
+        "media": 124.27,
+        "mediana": 92.0,
+        "std": 122.33
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 174,
+        "min": 0.0,
+        "max": 231.0,
+        "media": 31.44,
+        "mediana": 21.0,
+        "std": 33.24
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 285,
+        "min": 0.0,
+        "max": 444.0,
+        "media": 59.41,
+        "mediana": 42.0,
+        "std": 59.3
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 99,
+        "min": 0.0,
+        "max": 148.0,
+        "media": 13.14,
+        "mediana": 6.0,
+        "std": 17.02
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 231,
+        "min": 0.0,
+        "max": 370.0,
+        "media": 36.33,
+        "mediana": 20.0,
+        "std": 44.4
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 152,
+        "min": 0.0,
+        "max": 208.0,
+        "media": 21.97,
+        "mediana": 14.0,
+        "std": 25.48
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 178,
+        "min": 0.0,
+        "max": 267.0,
+        "media": 28.87,
+        "mediana": 19.0,
+        "std": 31.9
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 102,
+        "min": 0.0,
+        "max": 120.0,
+        "media": 13.67,
+        "mediana": 8.0,
+        "std": 16.15
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 173,
+        "min": 0.0,
+        "max": 216.0,
+        "media": 33.98,
+        "mediana": 25.0,
+        "std": 33.02
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 240,
+        "min": 0.0,
+        "max": 289.0,
+        "media": 47.65,
+        "mediana": 34.0,
+        "std": 46.95
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 207,
+        "min": 0.0,
+        "max": 286.0,
+        "media": 25.92,
+        "mediana": 14.0,
+        "std": 34.91
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 63,
+        "min": 0.0,
+        "max": 72.0,
+        "media": 10.32,
+        "mediana": 8.0,
+        "std": 10.25
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 107,
+        "min": 0.0,
+        "max": 131.0,
+        "media": 19.22,
+        "mediana": 15.0,
+        "std": 18.56
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 56,
+        "min": 0.0,
+        "max": 88.0,
+        "media": 4.03,
+        "mediana": 1.0,
+        "std": 6.81
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 33,
+        "min": 0.0,
+        "max": 36.0,
+        "media": 4.03,
+        "mediana": 3.0,
+        "std": 4.39
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 117,
+        "min": 0.0,
+        "max": 122.0,
+        "media": 32.52,
+        "mediana": 29.0,
+        "std": 25.36
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 185,
+        "min": 0.0,
+        "max": 274.0,
+        "media": 32.22,
+        "mediana": 23.0,
+        "std": 33.48
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 603,
+        "min": -16.0,
+        "max": 902.0,
+        "media": 130.59,
+        "mediana": 86.0,
+        "std": 139.52
+      },
+      "plus_minus": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 414,
+        "min": -276.0,
+        "max": 360.0,
+        "media": 0.0,
+        "mediana": -3.0,
+        "std": 61.25
+      },
+      "minutes_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2582,
+        "min": 0.0,
+        "max": 37.62,
+        "media": 15.99,
+        "mediana": 16.73,
+        "std": 8.46
+      },
+      "points_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1345,
+        "min": 0.0,
+        "max": 23.15,
+        "media": 6.04,
+        "mediana": 5.67,
+        "std": 4.25
+      },
+      "two_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 502,
+        "min": 0.0,
+        "max": 7.0,
+        "media": 1.55,
+        "mediana": 1.32,
+        "std": 1.25
+      },
+      "two_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 813,
+        "min": 0.0,
+        "max": 14.5,
+        "media": 3.0,
+        "mediana": 2.65,
+        "std": 2.24
+      },
+      "two_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 478,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.46,
+        "mediana": 0.5,
+        "std": 0.21
+      },
+      "three_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 274,
+        "min": 0.0,
+        "max": 3.92,
+        "media": 0.62,
+        "mediana": 0.48,
+        "std": 0.64
+      },
+      "three_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 628,
+        "min": 0.0,
+        "max": 10.69,
+        "media": 1.77,
+        "mediana": 1.46,
+        "std": 1.66
+      },
+      "three_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 379,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.26,
+        "mediana": 0.31,
+        "std": 0.2
+      },
+      "free_throws_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 418,
+        "min": 0.0,
+        "max": 7.86,
+        "media": 1.08,
+        "mediana": 0.86,
+        "std": 0.99
+      },
+      "free_throws_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 515,
+        "min": 0.0,
+        "max": 11.0,
+        "media": 1.44,
+        "mediana": 1.2,
+        "std": 1.26
+      },
+      "free_throws_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 476,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.63,
+        "mediana": 0.73,
+        "std": 0.31
+      },
+      "offensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 293,
+        "min": 0.0,
+        "max": 8.0,
+        "media": 0.69,
+        "mediana": 0.5,
+        "std": 0.65
+      },
+      "defensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 492,
+        "min": 0.0,
+        "max": 7.21,
+        "media": 1.69,
+        "mediana": 1.57,
+        "std": 1.19
+      },
+      "total_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 652,
+        "min": 0.0,
+        "max": 11.5,
+        "media": 2.38,
+        "mediana": 2.13,
+        "std": 1.7
+      },
+      "assists_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 533,
+        "min": 0.0,
+        "max": 9.11,
+        "media": 1.23,
+        "mediana": 0.86,
+        "std": 1.27
+      },
+      "steals_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 200,
+        "min": 0.0,
+        "max": 2.76,
+        "media": 0.52,
+        "mediana": 0.47,
+        "std": 0.42
+      },
+      "turnovers_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 310,
+        "min": 0.0,
+        "max": 4.7,
+        "media": 1.01,
+        "mediana": 0.92,
+        "std": 0.72
+      },
+      "blocks_favour_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 164,
+        "min": 0.0,
+        "max": 3.0,
+        "media": 0.2,
+        "mediana": 0.09,
+        "std": 0.3
+      },
+      "blocks_against_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 105,
+        "min": 0.0,
+        "max": 2.0,
+        "media": 0.21,
+        "mediana": 0.18,
+        "std": 0.21
+      },
+      "fouls_committed_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 322,
+        "min": 0.0,
+        "max": 5.0,
+        "media": 1.71,
+        "mediana": 1.8,
+        "std": 0.86
+      },
+      "fouls_received_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 510,
+        "min": 0.0,
+        "max": 10.0,
+        "media": 1.6,
+        "mediana": 1.4,
+        "std": 1.26
+      },
+      "valuation_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1571,
+        "min": -7.0,
+        "max": 28.0,
+        "media": 6.09,
+        "mediana": 5.44,
+        "std": 4.99
+      },
+      "plus_minus_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1328,
+        "min": -20.0,
+        "max": 28.0,
+        "media": -0.63,
+        "mediana": -0.38,
+        "std": 3.55
+      }
+    }
+  },
+  "l_points": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_points.csv",
+    "filas": 741958,
+    "columnas": 24,
+    "duplicados": 0,
+    "total_nulos": 930081,
+    "pct_completo": 94.8,
+    "columnas_detalle": {
+      "game_point_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 741958,
+        "top_valores": {
+          "E2007_001_002": 1,
+          "E2007_001_004": 1,
+          "E2007_001_008": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4957,
+        "top_valores": {
+          "E2023_170": 245,
+          "E2025_168": 226,
+          "E2014_070": 208
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1373,
+        "top_valores": {
+          "OLY-IST": 3446,
+          "MAD-TEL": 3315,
+          "IST-MAD": 3307
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 43,
+        "min": 1.0,
+        "max": 43.0,
+        "media": 15.02,
+        "mediana": 14.0,
+        "std": 9.69
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 7,
+        "top_valores": {
+          "REGULAR SEASON": 589139,
+          "TOP 16": 99019,
+          "PLAYOFFS": 36459
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2024": 51193,
+          "E2025": 50950,
+          "E2023": 50159
+        }
+      },
+      "number_of_play": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1081,
+        "min": 2.0,
+        "max": 1222.0,
+        "media": 284.75,
+        "mediana": 284.0,
+        "std": 170.41
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "MAD": 44824,
+          "OLY": 43389,
+          "BAR": 42871
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2092,
+        "top_valores": {
+          "P005985": 5898,
+          "P002100": 4636,
+          "PTGB": 4449
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2091,
+        "top_valores": {
+          "JAMES, MIKE": 5898,
+          "DE COLO, NANDO": 4636,
+          "LLULL, SERGIO": 4449
+        }
+      },
+      "action_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 10,
+        "top_valores": {
+          "2FGM": 157011,
+          "3FGA": 145486,
+          "2FGA": 144391
+        }
+      },
+      "action": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 8,
+        "top_valores": {
+          "Two Pointer": 157011,
+          "Missed Two Pointer": 150288,
+          "Missed Three Pointer": 146173
+        }
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4,
+        "min": 0.0,
+        "max": 3.0,
+        "media": 1.06,
+        "mediana": 1.0,
+        "std": 1.07
+      },
+      "coord_x": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 711,
+        "min": -740.0,
+        "max": 746.0,
+        "media": -1.05,
+        "mediana": -1.0,
+        "std": 300.12
+      },
+      "coord_y": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 584,
+        "min": -156.0,
+        "max": 1304.0,
+        "media": 230.16,
+        "mediana": 119.0,
+        "std": 255.13
+      },
+      "zone": {
+        "tipo": "str",
+        "nulos": 138552,
+        "pct_nulos": 18.7,
+        "unicos": 10,
+        "top_valores": {
+          "B": 110218,
+          "I": 107066,
+          "H": 105716
+        }
+      },
+      "fastbreak": {
+        "tipo": "float64",
+        "nulos": 263843,
+        "pct_nulos": 35.6,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.05,
+        "mediana": 0.0,
+        "std": 0.21
+      },
+      "second_chance": {
+        "tipo": "float64",
+        "nulos": 263843,
+        "pct_nulos": 35.6,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.08,
+        "mediana": 0.0,
+        "std": 0.27
+      },
+      "points_off_turnover": {
+        "tipo": "float64",
+        "nulos": 263843,
+        "pct_nulos": 35.6,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.1,
+        "mediana": 0.0,
+        "std": 0.3
+      },
+      "minute": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 60,
+        "min": 1.0,
+        "max": 60.0,
+        "media": 21.1,
+        "mediana": 21.0,
+        "std": 11.8
+      },
+      "console": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 602,
+        "top_valores": {
+          "00:00": 19833,
+          "01:00": 15127,
+          "02:00": 13176
+        }
+      },
+      "points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 132,
+        "min": 0.0,
+        "max": 134.0,
+        "media": 41.39,
+        "mediana": 41.0,
+        "std": 24.73
+      },
+      "points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 126,
+        "min": 0.0,
+        "max": 126.0,
+        "media": 39.32,
+        "mediana": 39.0,
+        "std": 23.7
+      },
+      "timestamp": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 442079,
+        "top_valores": {
+          "1970-01-01": 270790,
+          "1970-01-01 00:00:00": 21501,
+          "2024-04-11 18:30:29": 4
+        }
+      }
+    }
+  },
+  "l_teams": {
+    "liga": "euroleague",
+    "ruta": "data/euroleague_teams.csv",
+    "filas": 392,
+    "columnas": 45,
+    "duplicados": 0,
+    "total_nulos": 0,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "season_team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 392,
+        "top_valores": {
+          "E2007_ARI": 1,
+          "E2007_BAM": 1,
+          "E2007_BAR": 1
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "E2007": 24,
+          "E2008": 24,
+          "E2009": 24
+        }
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "top_valores": {
+          "BAR": 19,
+          "BAS": 19,
+          "IST": 19
+        }
+      },
+      "games_played": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 25,
+        "min": 10.0,
+        "max": 41.0,
+        "media": 25.29,
+        "mediana": 28.0,
+        "std": 9.5
+      },
+      "minutes": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 190,
+        "min": 399.9,
+        "max": 1670.0,
+        "media": 1018.39,
+        "mediana": 1120.0,
+        "std": 382.43
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 355,
+        "min": 589.0,
+        "max": 3575.0,
+        "media": 1998.19,
+        "mediana": 2089.0,
+        "std": 823.31
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 293,
+        "min": 149.0,
+        "max": 927.0,
+        "media": 505.53,
+        "mediana": 530.5,
+        "std": 199.64
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 333,
+        "min": 313.0,
+        "max": 1711.0,
+        "media": 955.3,
+        "mediana": 1026.0,
+        "std": 351.82
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 232,
+        "min": 41.0,
+        "max": 470.0,
+        "media": 211.31,
+        "mediana": 213.0,
+        "std": 101.64
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 319,
+        "min": 142.0,
+        "max": 1199.0,
+        "media": 584.2,
+        "mediana": 598.0,
+        "std": 265.7
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 275,
+        "min": 72.0,
+        "max": 715.0,
+        "media": 353.21,
+        "mediana": 363.5,
+        "std": 144.2
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 290,
+        "min": 106.0,
+        "max": 949.0,
+        "media": 464.16,
+        "mediana": 477.0,
+        "std": 180.38
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 239,
+        "min": 71.0,
+        "max": 523.0,
+        "media": 258.66,
+        "mediana": 275.5,
+        "std": 105.53
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 309,
+        "min": 172.0,
+        "max": 1093.0,
+        "media": 588.71,
+        "mediana": 625.0,
+        "std": 230.52
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 327,
+        "min": 248.0,
+        "max": 1505.0,
+        "media": 847.37,
+        "mediana": 918.0,
+        "std": 331.43
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 288,
+        "min": 96.0,
+        "max": 861.0,
+        "media": 416.79,
+        "mediana": 444.5,
+        "std": 197.07
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 193,
+        "min": 34.0,
+        "max": 342.0,
+        "media": 167.36,
+        "mediana": 174.0,
+        "std": 64.25
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 255,
+        "min": 100.0,
+        "max": 585.0,
+        "media": 323.28,
+        "mediana": 339.0,
+        "std": 113.48
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 114,
+        "min": 7.0,
+        "max": 163.0,
+        "media": 64.79,
+        "mediana": 64.5,
+        "std": 29.77
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 96,
+        "min": 16.0,
+        "max": 132.0,
+        "media": 64.73,
+        "mediana": 68.0,
+        "std": 24.28
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 298,
+        "min": 173.0,
+        "max": 891.0,
+        "media": 523.47,
+        "mediana": 561.5,
+        "std": 192.06
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 292,
+        "min": 160.0,
+        "max": 941.0,
+        "media": 518.16,
+        "mediana": 548.5,
+        "std": 194.4
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 376,
+        "min": 498.0,
+        "max": 4215.0,
+        "media": 2167.57,
+        "mediana": 2268.0,
+        "std": 971.82
+      },
+      "minutes_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 90,
+        "min": 39.65,
+        "max": 41.6,
+        "media": 40.27,
+        "mediana": 40.2,
+        "std": 0.29
+      },
+      "points_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 343,
+        "min": 58.9,
+        "max": 90.97,
+        "media": 77.72,
+        "mediana": 77.69,
+        "std": 5.44
+      },
+      "two_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 258,
+        "min": 14.9,
+        "max": 24.45,
+        "media": 19.86,
+        "mediana": 19.81,
+        "std": 1.65
+      },
+      "two_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 301,
+        "min": 30.07,
+        "max": 47.3,
+        "media": 38.02,
+        "mediana": 37.88,
+        "std": 2.96
+      },
+      "two_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 128,
+        "min": 0.42,
+        "max": 0.6,
+        "media": 0.52,
+        "mediana": 0.52,
+        "std": 0.03
+      },
+      "three_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 246,
+        "min": 4.1,
+        "max": 12.56,
+        "media": 8.04,
+        "mediana": 8.07,
+        "std": 1.43
+      },
+      "three_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 310,
+        "min": 13.44,
+        "max": 32.97,
+        "media": 22.51,
+        "mediana": 22.49,
+        "std": 3.26
+      },
+      "three_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 118,
+        "min": 0.24,
+        "max": 0.43,
+        "media": 0.36,
+        "mediana": 0.36,
+        "std": 0.03
+      },
+      "free_throws_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 283,
+        "min": 7.2,
+        "max": 19.44,
+        "media": 13.87,
+        "mediana": 13.76,
+        "std": 2.02
+      },
+      "free_throws_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 295,
+        "min": 10.6,
+        "max": 26.77,
+        "media": 18.39,
+        "mediana": 18.16,
+        "std": 2.51
+      },
+      "free_throws_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 151,
+        "min": 0.61,
+        "max": 0.86,
+        "media": 0.75,
+        "mediana": 0.76,
+        "std": 0.04
+      },
+      "offensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 241,
+        "min": 5.6,
+        "max": 15.1,
+        "media": 10.17,
+        "mediana": 10.17,
+        "std": 1.36
+      },
+      "defensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 269,
+        "min": 17.2,
+        "max": 27.31,
+        "media": 23.11,
+        "mediana": 23.12,
+        "std": 1.64
+      },
+      "total_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 285,
+        "min": 24.8,
+        "max": 39.58,
+        "media": 33.29,
+        "mediana": 33.37,
+        "std": 2.23
+      },
+      "assists_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 303,
+        "min": 8.64,
+        "max": 21.47,
+        "media": 15.83,
+        "mediana": 16.09,
+        "std": 2.66
+      },
+      "steals_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 224,
+        "min": 3.4,
+        "max": 14.25,
+        "media": 6.69,
+        "mediana": 6.56,
+        "std": 1.27
+      },
+      "turnovers_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 246,
+        "min": 9.53,
+        "max": 18.31,
+        "media": 13.03,
+        "mediana": 12.96,
+        "std": 1.46
+      },
+      "blocks_favour_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 189,
+        "min": 0.7,
+        "max": 4.41,
+        "media": 2.55,
+        "mediana": 2.49,
+        "std": 0.69
+      },
+      "blocks_against_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "min": 1.36,
+        "max": 4.5,
+        "media": 2.62,
+        "mediana": 2.53,
+        "std": 0.53
+      },
+      "fouls_committed_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 271,
+        "min": 16.64,
+        "max": 26.58,
+        "media": 20.88,
+        "mediana": 20.82,
+        "std": 1.69
+      },
+      "fouls_received_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 249,
+        "min": 16.0,
+        "max": 24.09,
+        "media": 20.52,
+        "mediana": 20.54,
+        "std": 1.35
+      },
+      "valuation_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 368,
+        "min": 49.8,
+        "max": 109.27,
+        "media": 82.9,
+        "mediana": 84.06,
+        "std": 10.87
+      }
+    }
+  },
+  "c_box_score": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_box_score.csv",
+    "filas": 96933,
+    "columnas": 32,
+    "duplicados": 0,
+    "total_nulos": 4,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "game_player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 96933,
+        "top_valores": {
+          "U2007_171_P000596": 1,
+          "U2007_171_P000603": 1,
+          "U2007_171_P000598": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3899,
+        "top_valores": {
+          "U2007_043": 27,
+          "U2007_171": 26,
+          "U2007_105": 26
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2949,
+        "top_valores": {
+          "CAN-BUD": 155,
+          "ULM-BUD": 155,
+          "BUD-CAN": 152
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": -1.0,
+        "max": 25.0,
+        "media": 8.55,
+        "mediana": 8.0,
+        "std": 5.32
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 11,
+        "top_valores": {
+          "REGULAR SEASON": 69290,
+          "LAST 32": 7939,
+          "LAST 16": 6327
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 8964,
+          "U2007": 7980,
+          "U2014": 7580
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4511,
+        "top_valores": {
+          "BUD": 237,
+          "CAN": 237,
+          "PAM": 215
+        }
+      },
+      "is_starter": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.4,
+        "mediana": 0.0,
+        "std": 0.49
+      },
+      "is_playing": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.9,
+        "mediana": 1.0,
+        "std": 0.3
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "CAN": 3002,
+          "BUD": 2997,
+          "PAM": 2689
+        }
+      },
+      "dorsal": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 84,
+        "top_valores": {
+          "TOTAL": 7798,
+          "7": 4940,
+          "10": 4626
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4635,
+        "top_valores": {
+          "RATIOPHARM ULM": 202,
+          "BUDUCNOST VOLI PODGORICA": 176,
+          "DOLOMITI ENERGIA TRENTO": 171
+        }
+      },
+      "minutes": {
+        "tipo": "str",
+        "nulos": 4,
+        "pct_nulos": 0.0,
+        "unicos": 2657,
+        "top_valores": {
+          "DNP": 9924,
+          "200:00": 7144,
+          "225:00": 331
+        }
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 126,
+        "min": 0.0,
+        "max": 141.0,
+        "media": 12.77,
+        "mediana": 6.0,
+        "std": 20.91
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 40,
+        "min": 0.0,
+        "max": 39.0,
+        "media": 3.25,
+        "mediana": 1.0,
+        "std": 5.52
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 66,
+        "min": 0.0,
+        "max": 66.0,
+        "media": 6.16,
+        "mediana": 3.0,
+        "std": 10.15
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 21,
+        "min": 0.0,
+        "max": 20.0,
+        "media": 1.31,
+        "mediana": 0.0,
+        "std": 2.46
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 47,
+        "min": 0.0,
+        "max": 49.0,
+        "media": 3.69,
+        "mediana": 2.0,
+        "std": 6.32
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 40,
+        "min": 0.0,
+        "max": 47.0,
+        "media": 2.33,
+        "mediana": 1.0,
+        "std": 4.33
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 51,
+        "min": 0.0,
+        "max": 61.0,
+        "media": 3.13,
+        "mediana": 1.0,
+        "std": 5.67
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 28,
+        "min": 0.0,
+        "max": 27.0,
+        "media": 1.51,
+        "mediana": 0.0,
+        "std": 2.97
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 44,
+        "min": 0.0,
+        "max": 46.0,
+        "media": 3.68,
+        "mediana": 2.0,
+        "std": 6.35
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 60,
+        "min": 0.0,
+        "max": 61.0,
+        "media": 5.19,
+        "mediana": 2.0,
+        "std": 8.99
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 37,
+        "min": 0.0,
+        "max": 37.0,
+        "media": 2.63,
+        "mediana": 1.0,
+        "std": 4.64
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 0.0,
+        "max": 25.0,
+        "media": 1.15,
+        "mediana": 0.0,
+        "std": 2.18
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 31,
+        "min": 0.0,
+        "max": 30.0,
+        "media": 2.18,
+        "mediana": 1.0,
+        "std": 3.81
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 13,
+        "min": 0.0,
+        "max": 12.0,
+        "media": 0.39,
+        "mediana": 0.0,
+        "std": 0.94
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 13,
+        "min": 0.0,
+        "max": 12.0,
+        "media": 0.39,
+        "mediana": 0.0,
+        "std": 0.91
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 39,
+        "min": 0.0,
+        "max": 40.0,
+        "media": 3.41,
+        "mediana": 2.0,
+        "std": 5.56
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 38,
+        "min": 0.0,
+        "max": 40.0,
+        "media": 3.37,
+        "mediana": 2.0,
+        "std": 5.64
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 173,
+        "min": -15.0,
+        "max": 173.0,
+        "media": 13.44,
+        "mediana": 6.0,
+        "std": 23.34
+      },
+      "plus_minus": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 103,
+        "min": -86.0,
+        "max": 71.0,
+        "media": -0.0,
+        "mediana": 0.0,
+        "std": 9.35
+      }
+    }
+  },
+  "c_comparison": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_comparison.csv",
+    "filas": 3899,
+    "columnas": 49,
+    "duplicados": 0,
+    "total_nulos": 743,
+    "pct_completo": 99.6,
+    "columnas_detalle": {
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3899,
+        "top_valores": {
+          "U2007_001": 1,
+          "U2007_002": 1,
+          "U2007_003": 1
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2949,
+        "top_valores": {
+          "PAM-KHI": 6,
+          "BUD-CAN": 6,
+          "CAN-BUD": 6
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": -1.0,
+        "max": 25.0,
+        "media": 8.54,
+        "mediana": 8.0,
+        "std": 5.3
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 11,
+        "top_valores": {
+          "REGULAR SEASON": 2795,
+          "LAST 32": 319,
+          "LAST 16": 254
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 360,
+          "U2007": 326,
+          "U2014": 306
+        }
+      },
+      "team_id_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "CAN": 122,
+          "BUD": 117,
+          "PAM": 112
+        }
+      },
+      "team_id_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "BUD": 120,
+          "CAN": 115,
+          "PAM": 103
+        }
+      },
+      "fast_break_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 32,
+        "min": 0.0,
+        "max": 39.0,
+        "media": 3.62,
+        "mediana": 0.0,
+        "std": 5.29
+      },
+      "fast_break_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 27,
+        "min": 0.0,
+        "max": 27.0,
+        "media": 3.22,
+        "mediana": 0.0,
+        "std": 4.76
+      },
+      "turnover_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 38,
+        "min": 0.0,
+        "max": 40.0,
+        "media": 8.33,
+        "mediana": 6.0,
+        "std": 9.12
+      },
+      "turnover_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 39,
+        "min": 0.0,
+        "max": 40.0,
+        "media": 7.6,
+        "mediana": 6.0,
+        "std": 8.4
+      },
+      "second_chance_points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 31,
+        "min": 0.0,
+        "max": 32.0,
+        "media": 5.88,
+        "mediana": 4.0,
+        "std": 6.66
+      },
+      "second_chance_points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 30,
+        "min": 0.0,
+        "max": 36.0,
+        "media": 5.64,
+        "mediana": 3.0,
+        "std": 6.51
+      },
+      "defensive_rebounds_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 34,
+        "min": 9.0,
+        "max": 47.0,
+        "media": 24.07,
+        "mediana": 24.0,
+        "std": 4.7
+      },
+      "offensive_rebounds_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 27,
+        "min": 0.0,
+        "max": 26.0,
+        "media": 9.93,
+        "mediana": 9.0,
+        "std": 3.77
+      },
+      "offensive_rebounds_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 27,
+        "min": 1.0,
+        "max": 27.0,
+        "media": 10.34,
+        "mediana": 10.0,
+        "std": 3.76
+      },
+      "defensive_rebounds_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 34,
+        "min": 7.0,
+        "max": 42.0,
+        "media": 23.31,
+        "mediana": 23.0,
+        "std": 4.68
+      },
+      "turnovers_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 23,
+        "min": 0.0,
+        "max": 22.0,
+        "media": 7.96,
+        "mediana": 8.0,
+        "std": 3.0
+      },
+      "turnovers_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 18,
+        "min": 0.0,
+        "max": 18.0,
+        "media": 5.42,
+        "mediana": 5.0,
+        "std": 2.58
+      },
+      "turnovers_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 21,
+        "min": 0.0,
+        "max": 20.0,
+        "media": 8.53,
+        "mediana": 8.0,
+        "std": 3.14
+      },
+      "turnovers_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "min": 0.0,
+        "max": 18.0,
+        "media": 5.73,
+        "mediana": 6.0,
+        "std": 2.66
+      },
+      "steals_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 16,
+        "min": 0.0,
+        "max": 18.0,
+        "media": 4.54,
+        "mediana": 4.0,
+        "std": 2.42
+      },
+      "steals_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "min": 0.0,
+        "max": 21.0,
+        "media": 2.91,
+        "mediana": 2.0,
+        "std": 2.2
+      },
+      "steals_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 16,
+        "min": 0.0,
+        "max": 15.0,
+        "media": 4.36,
+        "mediana": 4.0,
+        "std": 2.31
+      },
+      "steals_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 17,
+        "min": 0.0,
+        "max": 18.0,
+        "media": 2.64,
+        "mediana": 2.0,
+        "std": 1.96
+      },
+      "assists_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 0.0,
+        "max": 25.0,
+        "media": 10.93,
+        "mediana": 11.0,
+        "std": 4.06
+      },
+      "assists_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 22,
+        "min": 0.0,
+        "max": 22.0,
+        "media": 6.15,
+        "mediana": 6.0,
+        "std": 3.45
+      },
+      "assists_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 27,
+        "min": 0.0,
+        "max": 26.0,
+        "media": 10.14,
+        "mediana": 10.0,
+        "std": 3.96
+      },
+      "assists_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 22,
+        "min": 0.0,
+        "max": 21.0,
+        "media": 5.45,
+        "mediana": 5.0,
+        "std": 3.16
+      },
+      "points_starters_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 83,
+        "min": 8.0,
+        "max": 126.0,
+        "media": 51.19,
+        "mediana": 51.0,
+        "std": 12.59
+      },
+      "points_bench_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 71,
+        "min": 0.0,
+        "max": 85.0,
+        "media": 30.07,
+        "mediana": 29.0,
+        "std": 12.07
+      },
+      "points_starters_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 86,
+        "min": 6.0,
+        "max": 107.0,
+        "media": 49.32,
+        "mediana": 49.0,
+        "std": 12.71
+      },
+      "points_bench_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 74,
+        "min": 0.0,
+        "max": 78.0,
+        "media": 28.24,
+        "mediana": 27.0,
+        "std": 11.42
+      },
+      "max_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 29,
+        "min": 4.0,
+        "max": 88.0,
+        "media": 9.82,
+        "mediana": 9.0,
+        "std": 3.63
+      },
+      "minute_prev_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 44,
+        "min": 1.0,
+        "max": 62.0,
+        "media": 17.48,
+        "mediana": 17.0,
+        "std": 11.01
+      },
+      "prev_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1816,
+        "top_valores": {
+          "0-0": 72,
+          "0-2": 43,
+          "2-2": 26
+        }
+      },
+      "minute_str_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 46,
+        "min": 1.0,
+        "max": 63.0,
+        "media": 20.24,
+        "mediana": 19.0,
+        "std": 11.13
+      },
+      "str_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2014,
+        "top_valores": {
+          "9-0": 15,
+          "8-0": 14,
+          "9-2": 12
+        }
+      },
+      "max_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 24,
+        "min": 4.0,
+        "max": 83.0,
+        "media": 9.18,
+        "mediana": 9.0,
+        "std": 3.43
+      },
+      "minute_prev_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 44,
+        "min": 1.0,
+        "max": 47.0,
+        "media": 17.58,
+        "mediana": 17.0,
+        "std": 10.83
+      },
+      "prev_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1872,
+        "top_valores": {
+          "2-0": 47,
+          "0-0": 43,
+          "3-0": 23
+        }
+      },
+      "minute_str_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 46,
+        "min": 1.0,
+        "max": 50.0,
+        "media": 20.13,
+        "mediana": 20.0,
+        "std": 10.99
+      },
+      "str_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2027,
+        "top_valores": {
+          "2-9": 15,
+          "2-11": 12,
+          "2-8": 12
+        }
+      },
+      "max_lead_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 58,
+        "min": 0.0,
+        "max": 90.0,
+        "media": 12.94,
+        "mediana": 11.0,
+        "std": 9.43
+      },
+      "max_lead_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 44,
+        "min": 0.0,
+        "max": 46.0,
+        "media": 9.01,
+        "mediana": 7.0,
+        "std": 7.71
+      },
+      "minute_max_lead_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 48,
+        "min": 0.0,
+        "max": 65.0,
+        "media": 22.25,
+        "mediana": 24.0,
+        "std": 14.02
+      },
+      "minute_max_lead_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 46,
+        "min": 0.0,
+        "max": 50.0,
+        "media": 16.6,
+        "mediana": 14.0,
+        "std": 13.91
+      },
+      "points_max_lead_a": {
+        "tipo": "str",
+        "nulos": 267,
+        "pct_nulos": 6.8,
+        "unicos": 1767,
+        "top_valores": {
+          "2-0": 70,
+          "3-0": 23,
+          "4-0": 22
+        }
+      },
+      "points_max_lead_b": {
+        "tipo": "str",
+        "nulos": 476,
+        "pct_nulos": 12.2,
+        "unicos": 1473,
+        "top_valores": {
+          "0-2": 140,
+          "0-3": 68,
+          "0-4": 39
+        }
+      }
+    }
+  },
+  "c_header": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_header.csv",
+    "filas": 3899,
+    "columnas": 43,
+    "duplicados": 0,
+    "total_nulos": 34454,
+    "pct_completo": 79.4,
+    "columnas_detalle": {
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3899,
+        "top_valores": {
+          "U2007_001": 1,
+          "U2007_002": 1,
+          "U2007_003": 1
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2949,
+        "top_valores": {
+          "PAM-KHI": 6,
+          "BUD-CAN": 6,
+          "CAN-BUD": 6
+        }
+      },
+      "date": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 699,
+        "top_valores": {
+          "2007-11-13": 27,
+          "2007-11-20": 27,
+          "2007-12-11": 27
+        }
+      },
+      "time": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 52,
+        "top_valores": {
+          "18:00:00": 647,
+          "20:30:00": 614,
+          "20:00:00": 551
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": -1.0,
+        "max": 25.0,
+        "media": 8.54,
+        "mediana": 8.0,
+        "std": 5.3
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 11,
+        "top_valores": {
+          "REGULAR SEASON": 2795,
+          "LAST 32": 319,
+          "LAST 16": 254
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 360,
+          "U2007": 326,
+          "U2014": 306
+        }
+      },
+      "score_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 81,
+        "min": 35.0,
+        "max": 141.0,
+        "media": 81.26,
+        "mediana": 81.0,
+        "std": 11.67
+      },
+      "score_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 77,
+        "min": 42.0,
+        "max": 129.0,
+        "media": 77.57,
+        "mediana": 77.0,
+        "std": 11.64
+      },
+      "team_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 279,
+        "top_valores": {
+          "RATIOPHARM ULM": 100,
+          "BUDUCNOST VOLI PODGORICA": 86,
+          "DOLOMITI ENERGIA TRENTO": 84
+        }
+      },
+      "team_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 285,
+        "top_valores": {
+          "RATIOPHARM ULM": 102,
+          "BUDUCNOST VOLI PODGORICA": 90,
+          "DOLOMITI ENERGIA TRENTO": 87
+        }
+      },
+      "team_id_a": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "CAN": 122,
+          "BUD": 117,
+          "PAM": 112
+        }
+      },
+      "team_id_b": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "BUD": 120,
+          "CAN": 115,
+          "PAM": 103
+        }
+      },
+      "coach_a": {
+        "tipo": "str",
+        "nulos": 1913,
+        "pct_nulos": 49.1,
+        "unicos": 272,
+        "top_valores": {
+          "LAKOVIC, JAKA": 53,
+          "CANAK, NENAD": 52,
+          "ALIMPIJEVIC, DUSAN": 48
+        }
+      },
+      "coach_b": {
+        "tipo": "str",
+        "nulos": 1913,
+        "pct_nulos": 49.1,
+        "unicos": 429,
+        "top_valores": {
+          "ALIMPIJEVIC, DUSAN": 58,
+          "CANAK, NENAD": 50,
+          "LAKOVIC, JAKA": 48
+        }
+      },
+      "game_time": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 13,
+        "top_valores": {
+          "40:00": 3641,
+          "45:00": 169,
+          "41:00": 38
+        }
+      },
+      "remaining_partial_time": {
+        "tipo": "str",
+        "nulos": 2,
+        "pct_nulos": 0.1,
+        "unicos": 6,
+        "top_valores": {
+          "00:00": 3872,
+          "05:00": 12,
+          "10:00": 9
+        }
+      },
+      "referee_1": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 168,
+        "top_valores": {
+          "ZAMOJSKI, JAKUB": 98,
+          "VYKLICKY, ROBERT": 87,
+          "PUKL,SASA": 85
+        }
+      },
+      "referee_2": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 199,
+        "top_valores": {
+          "JURAS, MARKO": 119,
+          "KOWALSKI, MARCIN": 100,
+          "DRAGOJEVIC, IGOR": 93
+        }
+      },
+      "referee_3": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 199,
+        "top_valores": {
+          "VAN DEN BROECK, NICK": 122,
+          "RADOJKOVIC, JOSIP": 82,
+          "HADZIC, DENIS": 71
+        }
+      },
+      "stadium": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 311,
+        "top_valores": {
+          "GRAN CANARIA ARENA": 94,
+          "MORACA": 89,
+          "ARENA STOZICE": 86
+        }
+      },
+      "capacity": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1797,
+        "min": 0.0,
+        "max": 24232.0,
+        "media": 2852.72,
+        "mediana": 2500.0,
+        "std": 2227.0
+      },
+      "w_id": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 10,
+        "min": 70.0,
+        "max": 94.0,
+        "media": 80.46,
+        "mediana": 80.0,
+        "std": 2.09
+      },
+      "fouls_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 29,
+        "min": 7.0,
+        "max": 40.0,
+        "media": 20.98,
+        "mediana": 21.0,
+        "std": 3.81
+      },
+      "fouls_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 28,
+        "min": 10.0,
+        "max": 39.0,
+        "media": 21.48,
+        "mediana": 21.0,
+        "std": 3.88
+      },
+      "timeouts_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 9,
+        "min": 0.0,
+        "max": 8.0,
+        "media": 3.36,
+        "mediana": 3.0,
+        "std": 1.33
+      },
+      "timeouts_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 9,
+        "min": 0.0,
+        "max": 9.0,
+        "media": 3.64,
+        "mediana": 4.0,
+        "std": 1.23
+      },
+      "score_quarter_1_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 42,
+        "min": 3.0,
+        "max": 90.0,
+        "media": 20.56,
+        "mediana": 21.0,
+        "std": 5.48
+      },
+      "score_quarter_2_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 54,
+        "min": 17.0,
+        "max": 90.0,
+        "media": 40.67,
+        "mediana": 41.0,
+        "std": 7.67
+      },
+      "score_quarter_3_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 65,
+        "min": 24.0,
+        "max": 97.0,
+        "media": 60.3,
+        "mediana": 60.0,
+        "std": 9.6
+      },
+      "score_quarter_4_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 78,
+        "min": 35.0,
+        "max": 125.0,
+        "media": 80.64,
+        "mediana": 81.0,
+        "std": 11.37
+      },
+      "score_quarter_1_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 41,
+        "min": 3.0,
+        "max": 83.0,
+        "media": 19.38,
+        "mediana": 19.0,
+        "std": 5.5
+      },
+      "score_quarter_2_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 56,
+        "min": 15.0,
+        "max": 83.0,
+        "media": 38.63,
+        "mediana": 38.0,
+        "std": 7.51
+      },
+      "score_quarter_3_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 62,
+        "min": 28.0,
+        "max": 95.0,
+        "media": 57.49,
+        "mediana": 57.0,
+        "std": 9.37
+      },
+      "score_quarter_4_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 74,
+        "min": 42.0,
+        "max": 118.0,
+        "media": 76.99,
+        "mediana": 77.0,
+        "std": 11.21
+      },
+      "score_extra_time_1_a": {
+        "tipo": "float64",
+        "nulos": 3647,
+        "pct_nulos": 93.5,
+        "unicos": 52,
+        "min": 58.0,
+        "max": 120.0,
+        "media": 86.67,
+        "mediana": 87.0,
+        "std": 10.55
+      },
+      "score_extra_time_2_a": {
+        "tipo": "float64",
+        "nulos": 3873,
+        "pct_nulos": 99.3,
+        "unicos": 21,
+        "min": 75.0,
+        "max": 124.0,
+        "media": 96.96,
+        "mediana": 96.5,
+        "std": 11.39
+      },
+      "score_extra_time_3_a": {
+        "tipo": "float64",
+        "nulos": 3895,
+        "pct_nulos": 99.9,
+        "unicos": 4,
+        "min": 89.0,
+        "max": 128.0,
+        "media": 105.0,
+        "mediana": 101.5,
+        "std": 18.17
+      },
+      "score_extra_time_4_a": {
+        "tipo": "float64",
+        "nulos": 3898,
+        "pct_nulos": 100.0,
+        "unicos": 1,
+        "min": 122.0,
+        "max": 122.0,
+        "media": 122.0,
+        "mediana": 122.0,
+        "std": NaN
+      },
+      "score_extra_time_1_b": {
+        "tipo": "float64",
+        "nulos": 3647,
+        "pct_nulos": 93.5,
+        "unicos": 56,
+        "min": 50.0,
+        "max": 113.0,
+        "media": 84.71,
+        "mediana": 85.0,
+        "std": 12.02
+      },
+      "score_extra_time_2_b": {
+        "tipo": "float64",
+        "nulos": 3873,
+        "pct_nulos": 99.3,
+        "unicos": 21,
+        "min": 75.0,
+        "max": 115.0,
+        "media": 96.31,
+        "mediana": 95.5,
+        "std": 10.63
+      },
+      "score_extra_time_3_b": {
+        "tipo": "float64",
+        "nulos": 3895,
+        "pct_nulos": 99.9,
+        "unicos": 4,
+        "min": 87.0,
+        "max": 129.0,
+        "media": 105.25,
+        "mediana": 102.5,
+        "std": 18.77
+      },
+      "score_extra_time_4_b": {
+        "tipo": "float64",
+        "nulos": 3898,
+        "pct_nulos": 100.0,
+        "unicos": 1,
+        "min": 122.0,
+        "max": 122.0,
+        "media": 122.0,
+        "mediana": 122.0,
+        "std": NaN
+      }
+    }
+  },
+  "c_play_by_play": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_play_by_play.csv",
+    "filas": 2029741,
+    "columnas": 21,
+    "duplicados": 0,
+    "total_nulos": 5759804,
+    "pct_completo": 86.5,
+    "columnas_detalle": {
+      "game_play_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2029741,
+        "top_valores": {
+          "U2007_001_003": 1,
+          "U2007_001_004": 1,
+          "U2007_001_005": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3899,
+        "top_valores": {
+          "U2007_110": 803,
+          "U2017_156": 746,
+          "U2025_141": 731
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2949,
+        "top_valores": {
+          "TRN-BUD": 3367,
+          "BUD-TRN": 3259,
+          "ULM-BUD": 3207
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": -1.0,
+        "max": 25.0,
+        "media": 8.59,
+        "mediana": 8.0,
+        "std": 5.33
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 11,
+        "top_valores": {
+          "REGULAR SEASON": 1463775,
+          "LAST 32": 160836,
+          "TOP 16": 127032
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 179398,
+          "U2015": 159796,
+          "U2007": 158354
+        }
+      },
+      "quarter": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 5,
+        "top_valores": {
+          "q4": 523621,
+          "q2": 521901,
+          "q3": 506401
+        }
+      },
+      "type": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1,
+        "min": 0.0,
+        "max": 0.0,
+        "media": 0.0,
+        "mediana": 0.0,
+        "std": 0.0
+      },
+      "number_of_play": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1319,
+        "min": 2.0,
+        "max": 1323.0,
+        "media": 292.04,
+        "mediana": 289.0,
+        "std": 170.7
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 27336,
+        "pct_nulos": 1.3,
+        "unicos": 156,
+        "top_valores": {
+          "CAN": 61138,
+          "BUD": 60059,
+          "PAM": 55844
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 84965,
+        "pct_nulos": 4.2,
+        "unicos": 4118,
+        "top_valores": {
+          "P004222": 4609,
+          "P002742": 4485,
+          "P003425": 4085
+        }
+      },
+      "play_type": {
+        "tipo": "str",
+        "nulos": 2,
+        "pct_nulos": 0.0,
+        "unicos": 38,
+        "top_valores": {
+          "OUT": 209823,
+          "IN": 209809,
+          "D": 184744
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 85508,
+        "pct_nulos": 4.2,
+        "unicos": 4109,
+        "top_valores": {
+          "OMIC, ALEN": 4609,
+          "DUBLJEVIC, BOJAN": 4485,
+          "ALBICY, ANDREW": 4085
+        }
+      },
+      "team": {
+        "tipo": "str",
+        "nulos": 27337,
+        "pct_nulos": 1.3,
+        "unicos": 332,
+        "top_valores": {
+          "Dolomiti Energia Trento": 44844,
+          "Buducnost VOLI Podgorica": 42463,
+          "ratiopharm Ulm": 41709
+        }
+      },
+      "dorsal": {
+        "tipo": "float64",
+        "nulos": 87011,
+        "pct_nulos": 4.3,
+        "unicos": 83,
+        "min": 0.0,
+        "max": 99.0,
+        "media": 16.24,
+        "mediana": 12.0,
+        "std": 14.61
+      },
+      "minute": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 65,
+        "min": 1.0,
+        "max": 66.0,
+        "media": 21.29,
+        "mediana": 21.0,
+        "std": 11.54
+      },
+      "marker_time": {
+        "tipo": "str",
+        "nulos": 24662,
+        "pct_nulos": 1.2,
+        "unicos": 663,
+        "top_valores": {
+          "10:00": 339205,
+          "00:00": 19258,
+          "10:59": 15658
+        }
+      },
+      "points_a": {
+        "tipo": "float64",
+        "nulos": 1695267,
+        "pct_nulos": 83.5,
+        "unicos": 136,
+        "min": 0.0,
+        "max": 141.0,
+        "media": 42.56,
+        "mediana": 42.0,
+        "std": 24.95
+      },
+      "points_b": {
+        "tipo": "float64",
+        "nulos": 1695267,
+        "pct_nulos": 83.5,
+        "unicos": 129,
+        "min": 0.0,
+        "max": 129.0,
+        "media": 40.52,
+        "mediana": 40.0,
+        "std": 24.03
+      },
+      "comment": {
+        "tipo": "float64",
+        "nulos": 2029741,
+        "pct_nulos": 100.0,
+        "unicos": 0,
+        "min": NaN,
+        "max": NaN,
+        "media": NaN,
+        "mediana": NaN,
+        "std": NaN
+      },
+      "play_info": {
+        "tipo": "str",
+        "nulos": 2708,
+        "pct_nulos": 0.1,
+        "unicos": 10591,
+        "top_valores": {
+          "Out": 209823,
+          "In": 209809,
+          "Def Rebound (1)": 65488
+        }
+      }
+    }
+  },
+  "c_players": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_players.csv",
+    "filas": 8529,
+    "columnas": 50,
+    "duplicados": 0,
+    "total_nulos": 0,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "season_player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 8529,
+        "top_valores": {
+          "U2007_P000286_GUI": 1,
+          "U2007_PLNA_DEN": 1,
+          "U2018_P003733_PAM": 1
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2007": 810,
+          "U2013": 781,
+          "U2015": 639
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4356,
+        "top_valores": {
+          "P000531": 11,
+          "P000564": 11,
+          "P006382": 10
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4353,
+        "top_valores": {
+          "SIMONOVIC, MARKO": 12,
+          "GORDIC, NEMANJA": 11,
+          "STEVIC, OLIVER": 11
+        }
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "BUD": 246,
+          "ULM": 217,
+          "CAN": 211
+        }
+      },
+      "games_played": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": 0.0,
+        "max": 25.0,
+        "media": 9.29,
+        "mediana": 9.0,
+        "std": 5.86
+      },
+      "games_started": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 25,
+        "min": 0.0,
+        "max": 24.0,
+        "media": 4.57,
+        "mediana": 3.0,
+        "std": 5.14
+      },
+      "minutes": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3857,
+        "min": 0.0,
+        "max": 773.1,
+        "media": 184.26,
+        "mediana": 161.6,
+        "std": 147.53
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 338,
+        "min": 0.0,
+        "max": 451.0,
+        "media": 72.59,
+        "mediana": 55.0,
+        "std": 69.81
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 119,
+        "min": 0.0,
+        "max": 151.0,
+        "media": 18.49,
+        "mediana": 13.0,
+        "std": 19.7
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 194,
+        "min": 0.0,
+        "max": 242.0,
+        "media": 34.99,
+        "mediana": 25.0,
+        "std": 34.98
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 63,
+        "min": 0.0,
+        "max": 65.0,
+        "media": 7.45,
+        "mediana": 3.0,
+        "std": 9.8
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 142,
+        "min": 0.0,
+        "max": 174.0,
+        "media": 20.98,
+        "mediana": 12.0,
+        "std": 25.17
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 103,
+        "min": 0.0,
+        "max": 174.0,
+        "media": 13.27,
+        "mediana": 9.0,
+        "std": 15.08
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 124,
+        "min": 0.0,
+        "max": 199.0,
+        "media": 17.78,
+        "mediana": 12.0,
+        "std": 19.36
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 69,
+        "min": 0.0,
+        "max": 88.0,
+        "media": 7.96,
+        "mediana": 5.0,
+        "std": 9.32
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 117,
+        "min": 0.0,
+        "max": 135.0,
+        "media": 20.15,
+        "mediana": 15.0,
+        "std": 19.42
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 160,
+        "min": 0.0,
+        "max": 223.0,
+        "media": 28.11,
+        "mediana": 21.0,
+        "std": 27.41
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 125,
+        "min": 0.0,
+        "max": 167.0,
+        "media": 14.93,
+        "mediana": 8.0,
+        "std": 18.91
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 47,
+        "min": 0.0,
+        "max": 46.0,
+        "media": 6.49,
+        "mediana": 5.0,
+        "std": 6.65
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 68,
+        "min": 0.0,
+        "max": 78.0,
+        "media": 12.2,
+        "mediana": 10.0,
+        "std": 11.25
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 36,
+        "min": 0.0,
+        "max": 47.0,
+        "media": 2.21,
+        "mediana": 1.0,
+        "std": 3.87
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 21,
+        "min": 0.0,
+        "max": 20.0,
+        "media": 2.19,
+        "mediana": 1.0,
+        "std": 2.6
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 79,
+        "min": 0.0,
+        "max": 79.0,
+        "media": 19.38,
+        "mediana": 17.0,
+        "std": 15.07
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 120,
+        "min": 0.0,
+        "max": 142.0,
+        "media": 19.17,
+        "mediana": 14.0,
+        "std": 19.37
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 400,
+        "min": -27.0,
+        "max": 539.0,
+        "media": 75.18,
+        "mediana": 51.0,
+        "std": 79.2
+      },
+      "plus_minus": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 342,
+        "min": -213.0,
+        "max": 310.0,
+        "media": -0.0,
+        "mediana": -2.0,
+        "std": 43.83
+      },
+      "minutes_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2950,
+        "min": 0.0,
+        "max": 47.0,
+        "media": 17.04,
+        "mediana": 18.16,
+        "std": 9.09
+      },
+      "points_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1286,
+        "min": 0.0,
+        "max": 34.0,
+        "media": 6.52,
+        "mediana": 6.12,
+        "std": 4.74
+      },
+      "two_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 511,
+        "min": 0.0,
+        "max": 9.0,
+        "media": 1.67,
+        "mediana": 1.38,
+        "std": 1.42
+      },
+      "two_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 811,
+        "min": 0.0,
+        "max": 16.0,
+        "media": 3.22,
+        "mediana": 2.8,
+        "std": 2.51
+      },
+      "two_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 474,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.45,
+        "mediana": 0.5,
+        "std": 0.23
+      },
+      "three_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 282,
+        "min": 0.0,
+        "max": 4.5,
+        "media": 0.66,
+        "mediana": 0.44,
+        "std": 0.73
+      },
+      "three_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 598,
+        "min": 0.0,
+        "max": 12.0,
+        "media": 1.89,
+        "mediana": 1.5,
+        "std": 1.81
+      },
+      "three_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 397,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.24,
+        "mediana": 0.28,
+        "std": 0.21
+      },
+      "free_throws_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 419,
+        "min": 0.0,
+        "max": 9.67,
+        "media": 1.2,
+        "mediana": 1.0,
+        "std": 1.12
+      },
+      "free_throws_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 515,
+        "min": 0.0,
+        "max": 11.06,
+        "media": 1.62,
+        "mediana": 1.33,
+        "std": 1.43
+      },
+      "free_throws_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 453,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.6,
+        "mediana": 0.71,
+        "std": 0.32
+      },
+      "offensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 303,
+        "min": 0.0,
+        "max": 6.0,
+        "media": 0.73,
+        "mediana": 0.56,
+        "std": 0.7
+      },
+      "defensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 484,
+        "min": 0.0,
+        "max": 9.5,
+        "media": 1.83,
+        "mediana": 1.67,
+        "std": 1.36
+      },
+      "total_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 645,
+        "min": 0.0,
+        "max": 13.0,
+        "media": 2.56,
+        "mediana": 2.31,
+        "std": 1.9
+      },
+      "assists_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 515,
+        "min": 0.0,
+        "max": 10.17,
+        "media": 1.32,
+        "mediana": 1.0,
+        "std": 1.35
+      },
+      "steals_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 207,
+        "min": 0.0,
+        "max": 3.2,
+        "media": 0.59,
+        "mediana": 0.5,
+        "std": 0.5
+      },
+      "turnovers_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 320,
+        "min": 0.0,
+        "max": 6.0,
+        "media": 1.15,
+        "mediana": 1.0,
+        "std": 0.84
+      },
+      "blocks_favour_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 164,
+        "min": 0.0,
+        "max": 4.0,
+        "media": 0.2,
+        "mediana": 0.07,
+        "std": 0.33
+      },
+      "blocks_against_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 104,
+        "min": 0.0,
+        "max": 3.0,
+        "media": 0.21,
+        "mediana": 0.17,
+        "std": 0.23
+      },
+      "fouls_committed_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 302,
+        "min": 0.0,
+        "max": 5.0,
+        "media": 1.83,
+        "mediana": 1.94,
+        "std": 0.96
+      },
+      "fouls_received_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 498,
+        "min": 0.0,
+        "max": 11.0,
+        "media": 1.75,
+        "mediana": 1.56,
+        "std": 1.38
+      },
+      "valuation_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1499,
+        "min": -7.0,
+        "max": 40.0,
+        "media": 6.55,
+        "mediana": 6.0,
+        "std": 5.54
+      },
+      "plus_minus_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1360,
+        "min": -Infinity,
+        "max": 20.5,
+        "media": -Infinity,
+        "mediana": -0.38,
+        "std": NaN
+      }
+    }
+  },
+  "c_points": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_points.csv",
+    "filas": 590678,
+    "columnas": 24,
+    "duplicados": 0,
+    "total_nulos": 935120,
+    "pct_completo": 93.4,
+    "columnas_detalle": {
+      "game_point_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 590678,
+        "top_valores": {
+          "U2007_001_004": 1,
+          "U2007_001_005": 1,
+          "U2007_001_007": 1
+        }
+      },
+      "game_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3899,
+        "top_valores": {
+          "U2007_110": 277,
+          "U2017_119": 222,
+          "U2016_040": 213
+        }
+      },
+      "game": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 2949,
+        "top_valores": {
+          "TRN-BUD": 1004,
+          "BUD-TRN": 965,
+          "BUD-CAN": 914
+        }
+      },
+      "round": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 26,
+        "min": -1.0,
+        "max": 25.0,
+        "media": 8.55,
+        "mediana": 8.0,
+        "std": 5.31
+      },
+      "phase": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 11,
+        "top_valores": {
+          "REGULAR SEASON": 426080,
+          "LAST 32": 47295,
+          "LAST 16": 37056
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 52878,
+          "U2007": 48669,
+          "U2015": 46433
+        }
+      },
+      "number_of_play": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 1218,
+        "min": 2.0,
+        "max": 1318.0,
+        "media": 287.81,
+        "mediana": 285.0,
+        "std": 174.07
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "CAN": 18161,
+          "BUD": 17822,
+          "PAM": 16360
+        }
+      },
+      "player_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 3938,
+        "top_valores": {
+          "P003637": 1567,
+          "P003452": 1480,
+          "P005216": 1475
+        }
+      },
+      "player": {
+        "tipo": "str",
+        "nulos": 1,
+        "pct_nulos": 0.0,
+        "unicos": 3934,
+        "top_valores": {
+          "SLAUGHTER, AJ": 1567,
+          "BLAZIC, JAKA": 1480,
+          "MCCOLLUM, ERRICK": 1475
+        }
+      },
+      "action_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 10,
+        "top_valores": {
+          "2FGM": 119030,
+          "3FGA": 114880,
+          "FTM": 113190
+        }
+      },
+      "action": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 8,
+        "top_valores": {
+          "Two Pointer": 119030,
+          "Missed Two Pointer": 117507,
+          "Missed Three Pointer": 115500
+        }
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 4,
+        "min": 0.0,
+        "max": 3.0,
+        "media": 1.05,
+        "mediana": 1.0,
+        "std": 1.06
+      },
+      "coord_x": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 712,
+        "min": -740.0,
+        "max": 746.0,
+        "media": 0.65,
+        "mediana": -1.0,
+        "std": 297.14
+      },
+      "coord_y": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 608,
+        "min": -150.0,
+        "max": 1304.0,
+        "media": 228.37,
+        "mediana": 119.0,
+        "std": 252.68
+      },
+      "zone": {
+        "tipo": "str",
+        "nulos": 113242,
+        "pct_nulos": 19.2,
+        "unicos": 10,
+        "top_valores": {
+          "B": 87624,
+          "I": 81729,
+          "C": 80915
+        }
+      },
+      "fastbreak": {
+        "tipo": "float64",
+        "nulos": 273959,
+        "pct_nulos": 46.4,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.04,
+        "mediana": 0.0,
+        "std": 0.2
+      },
+      "second_chance": {
+        "tipo": "float64",
+        "nulos": 273959,
+        "pct_nulos": 46.4,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.08,
+        "mediana": 0.0,
+        "std": 0.27
+      },
+      "points_off_turnover": {
+        "tipo": "float64",
+        "nulos": 273959,
+        "pct_nulos": 46.4,
+        "unicos": 2,
+        "min": 0.0,
+        "max": 1.0,
+        "media": 0.11,
+        "mediana": 0.0,
+        "std": 0.31
+      },
+      "minute": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 64,
+        "min": 1.0,
+        "max": 65.0,
+        "media": 21.04,
+        "mediana": 21.0,
+        "std": 11.83
+      },
+      "console": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 602,
+        "top_valores": {
+          "00:00": 19015,
+          "01:00": 14021,
+          "02:00": 12704
+        }
+      },
+      "points_a": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 136,
+        "min": 0.0,
+        "max": 141.0,
+        "media": 41.56,
+        "mediana": 41.0,
+        "std": 24.88
+      },
+      "points_b": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 129,
+        "min": 0.0,
+        "max": 129.0,
+        "media": 39.54,
+        "mediana": 39.0,
+        "std": 23.92
+      },
+      "timestamp": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 278729,
+        "top_valores": {
+          "1970-01-01": 304118,
+          "1970-01-01 00:00:00": 2155,
+          "2016-10-19 18:56:29": 3
+        }
+      }
+    }
+  },
+  "c_teams": {
+    "liga": "eurocup",
+    "ruta": "data/eurocup_teams.csv",
+    "filas": 574,
+    "columnas": 45,
+    "duplicados": 0,
+    "total_nulos": 0,
+    "pct_completo": 100.0,
+    "columnas_detalle": {
+      "season_team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 574,
+        "top_valores": {
+          "U2007_ANT": 1,
+          "U2007_ART": 1,
+          "U2007_ASK": 1
+        }
+      },
+      "season_code": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 19,
+        "top_valores": {
+          "U2013": 56,
+          "U2007": 54,
+          "U2014": 44
+        }
+      },
+      "team_id": {
+        "tipo": "str",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 155,
+        "top_valores": {
+          "BUD": 17,
+          "CAN": 14,
+          "ULM": 13
+        }
+      },
+      "games_played": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 20,
+        "min": 5.0,
+        "max": 25.0,
+        "media": 13.59,
+        "mediana": 14.0,
+        "std": 4.95
+      },
+      "minutes": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 201,
+        "min": 200.0,
+        "max": 1010.0,
+        "media": 547.59,
+        "mediana": 561.25,
+        "std": 199.1
+      },
+      "points": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 452,
+        "min": 340.0,
+        "max": 2232.0,
+        "media": 1078.57,
+        "mediana": 1082.0,
+        "std": 433.79
+      },
+      "two_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 298,
+        "min": 74.0,
+        "max": 598.0,
+        "media": 274.77,
+        "mediana": 273.5,
+        "std": 108.76
+      },
+      "two_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 392,
+        "min": 161.0,
+        "max": 1002.0,
+        "media": 519.86,
+        "mediana": 518.5,
+        "std": 194.04
+      },
+      "three_points_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 189,
+        "min": 20.0,
+        "max": 281.0,
+        "media": 110.63,
+        "mediana": 104.0,
+        "std": 50.97
+      },
+      "three_points_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 337,
+        "min": 76.0,
+        "max": 741.0,
+        "media": 311.81,
+        "mediana": 293.5,
+        "std": 136.43
+      },
+      "free_throws_made": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 266,
+        "min": 43.0,
+        "max": 438.0,
+        "media": 197.16,
+        "mediana": 194.0,
+        "std": 83.51
+      },
+      "free_throws_attempted": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 307,
+        "min": 59.0,
+        "max": 581.0,
+        "media": 264.16,
+        "mediana": 263.0,
+        "std": 109.35
+      },
+      "offensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 203,
+        "min": 30.0,
+        "max": 310.0,
+        "media": 137.42,
+        "mediana": 129.5,
+        "std": 60.29
+      },
+      "defensive_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 319,
+        "min": 100.0,
+        "max": 617.0,
+        "media": 321.45,
+        "mediana": 309.5,
+        "std": 129.11
+      },
+      "total_rebounds": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 374,
+        "min": 139.0,
+        "max": 893.0,
+        "media": 458.87,
+        "mediana": 448.0,
+        "std": 186.44
+      },
+      "assists": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 293,
+        "min": 54.0,
+        "max": 523.0,
+        "media": 221.84,
+        "mediana": 203.5,
+        "std": 104.28
+      },
+      "steals": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 158,
+        "min": 23.0,
+        "max": 241.0,
+        "media": 97.7,
+        "mediana": 101.0,
+        "std": 40.45
+      },
+      "turnovers": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 228,
+        "min": 60.0,
+        "max": 356.0,
+        "media": 187.69,
+        "mediana": 189.5,
+        "std": 66.39
+      },
+      "blocks_favour": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 78,
+        "min": 3.0,
+        "max": 100.0,
+        "media": 32.91,
+        "mediana": 31.0,
+        "std": 17.0
+      },
+      "blocks_against": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 67,
+        "min": 3.0,
+        "max": 76.0,
+        "media": 32.59,
+        "mediana": 31.0,
+        "std": 14.31
+      },
+      "fouls_committed": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 299,
+        "min": 92.0,
+        "max": 561.0,
+        "media": 288.34,
+        "mediana": 285.5,
+        "std": 108.83
+      },
+      "fouls_received": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 303,
+        "min": 83.0,
+        "max": 544.0,
+        "media": 284.88,
+        "mediana": 285.0,
+        "std": 110.28
+      },
+      "valuation": {
+        "tipo": "int64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 484,
+        "min": 285.0,
+        "max": 2620.0,
+        "media": 1152.89,
+        "mediana": 1129.5,
+        "std": 513.06
+      },
+      "minutes_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 115,
+        "min": 39.02,
+        "max": 43.33,
+        "media": 40.32,
+        "mediana": 40.24,
+        "std": 0.46
+      },
+      "points_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 416,
+        "min": 56.67,
+        "max": 97.04,
+        "media": 78.35,
+        "mediana": 78.48,
+        "std": 5.72
+      },
+      "two_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 312,
+        "min": 12.33,
+        "max": 26.9,
+        "media": 20.08,
+        "mediana": 20.09,
+        "std": 2.11
+      },
+      "two_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 366,
+        "min": 26.83,
+        "max": 49.4,
+        "media": 38.31,
+        "mediana": 38.23,
+        "std": 3.54
+      },
+      "two_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 152,
+        "min": 0.4,
+        "max": 0.62,
+        "media": 0.52,
+        "mediana": 0.52,
+        "std": 0.03
+      },
+      "three_points_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 266,
+        "min": 3.83,
+        "max": 12.77,
+        "media": 7.95,
+        "mediana": 8.0,
+        "std": 1.56
+      },
+      "three_points_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 380,
+        "min": 12.0,
+        "max": 33.68,
+        "media": 22.54,
+        "mediana": 22.61,
+        "std": 3.52
+      },
+      "three_points_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 154,
+        "min": 0.21,
+        "max": 0.45,
+        "media": 0.35,
+        "mediana": 0.35,
+        "std": 0.04
+      },
+      "free_throws_made_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 320,
+        "min": 7.17,
+        "max": 21.9,
+        "media": 14.35,
+        "mediana": 14.2,
+        "std": 2.39
+      },
+      "free_throws_attempted_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 360,
+        "min": 9.83,
+        "max": 29.05,
+        "media": 19.27,
+        "mediana": 19.17,
+        "std": 3.04
+      },
+      "free_throws_percentage": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 172,
+        "min": 0.59,
+        "max": 0.86,
+        "media": 0.74,
+        "mediana": 0.75,
+        "std": 0.04
+      },
+      "offensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 272,
+        "min": 5.0,
+        "max": 15.2,
+        "media": 9.94,
+        "mediana": 9.93,
+        "std": 1.6
+      },
+      "defensive_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 286,
+        "min": 16.7,
+        "max": 29.1,
+        "media": 23.39,
+        "mediana": 23.5,
+        "std": 2.0
+      },
+      "total_rebounds_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 347,
+        "min": 24.83,
+        "max": 40.59,
+        "media": 33.33,
+        "mediana": 33.5,
+        "std": 2.83
+      },
+      "assists_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 336,
+        "min": 9.0,
+        "max": 23.43,
+        "media": 15.8,
+        "mediana": 15.94,
+        "std": 2.71
+      },
+      "steals_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 250,
+        "min": 3.83,
+        "max": 14.18,
+        "media": 7.18,
+        "mediana": 7.0,
+        "std": 1.54
+      },
+      "turnovers_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 260,
+        "min": 9.67,
+        "max": 20.67,
+        "media": 13.95,
+        "mediana": 13.87,
+        "std": 1.5
+      },
+      "blocks_favour_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 179,
+        "min": 0.5,
+        "max": 5.33,
+        "media": 2.38,
+        "mediana": 2.33,
+        "std": 0.78
+      },
+      "blocks_against_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 160,
+        "min": 0.5,
+        "max": 4.5,
+        "media": 2.4,
+        "mediana": 2.33,
+        "std": 0.6
+      },
+      "fouls_committed_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 293,
+        "min": 15.5,
+        "max": 27.06,
+        "media": 21.21,
+        "mediana": 21.1,
+        "std": 1.9
+      },
+      "fouls_received_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 283,
+        "min": 13.83,
+        "max": 26.0,
+        "media": 20.84,
+        "mediana": 20.82,
+        "std": 1.71
+      },
+      "valuation_per_game": {
+        "tipo": "float64",
+        "nulos": 0,
+        "pct_nulos": 0.0,
+        "unicos": 464,
+        "min": 47.5,
+        "max": 114.32,
+        "media": 82.58,
+        "mediana": 82.5,
+        "std": 10.6
+      }
+    }
+  }
+}

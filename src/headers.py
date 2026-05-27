@@ -25,6 +25,16 @@ for file in eurocup_files:
             headers_dict[file] = header
     except FileNotFoundError:
         print(f"{file} no existe")
+for file in euroleague_files:
+    try:
+        # Abrir el archivo en modo lectura ('r')
+        with open(file, mode='r', encoding='utf-8') as csv_file:
+            # Crear un objeto reader
+            csv_reader = csv.reader(csv_file, delimiter=',')
+            header = next(csv_reader)
+            headers_dict[file] = header
+    except FileNotFoundError:
+        print(f"{file} no existe")
 
 with open('headers_output.csv', 'w', newline='', encoding='utf-8') as f:
     writer = csv.writer(f)
