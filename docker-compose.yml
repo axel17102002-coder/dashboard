@@ -1,0 +1,43 @@
+services:
+
+  db:
+    image: postgres:16-alpine
+    container_name: basketball_db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: secreto
+      POSTGRES_DB: basketball
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U admin -d basketball"]
+      interval: 10s
+      retries: 5
+
+  backend:
+    build: .
+    container_name: basketball_backend
+    environment:
+      DATABASE_URL: postgresql://admin:secreto@db:5432/basketball
+    volumes:
+      - ./data:/app/data
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  frontend:
+    image: nginx:alpine
+    container_name: basketball_frontend
+    volumes:
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:         
+  db_data:
