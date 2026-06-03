@@ -57,7 +57,7 @@ else:
         engine = create_engine(DATABASE_URL)
         with engine.begin() as conn:
             for tabla in TABLAS:
-                conn.execute(text(f"DROP TABLE IF EXISTS {tabla}"))
+                conn.execute(text(f"DROP TABLE IF EXISTS {tabla} CASCADE"))
                 print(f"  DROP TABLE IF EXISTS {tabla}")
         print("  ✅ Tablas eliminadas\n")
     except Exception as e:
