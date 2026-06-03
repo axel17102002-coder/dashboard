@@ -1,11 +1,20 @@
 """
-Limpieza: euroleague_play_by_play.csv
+Limpieza e ingesta: play_by_play (EuroLeague / EuroCup)
 Dataset grande (~1M+ filas). Foco en tipos, plays sin jugador y consistencia.
 """
-import pandas as pd
 import os
+import pandas as pd
+from sqlalchemy import create_engine
 
-liga = os.environ.get("LIGA", "euroleague")
+liga        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Play-by-Play para: {liga.upper()}")
 df = pd.read_csv(f"data/{liga}_play_by_play.csv")
 print(f"Original: {df.shape}")
 
@@ -61,10 +70,7 @@ def parse_marker(val):
 if "marker_time" in df.columns:
     df["marker_time_num"] = df["marker_time"].apply(parse_marker)
 
-# ── 7. Resultado ─────────────────────────────────────────────────────────────
-nulos = df.isnull().sum()
-nulos = nulos[nulos > 0]
-print(f"\nNulos restantes:\n{nulos if len(nulos) else 'ninguno'}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv(f"data/clean/{liga}_play_by_play_clean.csv", index=False)
-print(f"✅ Guardado en data/clean/{liga}_play_by_play_clean.csv")
+# ── 7. Ingesta a PostgreSQL ───────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if liga == "euroleague" else "EuroCup"
+df.to_sql("play_by_play", con=engine, if_exists="append", index=False, chunksize=5000, method="multi")
+print(f"✅ Inyectadas {len(df)} filas en 'play_by_play' ({liga})")

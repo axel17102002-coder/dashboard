@@ -1,18 +1,32 @@
 """
-Limpieza: euroleague_players.csv
-Datos completamente limpios (0 nulos). Foco en tipos, rangos y columnas útiles.
+Limpieza e ingesta: players (EuroLeague / EuroCup)
+Datos completamente limpios (0 nulos). Foco en tipos, rangos y métricas derivadas.
 """
+import os
 import pandas as pd
 import numpy as np
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_players.csv")
+LIGA        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Players para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_players.csv")
 print(f"Original: {df.shape}")
 
 # ── 1. Convertir minutes acumulados "MM:SS" → float ─────────────────────────
 def parse_minutes(val):
     try:
-        partes = str(val).split(":")
-        return int(partes[0]) + int(partes[1]) / 60
+        s = str(val)
+        if ":" in s:
+            partes = s.split(":")
+            return int(partes[0]) + int(partes[1]) / 60
+        return float(val)
     except:
         return 0.0
 
@@ -34,10 +48,6 @@ df["puntos_calculados"] = (
 )
 inconsistentes = df[df["puntos_calculados"] != df["points"]]
 print(f"Jugadores con puntos inconsistentes: {len(inconsistentes)}")
-if len(inconsistentes) > 0:
-    inconsistentes[["player","season_code","points","puntos_calculados"]].to_csv(
-        "data/clean/players_puntos_inconsistentes.csv", index=False
-    )
 df = df.drop(columns=["puntos_calculados"])
 
 # ── 4. Filtrar jugadores con 0 minutos jugados ───────────────────────────────
@@ -56,9 +66,30 @@ def perfil(row):
 
 df["perfil_ofensivo"] = df.apply(perfil, axis=1)
 
-# ── 6. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-print(f"Filas finales: {df.shape[0]}")
-df.to_csv("data/clean/euroleague_players_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_players_clean.csv")
+# ── 6. CU-02: Métricas derivadas avanzadas ──────────────────────────────────
+fga = df["two_points_attempted"] + df["three_points_attempted"]
+
+df["efg_pct"] = (
+    (df["two_points_made"] + 1.5 * df["three_points_made"]) /
+    (fga + 1e-9)
+).round(3)
+
+df["ts_pct"] = (
+    df["points"] /
+    (2 * (fga + 0.44 * df["free_throws_attempted"]) + 1e-9)
+).round(3)
+
+df["ast_to_ratio"] = (
+    df["assists"] / (df["turnovers"] + 1e-9)
+).round(3)
+
+# USG% simplificado (sin contexto de equipo): tasa de posesiones usadas por minuto
+df["usg_pct"] = (
+    (fga + 0.44 * df["free_throws_attempted"] + df["turnovers"]) /
+    (df["minutes_num"] + 1e-9)
+).round(3)
+
+# ── 7. Ingesta a PostgreSQL ──────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+df.to_sql("season_players", con=engine, if_exists="append", index=False)
+print(f"✅ Inyectadas {len(df)} filas en 'season_players' ({LIGA})")

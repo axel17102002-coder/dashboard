@@ -1,19 +1,28 @@
 """
-Limpieza: euroleague_box_score.csv
-Problema principal: 'minutes' como string "MM:SS" y 10 nulos en 'minutes'
+Módulo de Limpieza e Ingesta: Box Scores (EuroLeague / EuroCup)
+Calcula métricas derivadas requeridas (PIR) y carga directamente a PostgreSQL.
 """
+import os
 import pandas as pd
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_box_score.csv")
-print(f"Original: {df.shape}")
+# 1. Leer variables de entorno (En Docker el host es 'db')
+LIGA = os.environ.get("LIGA", "euroleague")
+DB_USER = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB = os.environ.get("POSTGRES_DB", "basket_db")
 
-# ── 1. Jugadores que no jugaron ─────────────────────────────────────────────
-# Los 10 nulos en 'minutes' son jugadores convocados pero que no entraron.
-# is_playing == 0 los identifica. Se eliminan porque no aportan stats.
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+# Cargar el archivo según la competición activa en el pipeline
+print(f"🔄 Procesando Box Scores para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_box_score.csv")
+
+# ── 1. Filtrar jugadores activos ───────────────────────────────────────────
 df = df[df["is_playing"] == 1].copy()
-print(f"Tras eliminar no jugadores: {df.shape}")
 
-# ── 2. Convertir minutes "MM:SS" → float (minutos decimales) ────────────────
+# ── 2. Convertir minutos "MM:SS" a flotante decimal ─────────────────────────
 def parse_minutes(val):
     try:
         partes = str(val).split(":")
@@ -23,40 +32,52 @@ def parse_minutes(val):
 
 df["minutes_num"] = df["minutes"].apply(parse_minutes)
 
-# ── 3. Tipos correctos ──────────────────────────────────────────────────────
+# ── 3. Tipos lógicos y capeo de anomalías ───────────────────────────────────
 df["is_starter"] = df["is_starter"].astype(bool)
 df["is_playing"] = df["is_playing"].astype(bool)
 
-# ── 4. Verificación de rangos lógicos ───────────────────────────────────────
-# EuroLeague usa reglas FIBA: máximo 5 faltas personales
+# ── 4. Verificación de rangos lógicos y auditoría de anomalías ──────────────
 anomalias = []
 
+# Regla FIBA: Máximo 5 faltas
 mask_faltas = df["fouls_committed"] > 5
 if mask_faltas.any():
     print(f"  ⚠️  {mask_faltas.sum()} filas con fouls_committed > 5 → se capean a 5")
-    anomalias.append(df[mask_faltas][["game_player_id","game_id","player","fouls_committed"]].assign(motivo="fouls>5"))
+    df_anomalo = df[mask_faltas][["game_player_id", "game_id", "player", "fouls_committed"]].copy()
+    df_anomalo["motivo"] = "fouls_committed > 5"
+    anomalias.append(df_anomalo)
     df.loc[mask_faltas, "fouls_committed"] = 5
 
+# Regla lógica: Puntos no pueden ser negativos
 mask_pts = df["points"] < 0
 if mask_pts.any():
     print(f"  ⚠️  {mask_pts.sum()} filas con points < 0 → se capean a 0")
+    df_anomalo = df[mask_pts][["game_player_id", "game_id", "player", "points"]].copy()
+    df_anomalo["motivo"] = "points < 0"
+    anomalias.append(df_anomalo)
     df.loc[mask_pts, "points"] = 0
 
-mask_min = df["minutes_num"] > 65
-if mask_min.any():
-    print(f"  ⚠️  {mask_min.sum()} filas con minutes_num > 65 → revisar")
-
+# Si se encontraron anomalías, se guardan en una tabla dedicada de la BD
 if anomalias:
-    import pandas as pd
-    pd.concat(anomalias, ignore_index=True).to_csv(
-        "data/clean/box_score_anomalias.csv", index=False
-    )
+    df_todas_anomalias = pd.concat(anomalias, ignore_index=True)
+    df_todas_anomalias["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+    # Guardamos en la tabla 'audit_anomalias'
+    df_todas_anomalias.to_sql("audit_anomalias", con=engine, if_exists="append", index=False)
 
-# ── 5. Columna auxiliar: tipo de jugador ────────────────────────────────────
-df["role"] = df["is_starter"].map({True: "starter", False: "bench"})
+# ── 5. CU-02: Cálculo de Métrica Derivada: PIR (Valoración) ─────────────────
+# Fórmula Oficial Euroliga: (Pts + Reb + Ast + Stl + Blk + Fouls Rec) - (Tiros Fallados + FT Fallados + TO + Blk Ag)
+tiros_fallados = (df["two_points_attempted"] - df["two_points_made"]) + (df["three_points_attempted"] - df["three_points_made"])
+ft_fallados = df["free_throws_attempted"] - df["free_throws_made"]
 
-# ── 6. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv("data/clean/euroleague_box_score_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_box_score_clean.csv")
+df["pir_calculado"] = (
+    df["points"] + df["total_rebounds"] + df["assists"] + df["steals"] + df["blocks_favour"] + df["fouls_received"]
+) - (tiros_fallados + ft_fallados + df["turnovers"] + df["blocks_against"])
+
+
+# ── 6. Unificación: Columna de Identificación de Competencia ────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+
+# ── 7. Ingesta a la Base de Datos con SQLAlchemy ────────────────────────────
+# Usamos if_exists='append' para que EuroLeague y EuroCup convivan en la misma tabla
+df.to_sql("game_box_scores", con=engine, if_exists="append", index=False)
+print(f"✅ Inyectadas {len(df)} filas en la tabla 'game_box_scores' ({LIGA})")

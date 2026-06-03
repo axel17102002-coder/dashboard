@@ -1,11 +1,22 @@
 """
-Limpieza: euroleague_comparison.csv
+Limpieza e ingesta: comparison (EuroLeague / EuroCup)
 Dataset de estadísticas comparativas por partido (team_a vs team_b).
 Sin nulos reportados, foco en tipos y columnas auxiliares.
 """
+import os
 import pandas as pd
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_comparison.csv")
+LIGA        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Comparison para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_comparison.csv")
 print(f"Original: {df.shape}")
 
 # ── 1. Valores negativos en columnas que deben ser >= 0 ─────────────────────
@@ -48,8 +59,7 @@ if all(c in df.columns for c in ["points_bench_a","points_starters_a"]):
         (df["points_starters_b"] + df["points_bench_b"] + 1e-9)
     ).round(3)
 
-# ── 5. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv("data/clean/euroleague_comparison_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_comparison_clean.csv")
+# ── 5. Ingesta a PostgreSQL ──────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+df.to_sql("game_comparisons", con=engine, if_exists="append", index=False)
+print(f"✅ Inyectadas {len(df)} filas en 'game_comparisons' ({LIGA})")

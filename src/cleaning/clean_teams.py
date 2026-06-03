@@ -1,10 +1,21 @@
 """
-Limpieza: euroleague_teams.csv
-Datos completamente limpios. Foco en tipos, porcentajes y columnas derivadas.
+Limpieza e ingesta: teams (EuroLeague / EuroCup)
+Datos completamente limpios. Foco en tipos, porcentajes y métricas derivadas.
 """
+import os
 import pandas as pd
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_teams.csv")
+LIGA        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Teams para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_teams.csv")
 print(f"Original: {df.shape}")
 
 # ── 1. Convertir minutes acumulados "MM:SS" → float ─────────────────────────
@@ -28,21 +39,29 @@ print(f"Equipos con puntos/partido fuera de rango (50-120): {len(fuera_de_rango)
 if len(fuera_de_rango) > 0:
     print(fuera_de_rango[["team_id","season_code","points_per_game"]])
 
-# ── 4. Columnas auxiliares ──────────────────────────────────────────────────
-# Ratio ofensivo/defensivo de rebotes
+# ── 4. Métricas derivadas ───────────────────────────────────────────────────
+fga_pg = df["two_points_attempted_per_game"] + df["three_points_attempted_per_game"]
+
 df["rebote_ratio"] = (
     df["offensive_rebounds_per_game"] /
     (df["defensive_rebounds_per_game"] + df["offensive_rebounds_per_game"] + 1e-9)
 ).round(3)
 
-# Eficiencia de tiro ponderada (eFG%)
 df["efg_pct"] = (
     (df["two_points_made_per_game"] + 1.5 * df["three_points_made_per_game"]) /
-    (df["two_points_attempted_per_game"] + df["three_points_attempted_per_game"] + 1e-9)
+    (fga_pg + 1e-9)
 ).round(3)
 
-# ── 5. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv("data/clean/euroleague_teams_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_teams_clean.csv")
+df["ts_pct"] = (
+    df["points_per_game"] /
+    (2 * (fga_pg + 0.44 * df["free_throws_attempted_per_game"]) + 1e-9)
+).round(3)
+
+df["ast_to_ratio"] = (
+    df["assists_per_game"] / (df["turnovers_per_game"] + 1e-9)
+).round(3)
+
+# ── 5. Ingesta a PostgreSQL ──────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+df.to_sql("season_teams", con=engine, if_exists="append", index=False)
+print(f"✅ Inyectadas {len(df)} filas en 'season_teams' ({LIGA})")

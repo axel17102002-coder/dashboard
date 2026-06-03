@@ -2,3 +2,7 @@ pandas
 streamlit
 ydata-profiling
 setuptools<81
+psycopg2-binary==2.9.9
+sqlalchemy==2.0.28
+plotly==5.22.0
+matplotlib==3.9.0

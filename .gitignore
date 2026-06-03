@@ -3,5 +3,5 @@
 comm*.csv
 env
 .matplotlib-cache/
-*.html
+reporte_*.html
 

@@ -1,11 +1,22 @@
 """
-Limpieza: euroleague_header.csv
+Limpieza e ingesta: header (EuroLeague / EuroCup)
 Problemas: coaches faltantes (~37%), columnas de tiempo extra casi vacías,
            date como string, score_extra_time con nulos legítimos.
 """
+import os
 import pandas as pd
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_header.csv")
+LIGA        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Header para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_header.csv")
 print(f"Original: {df.shape}")
 
 # ── 1. Fecha y hora ─────────────────────────────────────────────────────────
@@ -38,11 +49,6 @@ inconsistentes = df[
     (df["check_score_b"] != df["score_b"])
 ]
 print(f"Partidos con score inconsistente: {len(inconsistentes)}")
-if len(inconsistentes) > 0:
-    inconsistentes[["game_id","score_a","check_score_a","score_b","check_score_b"]].to_csv(
-        "data/clean/header_inconsistencias.csv", index=False
-    )
-    print("  → Guardados en data/clean/header_inconsistencias.csv")
 
 # Eliminar columnas auxiliares de verificación
 df = df.drop(columns=["check_score_a", "check_score_b"])
@@ -51,8 +57,7 @@ df = df.drop(columns=["check_score_a", "check_score_b"])
 # Reemplazar valores 0 o negativos por NaN (dato no disponible)
 df["capacity"] = df["capacity"].where(df["capacity"] > 0, other=pd.NA)
 
-# ── 6. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv("data/clean/euroleague_header_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_header_clean.csv")
+# ── 6. Ingesta a PostgreSQL ──────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+df.to_sql("game_headers", con=engine, if_exists="append", index=False)
+print(f"✅ Inyectadas {len(df)} filas en 'game_headers' ({LIGA})")

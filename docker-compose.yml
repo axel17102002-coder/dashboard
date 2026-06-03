@@ -1,43 +1,38 @@
-services:
+version: '3.8'
 
+services:
+  # Base de Datos PostgreSQL
   db:
-    image: postgres:16-alpine
-    container_name: basketball_db
-    environment:
-      POSTGRES_USER: admin
-      POSTGRES_PASSWORD: secreto
-      POSTGRES_DB: basketball
-    volumes:
-      - db_data:/var/lib/postgresql/data
+    image: postgres:15-alpine
+    container_name: postgres_db
+    restart: always
+    env_file:
+      - .env
     ports:
       - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U admin -d basketball"]
-      interval: 10s
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
       retries: 5
 
-  backend:
+  # Aplicación de Streamlit
+  web:
     build: .
-    container_name: basketball_backend
-    environment:
-      DATABASE_URL: postgresql://admin:secreto@db:5432/basketball
-    volumes:
-      - ./data:/app/data
+    container_name: streamlit_basket_app
+    restart: always
     ports:
-      - "8000:8000"
+      - "8501:8501"
+    env_file:
+      - .env
     depends_on:
       db:
         condition: service_healthy
-
-  frontend:
-    image: nginx:alpine
-    container_name: basketball_frontend
     volumes:
-      - ./frontend:/usr/share/nginx/html
-    ports:
-      - "80:80"
-    depends_on:
-      - backend
+      - .:/app  # Esto sincroniza tus cambios en caliente. Si editas código, se ve en vivo.
+      - /app/.venv  # Evita que Docker use tu entorno virtual de Windows
 
-volumes:         
-  db_data:
+volumes:
+  postgres_data:

@@ -1,11 +1,22 @@
 """
-Limpieza: euroleague_points.csv
-Problemas: 'zone' con 138k nulos (tiros libres), 
+Limpieza e ingesta: points (EuroLeague / EuroCup)
+Problemas: 'zone' con 138k nulos (tiros libres),
            'fastbreak/second_chance/points_off_turnover' con 263k nulos (dato no registrado).
 """
+import os
 import pandas as pd
+from sqlalchemy import create_engine
 
-df = pd.read_csv("data/euroleague_points.csv")
+LIGA        = os.environ.get("LIGA", "euroleague")
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+engine = create_engine(DATABASE_URL)
+
+print(f"🔄 Procesando Points para: {LIGA.upper()}")
+df = pd.read_csv(f"data/{LIGA}_points.csv")
 print(f"Original: {df.shape}")
 
 # ── 1. Zone: los tiros libres no tienen zona asignada ───────────────────────
@@ -30,8 +41,6 @@ fuera_cancha = df[
     (df["coord_y"] > 1000)
 ]
 print(f"Tiros con coordenadas fuera de rango: {len(fuera_cancha)}")
-if len(fuera_cancha) > 0:
-    fuera_cancha.to_csv("data/clean/points_coords_anomalas.csv", index=False)
 
 # ── 4. Validación: puntos solo pueden ser 1, 2 o 3 ─────────────────────────
 invalidos = df[~df["points"].isin([1, 2, 3])]
@@ -53,8 +62,7 @@ df["shot_type"] = df["action_id"].apply(tipo_tiro)
 # ── 6. Columna auxiliar: solo tiros que entraron ─────────────────────────────
 df["made"] = df["action_id"].str.endswith("M").astype(int)
 
-# ── 7. Resultado ────────────────────────────────────────────────────────────
-print(f"\nNulos restantes:\n{df.isnull().sum()[df.isnull().sum() > 0]}")
-print(f"Duplicados: {df.duplicated().sum()}")
-df.to_csv("data/clean/euroleague_points_clean.csv", index=False)
-print("✅ Guardado en data/clean/euroleague_points_clean.csv")
+# ── 7. Ingesta a PostgreSQL ──────────────────────────────────────────────────
+df["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
+df.to_sql("game_points", con=engine, if_exists="append", index=False, chunksize=5000, method="multi")
+print(f"✅ Inyectadas {len(df)} filas en 'game_points' ({LIGA})")
