@@ -2,21 +2,41 @@
 Pipeline master de limpieza — euroleague y eurocup
 Ejecutar desde cualquier directorio:
     python src/cleaning/clean_master.py
+    python src/cleaning/clean_master.py --skip-drop
 """
+import os
 import subprocess
 import sys
 import time
+import argparse
 from pathlib import Path
+from sqlalchemy import create_engine, text
 
 # ── Rutas base ───────────────────────────────────────────────────────────────
-# DIR_SCRIPTS = carpeta donde vive este mismo archivo (src/cleaning/)
 DIR_SCRIPTS  = Path(__file__).parent
-DIR_PROYECTO = DIR_SCRIPTS.parent.parent          # raíz del proyecto
+DIR_PROYECTO = DIR_SCRIPTS.parent.parent
 DIR_CLEAN    = DIR_PROYECTO / "data" / "clean"
 DIR_CLEAN.mkdir(parents=True, exist_ok=True)
 
 LIGAS    = ["euroleague", "eurocup"]
 DATASETS = ["box_score", "header", "players", "teams", "points", "comparison", "play_by_play"]
+
+# ── DROP de tablas para evitar duplicados en re-ejecuciones ─────────────────
+DB_USER     = os.environ.get("POSTGRES_USER", "usuario_basket")
+DB_PASSWORD = os.environ.get("POSTGRES_PASSWORD", "bskt26")
+DB_DB       = os.environ.get("POSTGRES_DB", "basket_db")
+DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
+
+TABLAS = [
+    "game_box_scores",
+    "game_comparisons",
+    "game_headers",
+    "play_by_play",
+    "season_players",
+    "game_points",
+    "season_teams",
+    "audit_anomalias",
+]
 
 print("=" * 55)
 print("  🏀 Pipeline de limpieza")
@@ -24,6 +44,25 @@ print(f"  Scripts en: {DIR_SCRIPTS}")
 print(f"  Output en:  {DIR_CLEAN}")
 print(f"  Total scripts: {len(LIGAS) * len(DATASETS)}")
 print("=" * 55)
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--skip-drop", action="store_true", help="Omitir el DROP de tablas")
+args = parser.parse_args()
+
+if args.skip_drop:
+    print("\n⏩  --skip-drop activo: se omite el DROP de tablas\n")
+else:
+    print("\n🗑️  Limpiando tablas anteriores...")
+    try:
+        engine = create_engine(DATABASE_URL)
+        with engine.begin() as conn:
+            for tabla in TABLAS:
+                conn.execute(text(f"DROP TABLE IF EXISTS {tabla}"))
+                print(f"  DROP TABLE IF EXISTS {tabla}")
+        print("  ✅ Tablas eliminadas\n")
+    except Exception as e:
+        print(f"  ❌ Error al limpiar tablas: {e}")
+        sys.exit(1)
 
 resultados = []
 t_inicio = time.time()
@@ -45,7 +84,7 @@ for liga in LIGAS:
                 capture_output=True,
                 text=True,
                 # Pasar la liga como variable de entorno para que el script sepa qué CSV usar
-                env={**__import__("os").environ, "LIGA": liga},
+                env={**os.environ, "LIGA": liga},
             )
             elapsed = round(time.time() - t0, 1)
 
@@ -65,9 +104,9 @@ for liga in LIGAS:
             resultados.append((liga, dataset, False, str(e)))
 
 # ── Resumen final ────────────────────────────────────────────────────────────
-t_total   = round(time.time() - t_inicio, 1)
-exitosos  = [r for r in resultados if r[2]]
-fallidos  = [r for r in resultados if not r[2]]
+t_total  = round(time.time() - t_inicio, 1)
+exitosos = [r for r in resultados if r[2]]
+fallidos = [r for r in resultados if not r[2]]
 
 print("\n" + "=" * 55)
 print(f"  Resumen  ({t_total}s total)")
