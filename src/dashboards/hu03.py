@@ -5,7 +5,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from db import load_season_players, load_shot_data, dark_layout, draw_shot_map, make_radar
 
-
+#prueba-conexion
 def render():
     st.header("Dashboard — Analista Deportivo")
     st.caption("Patrones tácticos y eficiencia de equipos")
