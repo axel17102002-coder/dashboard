@@ -100,7 +100,11 @@ CREATE TABLE IF NOT EXISTS season_players (
     ts_pct NUMERIC(10,4),
     ast_to_ratio NUMERIC(10,4),
     usg_pct NUMERIC(10,4),
-    competition VARCHAR(50)
+    competition VARCHAR(50),
+    minutes_per_game NUMERIC(5,2),
+    two_points_percentage NUMERIC(10,4),
+    three_points_percentage NUMERIC(10,4),
+    free_throws_percentage NUMERIC(10,4)
 );
 
 CREATE TABLE IF NOT EXISTS game_box_scores (
@@ -142,10 +146,10 @@ CREATE TABLE IF NOT EXISTS game_box_scores (
 );
 
 CREATE TABLE IF NOT EXISTS season_teams (
-    team_id VARCHAR(100) PRIMARY KEY,
+    season_team_id VARCHAR(100) PRIMARY KEY,
     season_code VARCHAR(50),
+    team_id VARCHAR(100),
     games_played INT,
-    games_started INT,
     minutes VARCHAR(50),
     points INT,
     two_points_made INT,
@@ -165,14 +169,17 @@ CREATE TABLE IF NOT EXISTS season_teams (
     fouls_committed INT,
     fouls_received INT,
     valuation INT,
-    plus_minus INT,
+    minutes_per_game NUMERIC(10,2),
     points_per_game NUMERIC(10,2),
     two_points_made_per_game NUMERIC(10,2),
     two_points_attempted_per_game NUMERIC(10,2),
+    two_points_percentage NUMERIC(10,4),
     three_points_made_per_game NUMERIC(10,2),
     three_points_attempted_per_game NUMERIC(10,2),
+    three_points_percentage NUMERIC(10,4),
     free_throws_made_per_game NUMERIC(10,2),
     free_throws_attempted_per_game NUMERIC(10,2),
+    free_throws_percentage NUMERIC(10,4),
     offensive_rebounds_per_game NUMERIC(10,2),
     defensive_rebounds_per_game NUMERIC(10,2),
     total_rebounds_per_game NUMERIC(10,2),
@@ -184,7 +191,6 @@ CREATE TABLE IF NOT EXISTS season_teams (
     fouls_committed_per_game NUMERIC(10,2),
     fouls_received_per_game NUMERIC(10,2),
     valuation_per_game NUMERIC(10,2),
-    plus_minus_per_game NUMERIC(10,2),
     minutes_num NUMERIC(10,2),
     efg_pct NUMERIC(10,4),
     ts_pct NUMERIC(10,4),
@@ -264,13 +270,29 @@ CREATE TABLE IF NOT EXISTS game_comparisons (
     max_lead_b INT,
     minute_max_lead_a VARCHAR(50),
     minute_max_lead_b VARCHAR(50),
-    points_max_lead_a INT,
-    points_max_lead_b INT,
+    points_max_lead_a VARCHAR(50),
+    points_max_lead_b VARCHAR(50),
     mayor_ventaja INT,
     equipo_con_mayor_ventaja VARCHAR(255),
     bench_contribution_a NUMERIC(10,2),
     bench_contribution_b NUMERIC(10,2),
-    competition VARCHAR(50)
+    competition VARCHAR(50),
+    turnovers_starters_a INT,
+    turnovers_bench_a INT,
+    turnovers_starters_b INT,
+    turnovers_bench_b INT,
+    assists_bench_a INT,
+    assists_bench_b INT,
+    assists_starters_a INT,
+    assists_starters_b INT,
+    minute_str_a INT,
+    minute_str_b INT,
+    points_bench_a INT,
+    points_bench_b INT,
+    steals_bench_a INT,
+    steals_bench_b INT,
+    steals_starters_a INT,
+    steals_starters_b INT
 );
 
 CREATE TABLE IF NOT EXISTS play_by_play (
