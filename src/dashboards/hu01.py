@@ -33,9 +33,7 @@ def render():
         key="h1_sea"
     )
 
-    # =========================================================
-    # MAPEO team_id -> nombre completo
-    # =========================================================
+    # Mapeo team_id -> nombre completo
     team_a = (
         df_hdr[["team_id_a", "team_a"]]
         .dropna()
@@ -83,9 +81,8 @@ def render():
 
     st.divider()
 
-    # =========================================================
+
     # MÓDULO 1 — PERFIL DE TIRO POR JUGADOR
-    # =========================================================
     st.subheader("Perfil de Tiro por Jugador")
     st.caption(
         "Evolución por temporada. El eje Y representa el promedio por temporada "
@@ -190,9 +187,8 @@ def render():
 
     st.divider()
 
-    # =========================================================
-    # MÓDULO 2 — CONSISTENCIA COMPETITIVA
-    # =========================================================
+
+    # Módulo 2 — Consistencia competitiva
     st.subheader("Consistencia Competitiva")
 
     df_wr = build_winrate_df(df_hdr)
