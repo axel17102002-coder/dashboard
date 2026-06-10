@@ -6,7 +6,6 @@ import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
 
-
 @st.cache_resource
 def get_engine():
     user = os.environ.get("POSTGRES_USER", "usuario_basket")
