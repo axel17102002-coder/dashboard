@@ -13,6 +13,7 @@ from db import (
     dark_layout,
     draw_shot_map,
     make_radar,
+    format_season
 )
 
 
@@ -31,11 +32,14 @@ def render():
 
     c1, c2 = st.columns(2)
 
-    season = c1.selectbox(
+    season_codes  = sorted(df_sp["season_code"].dropna().unique())
+    season_labels = {format_season(s): s for s in season_codes}
+
+    season = season_labels[c1.selectbox(
         "Temporada",
-        sorted(df_sp["season_code"].dropna().unique()),
-        key="h3_sea"
-    )
+        list(season_labels.keys()),
+        key="h1_sea"
+    )]
 
     team_a = (
         df_hdr[["team_id_a", "team_a"]]

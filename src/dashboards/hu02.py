@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from db import load_box_scores, load_season_players, load_game_headers, dark_layout
+from db import load_box_scores, load_season_players, load_game_headers, dark_layout, format_season
 
 
 def render():
@@ -20,11 +20,15 @@ def render():
 
     c1, c2, c3 = st.columns(3)
 
-    season = c1.selectbox(
+    season_codes  = sorted(df_box["season_code"].dropna().unique())
+    season_labels = {format_season(s): s for s in season_codes}
+
+    season = season_labels[c1.selectbox(
         "Temporada",
-        sorted(df_sp["season_code"].dropna().unique()),
-        key="h2_sea"
-    )
+        list(season_labels.keys()),
+        key="h1_sea"
+    )]
+
 
     # Mapeo team_id -> nombre completo
     team_a = (

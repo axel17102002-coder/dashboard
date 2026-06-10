@@ -181,3 +181,6 @@ def validar_usuario(username, password):
         "username": df.iloc[0]["username"],
         "rol": df.iloc[0]["rol"]
     }
+
+def format_season(code) -> str:
+    return str(code)[1:]

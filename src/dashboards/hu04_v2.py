@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
-from db import load_game_headers, load_season_players, load_season_teams, build_winrate_df, dark_layout
+from db import load_game_headers, load_season_players, load_season_teams, build_winrate_df, dark_layout, format_season
 
 _NO_WR   = "No hay datos suficientes para calcular el porcentaje de victorias."
 _NO_DISP = "No hay datos suficientes para calcular la disponibilidad del jugador."
@@ -118,7 +118,6 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
     )
     st.plotly_chart(fig, use_container_width=True)
 
-
 def render():
     """Punto de entrada del dashboard: filtros globales y secciones de win rate, PIR y disponibilidad."""
     st.header("Dashboard — Directivo del Club")
@@ -132,7 +131,7 @@ def render():
 
     # Filtros de equipo y rango de temporadas
     c1, c2, c3 = st.columns(3)
-    team       = c1.selectbox("Equipo", sorted(df_sp["team_id"].unique()), key="h4_team")
+    team = c1.selectbox("Equipo", sorted(df_sp["team_id"].unique()), key="h4_team")
 
     # Intersección de temporadas con datos en los tres DataFrames
     seas_sp    = set(df_sp   [df_sp   ["team_id"] == team]["season_code"].unique())
@@ -141,12 +140,18 @@ def render():
 
     seasons_for_team = sorted(seas_sp & seas_hdr & seas_teams)
 
-    season_desde   = c2.selectbox("Desde temporada", seasons_for_team, key="h4_desde")
-    opciones_hasta = [s for s in seasons_for_team if s >= season_desde]
-    season_hasta   = c3.selectbox("Hasta temporada", opciones_hasta, index=len(opciones_hasta) - 1, key="h4_hasta")
+    # Mapeo label (sin prefijo) -> season_code real
+    season_label_map = {format_season(s): s for s in seasons_for_team}
+    season_labels    = list(season_label_map.keys())
+
+    season_desde = season_label_map[c2.selectbox("Desde temporada", season_labels, key="h4_desde")]
+    
+    opciones_hasta        = [s for s in seasons_for_team if s >= season_desde]
+    opciones_hasta_labels = [format_season(s) for s in opciones_hasta]
+    season_hasta = season_label_map[c3.selectbox("Hasta temporada", opciones_hasta_labels, index=len(opciones_hasta_labels) - 1, key="h4_hasta")]
 
     # seasons_sel incluye una temporada extra después del límite superior
-    idx_hasta  = seasons_for_team.index(season_hasta)
+    idx_hasta   = seasons_for_team.index(season_hasta)
     seasons_sel = seasons_for_team[seasons_for_team.index(season_desde) : idx_hasta + 2]
 
     st.divider(); _render_winrate(df_hdr, team, seasons_sel)
@@ -158,8 +163,9 @@ def render():
     if df_tpir.empty:
         st.info("Sin datos de equipo para el rango seleccionado.")
     else:
-        fig = px.line(df_tpir, x="season_code", y="valuation_per_game", markers=True,
-                      labels={"season_code": "Temporada", "valuation_per_game": "PIR promedio/partido"})
+        df_tpir["season_label"] = df_tpir["season_code"].apply(format_season)
+        fig = px.line(df_tpir, x="season_label", y="valuation_per_game", markers=True,
+                    labels={"season_label": "Temporada", "valuation_per_game": "PIR promedio/partido"})
         fig.update_traces(line_color="#f39c12", marker_color="#f39c12")
         fig.update_layout(xaxis=dict(tickangle=45), margin=dict(t=20))
         dark_layout(fig); st.plotly_chart(fig, use_container_width=True)

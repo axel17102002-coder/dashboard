@@ -8,12 +8,14 @@ from db import (
     load_season_players,
     build_winrate_df,
     dark_layout,
+    format_season
 )
 
 
 def render():
     st.header("Dashboard — Entrenador")
     st.caption("Rendimiento individual · Decisiones tácticas")
+    
 
     comp = st.selectbox("Competición", ["EuroLeague", "EuroCup", "Ambas"], key="h1_comp")
 
@@ -25,13 +27,17 @@ def render():
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
 
+
     c1, c2, c3 = st.columns(3)
 
-    season = c1.selectbox(
+    season_codes  = sorted(df_box["season_code"].dropna().unique())
+    season_labels = {format_season(s): s for s in season_codes}
+
+    season = season_labels[c1.selectbox(
         "Temporada",
-        sorted(df_box["season_code"].dropna().unique()),
+        list(season_labels.keys()),
         key="h1_sea"
-    )
+    )]
 
     # Mapeo team_id -> nombre completo
     team_a = (
