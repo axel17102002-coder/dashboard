@@ -341,9 +341,10 @@ CREATE TABLE IF NOT EXISTS usuarios (
 
 INSERT INTO usuarios (username, password, rol)
 VALUES
-('admin', 'admin', 'admin'),
-('entrenador', 'entrenador', 'entrenador'),
-('scout', 'scout', 'scout'),
-('analista', 'analista', 'analista'),
-('directivo', 'directivo', 'directivo')
+('Melina', 'admin', 'admin'),
+('Yessica', 'entrenador', 'entrenador'),
+('Emiliano', 'scout', 'scout'),
+('Cinthia', 'analista', 'analista'),
+('Axel', 'directivo', 'directivo'),
+('admin', 'admin', 'admin')
 ON CONFLICT (username) DO NOTHING;
