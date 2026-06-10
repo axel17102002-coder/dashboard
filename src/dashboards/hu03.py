@@ -1,9 +1,19 @@
+import pandas as pd
 import streamlit as st
 import plotly.express as px
 import matplotlib
+
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from db import load_season_players, load_shot_data, dark_layout, draw_shot_map, make_radar
+
+from db import (
+    load_season_players,
+    load_shot_data,
+    load_game_headers,
+    dark_layout,
+    draw_shot_map,
+    make_radar,
+)
 
 
 def render():
@@ -14,27 +24,83 @@ def render():
 
     try:
         df_sp = load_season_players(comp)
+        df_hdr = load_game_headers(comp)
     except Exception as e:
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
 
     c1, c2 = st.columns(2)
-    season = c1.selectbox("Temporada", sorted(df_sp["season_code"].unique()), key="h3_sea")
-    teams = sorted(df_sp[df_sp["season_code"] == season]["team_id"].unique())
-    team = c2.selectbox("Equipo", teams, key="h3_team")
+
+    season = c1.selectbox(
+        "Temporada",
+        sorted(df_sp["season_code"].dropna().unique()),
+        key="h3_sea"
+    )
+
+    team_a = (
+        df_hdr[["team_id_a", "team_a"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_a": "team_id", "team_a": "team_name"})
+    )
+
+    team_b = (
+        df_hdr[["team_id_b", "team_b"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_b": "team_id", "team_b": "team_name"})
+    )
+
+    df_team_names = (
+        pd.concat([team_a, team_b], ignore_index=True)
+        .drop_duplicates(subset="team_id")
+    )
+
+    teams_ids_temporada = (
+        df_sp[df_sp["season_code"] == season]["team_id"]
+        .dropna()
+        .unique()
+    )
+
+    df_team_names = (
+        df_team_names[df_team_names["team_id"].isin(teams_ids_temporada)]
+        .sort_values("team_name")
+    )
+
+    team_label_to_id = dict(
+        zip(df_team_names["team_name"], df_team_names["team_id"])
+    )
+
+    team_label = c2.selectbox(
+        "Equipo",
+        list(team_label_to_id.keys()),
+        key="h3_team"
+    )
+
+    team = team_label_to_id[team_label]
 
     st.divider()
-    tabs = st.tabs(["🗺️ Mapa de Aciertos", "🕸️ Comparación de Perfiles", "📈 Volumen Ofensivo"])
+
+    tabs = st.tabs([
+        "🗺️ Mapa de Aciertos",
+        "🕸️ Comparación de Perfiles",
+        "📈 Volumen Ofensivo"
+    ])
 
     # Tab 1 — Shot map
     with tabs[0]:
-        df_tsp = df_sp[(df_sp["season_code"] == season) & (df_sp["team_id"] == team)]
-        jugadores = sorted(df_tsp["player"].unique())
+        df_tsp = df_sp[
+            (df_sp["season_code"] == season) &
+            (df_sp["team_id"] == team)
+        ]
+
+        jugadores = sorted(df_tsp["player"].dropna().unique())
 
         if not jugadores:
             st.info("Sin jugadores para los filtros seleccionados.")
         else:
             c_jug, c_mint = st.columns([2, 1])
+
             jug_shot = c_jug.selectbox("Jugador", jugadores, key="h3_sjug")
             min_int = c_mint.slider("Mín. intentos/zona", 1, 20, 5, key="h3_mint")
 
@@ -53,7 +119,12 @@ def render():
 
     # Tab 2 — Radar
     with tabs[1]:
-        modo_radar = st.radio("Modo", ["Ofensivo", "Defensivo"], horizontal=True, key="h3_modo")
+        modo_radar = st.radio(
+            "Modo",
+            ["Ofensivo", "Defensivo"],
+            horizontal=True,
+            key="h3_modo"
+        )
 
         radar_cols = [
             "player",
@@ -71,17 +142,30 @@ def render():
             "total_rebounds_per_game"
         ]
 
-        df_radar = df_sp[df_sp["season_code"] == season][radar_cols].dropna()
-        all_players = sorted(df_radar["player"].unique())
+        df_radar = (
+            df_sp[
+                (df_sp["season_code"] == season) &
+                (df_sp["team_id"] == team)
+            ][radar_cols]
+            .dropna()
+        )
+
+        all_players = sorted(df_radar["player"].dropna().unique())
 
         if len(all_players) < 2:
             st.info("Sin suficientes jugadores para comparar.")
         else:
             c_pa, c_pb = st.columns(2)
+
             pa = c_pa.selectbox("Jugador A", all_players, key="h3_pa")
-            pb = c_pb.selectbox("Jugador B", [p for p in all_players if p != pa], key="h3_pb")
+            pb = c_pb.selectbox(
+                "Jugador B",
+                [p for p in all_players if p != pa],
+                key="h3_pb"
+            )
 
             df_radar_dedup = df_radar.drop_duplicates(subset="player", keep="first")
+
             st.plotly_chart(
                 make_radar(df_radar_dedup, pa, pb, modo_radar),
                 use_container_width=True
@@ -126,10 +210,10 @@ def render():
             ]
 
             colores_perfiles = {
-                "Estrella eficiente": "#2ecc71",          # verde
-                "Especialista eficiente": "#3498db",     # azul
-                "Alto volumen ineficiente": "#f1c40f",   # amarillo
-                "Bajo impacto ofensivo": "#e74c3c"       # rojo
+                "Estrella eficiente": "#2ecc71",
+                "Especialista eficiente": "#3498db",
+                "Alto volumen ineficiente": "#f1c40f",
+                "Bajo impacto ofensivo": "#e74c3c"
             }
 
             fig_sc = px.scatter(
@@ -179,11 +263,6 @@ def render():
                 marker=dict(size=8)
             )
 
-            fig_sc.update_layout(
-                margin=dict(t=20),
-                legend_title_text="Perfil ofensivo"
-            )
-
             dark_layout(fig_sc)
 
             fig_sc.update_layout(
@@ -202,4 +281,5 @@ def render():
                     )
                 )
             )
+
             st.plotly_chart(fig_sc, use_container_width=True)

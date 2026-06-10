@@ -1,6 +1,7 @@
+import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from db import load_box_scores, load_season_players, dark_layout
+from db import load_box_scores, load_season_players, load_game_headers, dark_layout
 
 
 def render():
@@ -12,6 +13,7 @@ def render():
     try:
         df_box = load_box_scores(comp)
         df_sp = load_season_players(comp)
+        df_hdr = load_game_headers(comp)
     except Exception as e:
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
@@ -24,11 +26,49 @@ def render():
         key="h2_sea"
     )
 
-    teams = ["Todos"] + sorted(
-        df_sp[df_sp["season_code"] == season]["team_id"].dropna().unique()
+    # Mapeo team_id -> nombre completo
+    team_a = (
+        df_hdr[["team_id_a", "team_a"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_a": "team_id", "team_a": "team_name"})
     )
 
-    team = c2.selectbox("Equipo", teams, key="h2_team")
+    team_b = (
+        df_hdr[["team_id_b", "team_b"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_b": "team_id", "team_b": "team_name"})
+    )
+
+    df_team_names = (
+        pd.concat([team_a, team_b], ignore_index=True)
+        .drop_duplicates(subset="team_id")
+    )
+
+    teams_ids_temporada = (
+        df_sp[df_sp["season_code"] == season]["team_id"]
+        .dropna()
+        .unique()
+    )
+
+    df_team_names = (
+        df_team_names[df_team_names["team_id"].isin(teams_ids_temporada)]
+        .sort_values("team_name")
+    )
+
+    team_label_to_id = {
+        "Todos": "Todos",
+        **dict(zip(df_team_names["team_name"], df_team_names["team_id"]))
+    }
+
+    team_label = c2.selectbox(
+        "Equipo",
+        list(team_label_to_id.keys()),
+        key="h2_team"
+    )
+
+    team = team_label_to_id[team_label]
 
     perfs = ["Todos"] + sorted(
         df_sp["perfil_ofensivo"].dropna().unique().tolist()
@@ -38,8 +78,7 @@ def render():
 
     st.divider()
 
-
-    # Módulo 1 — Ranking TOP 10 aara jugadores
+    # Módulo 1 — Ranking TOP 10 para jugadores
     st.subheader("Ranking de Valuación — Top 10 Jugadores")
 
     modo_pir = st.radio(
