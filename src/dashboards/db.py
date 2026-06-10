@@ -155,3 +155,30 @@ def make_radar(df: pd.DataFrame, pa: str, pb: str, modo: str):
         margin=dict(t=40, b=40),
     )
     return fig
+
+
+# Validar usuarios para el login
+def validar_usuario(username, password):
+    query = """
+        SELECT username, rol
+        FROM usuarios
+        WHERE username = %(username)s
+        AND password = %(password)s
+    """
+
+    df = pd.read_sql(
+        query,
+        get_engine(),
+        params={
+            "username": username,
+            "password": password
+        }
+    )
+
+    if df.empty:
+        return None
+
+    return {
+        "username": df.iloc[0]["username"],
+        "rol": df.iloc[0]["rol"]
+    }

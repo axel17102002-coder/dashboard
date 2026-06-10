@@ -331,3 +331,19 @@ CREATE TABLE IF NOT EXISTS audit_anomalias (
     motivo TEXT,
     competition VARCHAR(50)
 );
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    rol VARCHAR(30) NOT NULL
+);
+
+INSERT INTO usuarios (username, password, rol)
+VALUES
+('admin', 'admin', 'admin'),
+('entrenador', 'entrenador', 'entrenador'),
+('scout', 'scout', 'scout'),
+('analista', 'analista', 'analista'),
+('directivo', 'directivo', 'directivo')
+ON CONFLICT (username) DO NOTHING;
