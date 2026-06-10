@@ -110,16 +110,11 @@ def render():
     )
 
     jugadores = sorted(
-        jugadores_validos[
-            jugadores_validos["cantidad_temporadas"] >= 3
-        ]["player"].tolist()
-    )
+    df_players_team["player"].dropna().unique()
+)
 
     if not jugadores:
-        st.info(
-            "No hay jugadores con al menos 3 temporadas registradas "
-            "para los filtros seleccionados."
-        )
+        st.info("Sin jugadores para los filtros seleccionados.")
     else:
         jugador = st.selectbox("Jugador", jugadores, key="h1_jug")
 
