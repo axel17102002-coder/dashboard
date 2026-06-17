@@ -345,9 +345,11 @@ def render():
                         color=df_scatter["ast_to_ratio"],
                         colorscale=[[0.0, "#e74c3c"], [0.5, "#f39c12"], [1.0, "#2ecc71"]],
                         colorbar=dict(
-                            title="AST/TO",
+                            title=dict(
+                                text="AST/TO",
+                                font=dict(color="white")
+                            ),
                             tickfont=dict(color="white"),
-                            titlefont=dict(color="white"),
                         ),
                         showscale=True, opacity=base_opacity,
                         line=dict(width=0.5, color="rgba(255,255,255,0.2)"),
