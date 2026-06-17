@@ -168,8 +168,16 @@ def make_radar(df: pd.DataFrame, pa: str, pb: str, modo: str):
         fig.add_trace(go.Scatterpolar(
             r=vals + [vals[0]],
             theta=labels + [labels[0]],
-            fill="toself", name=player,
-            line_color=color, opacity=0.75,
+            fill="toself",
+            name=player,
+            line_color=color,
+            opacity=0.75,
+            marker=dict(size=8),
+            hovertemplate=(
+                "<b>%{fullData.name}</b><br>"
+                "%{theta}: %{r:.2%}"
+                "<extra></extra>"
+            ),
         ))
 
     fig.update_layout(
