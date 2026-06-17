@@ -18,10 +18,12 @@ from db import (
 
 
 def render():
-    st.header("Dashboard — Analista Deportivo")
-    st.caption("Patrones tácticos y eficiencia de equipos")
-
-    comp = st.selectbox("Competición", ["EuroLeague", "EuroCup", "Ambas"], key="h3_comp")
+    with st.sidebar:
+        st.markdown("### Filtros")
+        comp = st.selectbox(
+            "Competición", ["EuroLeague", "EuroCup", "Ambas"], key="h3_comp",
+            help="Filtra todos los módulos por competición",
+        )
 
     try:
         df_sp = load_season_players(comp)
@@ -30,16 +32,13 @@ def render():
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
 
-    c1, c2 = st.columns(2)
-
     season_codes  = sorted(df_sp["season_code"].dropna().unique())
     season_labels = {format_season(s): s for s in season_codes}
 
-    season = season_labels[c1.selectbox(
-        "Temporada",
-        list(season_labels.keys()),
-        key="h1_sea"
-    )]
+    with st.sidebar:
+        season = season_labels[st.selectbox(
+            "Temporada", list(season_labels.keys()), key="h1_sea",
+        )]
 
     team_a = (
         df_hdr[["team_id_a", "team_a"]]
@@ -75,15 +74,13 @@ def render():
         zip(df_team_names["team_name"], df_team_names["team_id"])
     )
 
-    team_label = c2.selectbox(
-        "Equipo",
-        list(team_label_to_id.keys()),
-        key="h3_team"
-    )
+    with st.sidebar:
+        team_label = st.selectbox(
+            "Equipo", list(team_label_to_id.keys()), key="h3_team",
+        )
+        team = team_label_to_id[team_label]
 
-    team = team_label_to_id[team_label]
-
-    st.divider()
+    pass  # divider removed
 
     tabs = st.tabs([
         "🗺️ Mapa de Aciertos",
@@ -103,23 +100,35 @@ def render():
         if not jugadores:
             st.info("Sin jugadores para los filtros seleccionados.")
         else:
-            c_jug, c_mint = st.columns([2, 1])
+            col_filtros, col_mapa = st.columns([1, 2])
 
-            jug_shot = c_jug.selectbox("Jugador", jugadores, key="h3_sjug")
-            min_int = c_mint.slider("Mín. intentos/zona", 1, 20, 5, key="h3_mint")
+            with col_filtros:
+                st.markdown("##### Filtros")
+                jug_shot = st.selectbox(
+                    "Jugador", jugadores, key="h3_sjug",
+                    help="Jugador a analizar",
+                )
+                min_int = st.slider(
+                    "Mín. intentos por zona", 1, 20, 5, key="h3_mint",
+                    help="Zonas con menos intentos se ocultan del mapa",
+                )
+                pass  # divider removed
+                st.caption("🔴 Efectividad ≤ 29%")
+                st.caption("🟡 Efectividad 30% – 49%")
+                st.caption("🟢 Efectividad ≥ 50%")
+                st.caption("Tamaño del círculo = volumen de intentos")
 
-            try:
-                df_shots = load_shot_data(jug_shot, comp, season)
-
-                if df_shots.empty:
-                    st.info("Sin datos de tiros para este jugador/temporada.")
-                else:
-                    fig_court = draw_shot_map(df_shots, min_int)
-                    st.pyplot(fig_court, use_container_width=True)
-                    plt.close(fig_court)
-
-            except Exception as e:
-                st.error(f"Error cargando tiros: {e}")
+            with col_mapa:
+                try:
+                    df_shots = load_shot_data(jug_shot, comp, season)
+                    if df_shots.empty:
+                        st.info("Sin datos de tiros para este jugador/temporada.")
+                    else:
+                        fig_court = draw_shot_map(df_shots, min_int)
+                        st.pyplot(fig_court, use_container_width=True)
+                        plt.close(fig_court)
+                except Exception as e:
+                    st.error(f"Error cargando tiros: {e}")
 
     # Tab 2 — Radar
     with tabs[1]:
@@ -178,8 +187,7 @@ def render():
     # Tab 3 — Scatter USG% vs TS%
     with tabs[2]:
         st.caption(
-            "USG% vs TS% · Color por perfil ofensivo calculado según promedios de liga · "
-            "Líneas = promedios de liga"
+            "USG% vs TS% · Color por posición de juego · Líneas = promedios de liga"
         )
 
         df_sc = df_sp[
@@ -189,10 +197,19 @@ def render():
         ].dropna(subset=["usg_pct", "ts_pct"]).copy()
 
         if df_sc.empty:
-            st.info("Sin datos para los filtros seleccionados.")
+            st.info("No existen datos suficientes para generar la visualización seleccionada.")
         else:
             avg_usg = df_sc["usg_pct"].mean()
-            avg_ts = df_sc["ts_pct"].mean()
+            avg_ts  = df_sc["ts_pct"].mean()
+
+            # KPI cards
+            k1, k2, k3, k4 = st.columns(4)
+            k1.metric("Jugadores analizados", len(df_sc))
+            k2.metric("USG% promedio liga",  f"{avg_usg:.1%}", help="Usage Rate promedio")
+            k3.metric("TS% promedio liga",   f"{avg_ts:.1%}",  help="True Shooting promedio")
+            estrellas = df_sc[(df_sc["usg_pct"] >= avg_usg) & (df_sc["ts_pct"] >= avg_ts)]
+            k4.metric("Alto vol. + alta ef.", len(estrellas),  help="Jugadores en el cuadrante superior derecho")
+            pass  # divider removed
 
             def clasificar_perfil_ofensivo(row):
                 if row["usg_pct"] >= avg_usg and row["ts_pct"] >= avg_ts:
