@@ -5,6 +5,7 @@ import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
 from sqlalchemy import create_engine
+import numpy as np
 
 @st.cache_resource
 def get_engine():
@@ -76,9 +77,28 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
     ax.add_patch(patches.Rectangle((-245,-200), 490, 580, lw=2, ec="white", fc="none"))
     ax.plot([-245,245],[380,380], color="white", lw=2)
     ax.add_patch(patches.Arc((0,380),490,490,theta1=0,theta2=180,color="white",lw=2))
-    ax.add_patch(patches.Arc((0,0),1350,1350,theta1=12,theta2=168,color="white",lw=2))
-    ax.plot([-675,-675],[-200,140], color="white", lw=2)
-    ax.plot([675, 675],[-200,140], color="white", lw=2)
+    # Línea de triple: tramos laterales + arco superior
+    triple_x = 675
+    triple_y_inicio = -200
+    triple_y_union = 140
+    triple_radio = (triple_x**2 + triple_y_union**2) ** 0.5
+
+    theta_union = np.degrees(np.arctan2(triple_y_union, triple_x))
+
+    ax.plot([-triple_x, -triple_x], [triple_y_inicio, triple_y_union], color="white", lw=2)
+    ax.plot([ triple_x,  triple_x], [triple_y_inicio, triple_y_union], color="white", lw=2)
+
+    ax.add_patch(
+        patches.Arc(
+            (0, 0),
+            2 * triple_radio,
+            2 * triple_radio,
+            theta1=theta_union,
+            theta2=180 - theta_union,
+            color="white",
+            lw=2
+        )
+    )
     ax.add_patch(plt.Circle((0,0),23, color="orange", fill=False, lw=2))
     ax.plot([-90,90],[-52,-52], color="white", lw=3)
 
@@ -95,8 +115,8 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
     else:
         by_zone["pct"] = by_zone["aciertos"] / by_zone["intentos"]
         mx = by_zone["intentos"].max()
-        by_zone["sz"] = (by_zone["intentos"] / mx) * 2700 + 300
-
+        by_zone["sz"] = (by_zone["intentos"] / mx) * 3500 + 500
+        
         def _color(p):
             if p < 0.30: return "#e74c3c"
             if p < 0.50: return "#f39c12"
@@ -105,9 +125,17 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
         for _, r in by_zone.iterrows():
             ax.scatter(r["cx"], r["cy"], s=r["sz"], color=_color(r["pct"]),
                        alpha=0.75, zorder=5, edgecolors="white", lw=0.5)
-            ax.text(r["cx"], r["cy"], f"{r['pct']:.0%}\n({int(r['intentos'])})",
-                    color="white", ha="center", va="center", fontsize=7,
-                    fontweight="bold", zorder=6)
+            ax.text(
+                r["cx"],
+                r["cy"],
+                f"{r['pct']:.0%}\n{int(r['aciertos'])}/{int(r['intentos'])}",
+                color="white",
+                ha="center",
+                va="center",
+                fontsize=8,
+                fontweight="bold",
+                zorder=6
+            )
 
     for c, lbl in [("#e74c3c","≤29%"),("#f39c12","30–49%"),("#2ecc71","≥50%")]:
         ax.scatter([],[], color=c, s=80, label=lbl)
