@@ -184,6 +184,48 @@ def render():
                 use_container_width=True
             )
 
+            if modo_radar == "Ofensivo":
+                cols_tabla = [
+                    "points_per_game",
+                    "assists_per_game",
+                    "efg_pct",
+                    "ts_pct",
+                    "offensive_rebounds_per_game",
+                    "usg_pct"
+                ]
+                labels_tabla = ["PTS/G", "AST/G", "eFG%", "TS%", "OREB/G", "USG%"]
+            else:
+                cols_tabla = [
+                    "defensive_rebounds_per_game",
+                    "steals_per_game",
+                    "blocks_favour_per_game",
+                    "ast_to_ratio",
+                    "fouls_received_per_game",
+                    "total_rebounds_per_game"
+                ]
+                labels_tabla = ["DREB/G", "STL/G", "BLK/G", "AST/TO", "Faltas Rec/G", "REB/G"]
+
+            df_norm_tabla = df_radar_dedup.set_index("player")[cols_tabla].copy()
+            df_norm_tabla = (df_norm_tabla - df_norm_tabla.min()) / (df_norm_tabla.max() - df_norm_tabla.min() + 1e-9)
+
+            tabla_comparativa = pd.DataFrame({
+                "Estadística": labels_tabla,
+                pa: [f"{v * 100:.2f}%" for v in df_norm_tabla.loc[pa, cols_tabla]],
+                pb: [f"{v * 100:.2f}%" for v in df_norm_tabla.loc[pb, cols_tabla]],
+            })
+
+            st.markdown("#### Tabla comparativa")
+            st.dataframe(tabla_comparativa, use_container_width=True, hide_index=True)
+
+            csv = tabla_comparativa.to_csv(index=False).encode("utf-8-sig")
+
+            st.download_button(
+                label="⬇️ Descargar",
+                data=csv,
+                file_name=f"comparacion_radar_{pa}_vs_{pb}_{modo_radar}.csv",
+                mime="text/csv"
+            )
+
     # Tab 3 — Scatter USG% vs TS%
     with tabs[2]:
         st.caption(
@@ -202,7 +244,6 @@ def render():
             avg_usg = df_sc["usg_pct"].mean()
             avg_ts  = df_sc["ts_pct"].mean()
 
-            # KPI cards
             k1, k2, k3, k4 = st.columns(4)
             k1.metric("Jugadores analizados", len(df_sc))
             k2.metric("USG% promedio liga",  f"{avg_usg:.1%}", help="Usage Rate promedio")
