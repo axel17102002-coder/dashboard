@@ -191,9 +191,33 @@ def render():
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
 
+    team_a = (
+        df_hdr[["team_id_a", "team_a"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_a": "team_id", "team_a": "team_name"})
+    )
+
+    team_b = (
+        df_hdr[["team_id_b", "team_b"]]
+        .dropna()
+        .drop_duplicates()
+        .rename(columns={"team_id_b": "team_id", "team_b": "team_name"})
+    )
+
+    df_team_names = (
+        pd.concat([team_a, team_b], ignore_index=True)
+        .drop_duplicates(subset="team_id")
+    )
+
+    team_label_to_id = dict(
+        zip(df_team_names["team_name"], df_team_names["team_id"])
+    )
+
     all_seasons = sorted(df_sp["season_code"].unique())
     with st.sidebar:
-        team         = st.selectbox("Equipo", sorted(df_sp["team_id"].unique()), key="h4_team")
+        team_label = st.selectbox("Equipo", sorted(team_label_to_id.keys()), key="h4_team")
+        team = team_label_to_id[team_label]
         season_desde = st.selectbox("Desde temporada", all_seasons, key="h4_desde",
                                     help="Inicio del rango a analizar")
         opciones_hasta = [s for s in all_seasons if s >= season_desde]
