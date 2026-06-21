@@ -217,14 +217,7 @@ def render():
             st.markdown("#### Tabla comparativa")
             st.dataframe(tabla_comparativa, use_container_width=True, hide_index=True)
 
-            csv = tabla_comparativa.to_csv(index=False).encode("utf-8-sig")
-
-            st.download_button(
-                label="⬇️ Descargar",
-                data=csv,
-                file_name=f"comparacion_radar_{pa}_vs_{pb}_{modo_radar}.csv",
-                mime="text/csv"
-            )
+            
 
     # Tab 3 — Scatter USG% vs TS%
     with tabs[2]:
