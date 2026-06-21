@@ -76,9 +76,9 @@ def render():
 
     with st.sidebar:
         team_label = st.selectbox(
-            "Equipo", list(team_label_to_id.keys()), key="h3_team",
+            "Equipo", ["Todos"] + list(team_label_to_id.keys()), key="h3_team",
         )
-        team = team_label_to_id[team_label]
+        team = None if team_label == "Todos" else team_label_to_id[team_label]
 
     pass  # divider removed
 
@@ -91,9 +91,11 @@ def render():
     # Tab 1 — Shot map
     with tabs[0]:
         df_tsp = df_sp[
-            (df_sp["season_code"] == season) &
-            (df_sp["team_id"] == team)
+            (df_sp["season_code"] == season)
         ]
+
+        if team is not None:
+            df_tsp = df_tsp[df_tsp["team_id"] == team]
 
         jugadores = sorted(df_tsp["player"].dropna().unique())
 
@@ -155,13 +157,22 @@ def render():
             "total_rebounds_per_game"
         ]
 
-        df_radar = (
+        # Toda la liga/competición de la temporada: se usa para normalizar
+        df_radar_all = (
             df_sp[
-                (df_sp["season_code"] == season) &
-                (df_sp["team_id"] == team)
+                (df_sp["season_code"] == season)
             ][radar_cols]
             .dropna()
         )
+
+        # Datos filtrados: solo se usan para limitar la selección de jugadores
+        df_radar = df_radar_all.copy()
+
+        if team is not None:
+            df_radar = df_sp[
+                (df_sp["season_code"] == season) &
+                (df_sp["team_id"] == team)
+            ][radar_cols].dropna()
 
         all_players = sorted(df_radar["player"].dropna().unique())
 
@@ -178,9 +189,10 @@ def render():
             )
 
             df_radar_dedup = df_radar.drop_duplicates(subset="player", keep="first")
+            df_radar_all_dedup = df_radar_all.drop_duplicates(subset="player", keep="first")
 
             st.plotly_chart(
-                make_radar(df_radar_dedup, pa, pb, modo_radar),
+                make_radar(df_radar_all_dedup, pa, pb, modo_radar),
                 use_container_width=True
             )
 
@@ -205,7 +217,7 @@ def render():
                 ]
                 labels_tabla = ["DREB/G", "STL/G", "BLK/G", "AST/TO", "Faltas Rec/G", "REB/G"]
 
-            df_norm_tabla = df_radar_dedup.set_index("player")[cols_tabla].copy()
+            df_norm_tabla = df_radar_all_dedup.set_index("player")[cols_tabla].copy()
             df_norm_tabla = (df_norm_tabla - df_norm_tabla.min()) / (df_norm_tabla.max() - df_norm_tabla.min() + 1e-9)
 
             tabla_comparativa = pd.DataFrame({
@@ -222,20 +234,27 @@ def render():
     # Tab 3 — Scatter USG% vs TS%
     with tabs[2]:
         st.caption(
-            "USG% vs TS% · Color por posición de juego · Líneas = promedios de liga"
+            "USG% vs TS% · Color por perfil ofensivo · Líneas = promedios de liga"
         )
 
-        df_sc = df_sp[
+        # Toda la liga/competición de la temporada: se usa para calcular las medias
+        df_sc_all = df_sp[
             (df_sp["season_code"] == season) &
             (df_sp["usg_pct"] > 0) &
             (df_sp["ts_pct"] > 0)
         ].dropna(subset=["usg_pct", "ts_pct"]).copy()
 
+        # Datos mostrados: se filtran por equipo solo si corresponde
+        df_sc = df_sc_all.copy()
+
+        if team is not None:
+            df_sc = df_sc[df_sc["team_id"] == team]
+
         if df_sc.empty:
             st.info("No existen datos suficientes para generar la visualización seleccionada.")
         else:
-            avg_usg = df_sc["usg_pct"].mean()
-            avg_ts  = df_sc["ts_pct"].mean()
+            avg_usg = df_sc_all["usg_pct"].mean()
+            avg_ts  = df_sc_all["ts_pct"].mean()
 
             k1, k2, k3, k4 = st.columns(4)
             k1.metric("Jugadores analizados", len(df_sc))
