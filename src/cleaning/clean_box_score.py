@@ -16,19 +16,7 @@ DB_DB = os.environ.get("POSTGRES_DB", "basket_db")
 DATABASE_URL = f"postgresql://{DB_USER}:{DB_PASSWORD}@db:5432/{DB_DB}"
 engine = create_engine(DATABASE_URL)
 
-def pg_bulk_insert(df, table_name, engine):
-    buffer = StringIO()
-    df.to_csv(buffer, index=False, header=False, na_rep='NULL', quoting=csv.QUOTE_MINIMAL)
-    buffer.seek(0)
-    raw_conn = engine.raw_connection()
-    try:
-        with raw_conn.cursor() as cursor:
-            columnas = ', '.join([f'"{col}"' for col in df.columns])
-            sql = f'COPY "{table_name}" ({columnas}) FROM STDIN WITH CSV NULL AS \'NULL\''
-            cursor.copy_expert(sql, buffer)
-        raw_conn.commit()
-    finally:
-        raw_conn.close()
+from ingest import pg_load
 
 print(f"🔄 [BULK COPY] Box Scores: {LIGA.upper()}")
 df = pd.read_csv(f"data/{LIGA}_box_score.csv")
@@ -71,7 +59,7 @@ if mask_pts.any():
 if anomalias:
     df_todas_anomalias = pd.concat(anomalias, ignore_index=True)
     df_todas_anomalias["competition"] = "EuroLeague" if LIGA == "euroleague" else "EuroCup"
-    pg_bulk_insert(df_todas_anomalias, "audit_anomalias", engine)
+    pg_load(df_todas_anomalias, "audit_anomalias", engine)
 
 tiros_fallados = (df["two_points_attempted"] - df["two_points_made"]) + (df["three_points_attempted"] - df["three_points_made"])
 ft_fallados = df["free_throws_attempted"] - df["free_throws_made"]
@@ -84,5 +72,5 @@ with engine.connect() as conn:
     cols_db = pd.read_sql(f"SELECT * FROM game_box_scores LIMIT 0", conn).columns
 df = df[[col for col in df.columns if col in cols_db]]
 
-pg_bulk_insert(df, "game_box_scores", engine)
+pg_load(df, "game_box_scores", engine)
 print(f"✅ Inyectadas {len(df)} filas en 'game_box_scores' ({LIGA})")

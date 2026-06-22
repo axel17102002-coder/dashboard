@@ -320,17 +320,17 @@ def render():
             fig_sc.add_vline(
                 x=avg_usg,
                 line_dash="dash",
-                line_color="white",
+                line_color="#14140f",
                 annotation_text=f"Media USG% {avg_usg:.3f}",
-                annotation_font_color="white"
+                annotation_font_color="#14140f"
             )
 
             fig_sc.add_hline(
                 y=avg_ts,
                 line_dash="dash",
-                line_color="white",
+                line_color="#14140f",
                 annotation_text=f"Media TS% {avg_ts:.3f}",
-                annotation_font_color="white"
+                annotation_font_color="#14140f"
             )
 
             fig_sc.update_traces(
@@ -344,12 +344,12 @@ def render():
                 legend_title_text="Perfil ofensivo",
                 legend=dict(
                     font=dict(
-                        color="white",
+                        color="#14140f",
                         size=12
                     ),
                     title=dict(
                         font=dict(
-                            color="white",
+                            color="#14140f",
                             size=13
                         )
                     )

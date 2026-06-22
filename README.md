@@ -78,28 +78,73 @@ data/
 docker compose build
 ```
 
-**4. Levantar la base de datos**
+**4. Levantar el entorno y abrir el navegador**
+
+En macOS podés usar el script incluido, que levanta los contenedores y abre el
+dashboard automáticamente:
 ```bash
-docker compose up -d db
+./start.sh
 ```
 
-**5. Cargar los datos (tarda ~1 hora la primera vez)**
-
-Este paso corre el pipeline de limpieza e ingesta: lee los CSVs de `data/`, los procesa y los carga en la base de datos PostgreSQL.
-
-```bash
-docker compose run --rm web python src/cleaning/clean_master.py
-```
-
-**6. Levantar el dashboard**
+O hacerlo a mano:
 ```bash
 docker compose up
 ```
-
-**7. Abrir en el navegador**
+y abrir en el navegador:
 ```
 http://localhost:8501
 ```
+
+> En Linux, dentro de `start.sh` reemplazá `open` por `xdg-open`.
+
+Los usuarios del sistema se crean automáticamente al iniciar la app (no hace falta cargar nada para poder loguearte).
+
+**6. Cargar los datos desde el panel de Administración**
+
+Iniciá sesión con el usuario **admin** (ver tabla de usuarios abajo) y entrá a la
+pestaña **Administración → Cargar / Actualizar datos**. Elegí el modo de carga:
+
+- **Actualizar / Agregar (upsert)** — agrega filas nuevas y actualiza las
+  existentes **sin borrar nada**. Se puede correr las veces que quieras sin
+  generar duplicados. Recomendado para el día a día.
+- **Recarga completa** — borra todas las tablas de estadísticas y las vuelve a
+  cargar de cero.
+
+Opciones:
+- Tildá **"Carga rápida"** para omitir `play_by_play` y `comparison` (datasets muy
+  pesados que el dashboard no usa). Recomendado para la mayoría de los casos.
+- Apretá **"Ejecutar pipeline"**. El proceso lee los CSV de `data/`, los limpia y
+  los carga en PostgreSQL.
+
+> También podés subir/reemplazar el CSV de un dataset puntual desde la pestaña
+> **"Reemplazar un dataset"**.
+
+#### (Alternativa) Cargar los datos por terminal
+
+```bash
+# Recarga completa (borra y recarga)
+docker compose run --rm web python src/cleaning/clean_master.py --modo full
+
+# Actualizar / agregar sin borrar (upsert)
+docker compose run --rm web python src/cleaning/clean_master.py --modo upsert
+
+# Carga rápida (sin play_by_play ni comparison) — combinable con --modo
+docker compose run --rm web python src/cleaning/clean_master.py --modo upsert --datasets header,box_score,players,teams,points
+```
+
+---
+
+### Usuarios del sistema
+
+| Usuario  | Contraseña   | Rol        |
+|----------|--------------|------------|
+| admin    | admin        | admin      |
+| Yessica  | entrenador   | entrenador |
+| Emiliano | scout        | scout      |
+| Cinthia  | analista     | analista   |
+| Axel     | directivo    | directivo  |
+
+> El rol **admin** tiene acceso al panel de carga de datos y a todos los dashboards.
 
 ---
 

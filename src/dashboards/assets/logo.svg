@@ -1,0 +1,55 @@
+<svg width="100%" viewBox="0 0 680 320" role="img" xmlns="http://www.w3.org/2000/svg" style="">
+  <title style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">BasketStats Analytics logo</title>
+  <desc style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">Logo con una pelota de básquet con barras de estadística integradas y el nombre BasketStats Analytics</desc>
+  <defs>
+    <clipPath id="ballClip">
+      <circle cx="160" cy="160" r="100"/>
+    </clipPath>
+  </defs>
+
+  <!-- Ball base -->
+  <circle cx="160" cy="160" r="100" fill="#E8500A" style="fill:rgb(232, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Ball seam lines -->
+  <path d="M62 130 Q160 155 258 130" fill="none" stroke="#C23E00" stroke-width="3.5" stroke-linecap="round" style="fill:none;stroke:rgb(194, 62, 0);color:rgb(0, 0, 0);stroke-width:3.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <path d="M62 190 Q160 165 258 190" fill="none" stroke="#C23E00" stroke-width="3.5" stroke-linecap="round" style="fill:none;stroke:rgb(194, 62, 0);color:rgb(0, 0, 0);stroke-width:3.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  <line x1="160" y1="60" x2="160" y2="260" stroke="#C23E00" stroke-width="3.5" stroke-linecap="round" style="fill:rgb(0, 0, 0);stroke:rgb(194, 62, 0);color:rgb(0, 0, 0);stroke-width:3.5px;stroke-linecap:round;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Bar chart overlay clipped inside ball -->
+  <g clip-path="url(#ballClip)" opacity="0.92" style="fill:rgb(0, 0, 0);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.92;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto">
+    <!-- Bar 1 -->
+    <rect x="88" y="175" width="18" height="45" rx="3" fill="#1A1A2E" style="fill:rgb(26, 26, 46);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Bar 2 -->
+    <rect x="112" y="148" width="18" height="72" rx="3" fill="#1A1A2E" style="fill:rgb(26, 26, 46);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Bar 3 -->
+    <rect x="136" y="128" width="18" height="92" rx="3" fill="#FFFFFF" opacity="0.9" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:0.9;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Bar 4 -->
+    <rect x="160" y="140" width="18" height="80" rx="3" fill="#1A1A2E" style="fill:rgb(26, 26, 46);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Bar 5 -->
+    <rect x="184" y="158" width="18" height="62" rx="3" fill="#1A1A2E" style="fill:rgb(26, 26, 46);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Trend line -->
+    <polyline points="97,172 121,145 145,124 169,136 193,154" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="fill:none;stroke:rgb(255, 255, 255);color:rgb(0, 0, 0);stroke-width:2.5px;stroke-linecap:round;stroke-linejoin:round;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <!-- Trend dots -->
+    <circle cx="97" cy="172" r="3.5" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <circle cx="121" cy="145" r="3.5" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <circle cx="145" cy="124" r="3.5" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <circle cx="169" cy="136" r="3.5" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+    <circle cx="193" cy="154" r="3.5" fill="#FFFFFF" style="fill:rgb(255, 255, 255);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+  </g>
+
+  <!-- Ball border -->
+  <circle cx="160" cy="160" r="100" fill="none" stroke="#C23E00" stroke-width="2.5" style="fill:none;stroke:rgb(194, 62, 0);color:rgb(0, 0, 0);stroke-width:2.5px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Wordmark -->
+  <text x="286" y="138" font-family="sans-serif" font-size="52" font-weight="700" fill="#E8500A" letter-spacing="-1" style="fill:rgb(232, 80, 10);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:52px;font-weight:700;text-anchor:start;dominant-baseline:auto">Basket</text>
+  <text x="286" y="138" font-family="sans-serif" font-size="52" font-weight="700" fill="var(--color-text-primary)" letter-spacing="-1" dx="163" style="fill:rgb(20, 20, 19);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:52px;font-weight:700;text-anchor:start;dominant-baseline:auto">Stats</text>
+
+  <!-- Divider line -->
+  <line x1="286" y1="155" x2="620" y2="155" stroke="#E8500A" stroke-width="2" style="fill:rgb(0, 0, 0);stroke:rgb(232, 80, 10);color:rgb(0, 0, 0);stroke-width:2px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:&quot;Anthropic Sans&quot;, -apple-system, &quot;system-ui&quot;, &quot;Segoe UI&quot;, sans-serif;font-size:16px;font-weight:400;text-anchor:start;dominant-baseline:auto"/>
+
+  <!-- Subtitle -->
+  <text x="288" y="185" font-family="sans-serif" font-size="22" font-weight="400" fill="var(--color-text-secondary)" letter-spacing="6" style="fill:rgb(61, 61, 58);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:22px;font-weight:400;text-anchor:start;dominant-baseline:auto">ANALYTICS</text>
+
+  <!-- Tagline -->
+  <text x="289" y="215" font-family="sans-serif" font-size="13" font-weight="400" fill="var(--color-text-tertiary)" letter-spacing="1.5" style="fill:rgb(115, 114, 108);stroke:none;color:rgb(0, 0, 0);stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;opacity:1;font-family:sans-serif;font-size:13px;font-weight:400;text-anchor:start;dominant-baseline:auto">DATA-DRIVEN BASKETBALL INTELLIGENCE</text>
+</svg>

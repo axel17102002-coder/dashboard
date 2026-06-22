@@ -158,7 +158,7 @@ def render():
                         xaxis_title="Temporada", yaxis_title="Promedio por temporada",
                         legend=dict(
                             orientation="h", yanchor="bottom", y=1.05,
-                            xanchor="center", x=0.5, font=dict(color="white"),
+                            xanchor="center", x=0.5, font=dict(color="#14140f"),
                         ),
                         margin=dict(t=30), height=420,
                     )

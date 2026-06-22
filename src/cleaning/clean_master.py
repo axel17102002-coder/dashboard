@@ -49,12 +49,58 @@ print("=" * 55)
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--skip-drop", action="store_true", help="Omitir el DROP de tablas")
+parser.add_argument(
+    "--modo",
+    choices=["full", "upsert"],
+    default="full",
+    help="full = recarga completa (DROP + COPY). upsert = actualiza/agrega sin borrar.",
+)
+parser.add_argument(
+    "--datasets",
+    default="",
+    help="Lista separada por comas de datasets a procesar (ej: header,box_score,players,teams,points). "
+         "Vacío = todos.",
+)
 args = parser.parse_args()
+
+# El modo se propaga a los scripts hijos vía variable de entorno MODO
+os.environ["MODO"] = args.modo
+print(f"\n⚙️  Modo de carga: {args.modo.upper()}")
+
+# En modo upsert nunca se borra: solo se actualizan/agregan filas
+if args.modo == "upsert":
+    args.skip_drop = True
+
+# Filtro opcional de datasets (mantiene el orden definido en DATASETS)
+if args.datasets.strip():
+    seleccionados = {d.strip() for d in args.datasets.split(",") if d.strip()}
+    DATASETS = [d for d in DATASETS if d in seleccionados]
+    print(f"🎯 Datasets seleccionados: {', '.join(DATASETS)}")
 
 engine = create_engine(DATABASE_URL)
 
+def _asegurar_esquema():
+    """Crea las tablas si no existen (schema.sql usa CREATE TABLE IF NOT EXISTS)."""
+    ruta_schema = Path("/docker-entrypoint-initdb.d/schema.sql")
+    if not ruta_schema.exists():
+        ruta_schema = DIR_PROYECTO / "schema.sql"
+    with open(ruta_schema, "r", encoding="utf-8") as f:
+        sql_schema = f.read()
+    with engine.begin() as conn:
+        conn.execute(text(sql_schema))
+
+
 if args.skip_drop:
-    print("\n⏩  --skip-drop activo: se omite el DROP y la recreación del esquema\n")
+    if args.modo == "upsert":
+        print("\n🔁 Modo upsert: se actualizan/agregan filas sin borrar nada.")
+        try:
+            _asegurar_esquema()
+            print("  ✅ Esquema verificado (tablas existentes intactas).\n")
+        except Exception as e:
+            print(f"  ❌ Error al verificar el esquema: {e}")
+            sys.exit(1)
+    else:
+        print("\n⏩  --skip-drop activo: se omite el DROP y la recreación del esquema\n")
 else:
     # ── 1. DROP de tablas anteriores para limpiar a cero ─────────────────────
     print("\n🗑️  Limpiando tablas anteriores...")

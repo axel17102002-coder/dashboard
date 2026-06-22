@@ -4,7 +4,7 @@ import streamlit as st
 import matplotlib.patches as patches
 import matplotlib.pyplot as plt
 import plotly.graph_objects as go
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 import numpy as np
 
 @st.cache_resource
@@ -13,6 +13,47 @@ def get_engine():
     pwd  = os.environ.get("POSTGRES_PASSWORD", "bskt26")
     db   = os.environ.get("POSTGRES_DB", "basket_db")
     return create_engine(f"postgresql://{user}:{pwd}@db:5432/{db}")
+
+
+# Usuarios por defecto del sistema (username, password, rol)
+USUARIOS_DEFAULT = [
+    ("Melina",   "admin",      "admin"),
+    ("Yessica",  "entrenador", "entrenador"),
+    ("Emiliano", "scout",      "scout"),
+    ("Cinthia",  "analista",   "analista"),
+    ("Axel",     "directivo",  "directivo"),
+    ("admin",    "admin",      "admin"),
+]
+
+
+@st.cache_resource
+def ensure_usuarios_table():
+    """Crea la tabla de usuarios y siembra los usuarios por defecto si faltan.
+
+    Se ejecuta al iniciar Streamlit, así el login funciona aunque el volumen
+    de Postgres ya exista (schema.sql solo corre en la primera inicialización)
+    o aunque el pipeline de datos haya recreado el resto de las tablas.
+    """
+    engine = get_engine()
+    with engine.begin() as conn:
+        conn.execute(text("""
+            CREATE TABLE IF NOT EXISTS usuarios (
+                id SERIAL PRIMARY KEY,
+                username VARCHAR(50) UNIQUE NOT NULL,
+                password VARCHAR(100) NOT NULL,
+                rol VARCHAR(30) NOT NULL
+            )
+        """))
+        for username, password, rol in USUARIOS_DEFAULT:
+            conn.execute(
+                text("""
+                    INSERT INTO usuarios (username, password, rol)
+                    VALUES (:u, :p, :r)
+                    ON CONFLICT (username) DO NOTHING
+                """),
+                {"u": username, "p": password, "r": rol},
+            )
+    return True
 
 
 @st.cache_data(ttl=600)
@@ -58,25 +99,26 @@ def build_winrate_df(df_h: pd.DataFrame) -> pd.DataFrame:
 
 
 def dark_layout(fig):
+    # Tema claro (se mantiene el nombre por compatibilidad con los llamados)
     fig.update_layout(
-        plot_bgcolor="#1a1a2e",
-        paper_bgcolor="#0f0f1a",
-        font_color="white",
+        plot_bgcolor="#ffffff",
+        paper_bgcolor="#ffffff",
+        font_color="#14140f",
     )
-    fig.update_xaxes(gridcolor="#333")
-    fig.update_yaxes(gridcolor="#333")
+    fig.update_xaxes(gridcolor="#e3e7ef")
+    fig.update_yaxes(gridcolor="#e3e7ef")
     return fig
 
 
 def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
     fig, ax = plt.subplots(figsize=(10, 8))
-    ax.set_facecolor("#1a1a2e")
-    fig.patch.set_facecolor("#1a1a2e")
+    ax.set_facecolor("#ffffff")
+    fig.patch.set_facecolor("#ffffff")
 
-    ax.add_patch(patches.Rectangle((-750,-200),1500,1400, lw=2, ec="white", fc="none"))
-    ax.add_patch(patches.Rectangle((-245,-200), 490, 580, lw=2, ec="white", fc="none"))
-    ax.plot([-245,245],[380,380], color="white", lw=2)
-    ax.add_patch(patches.Arc((0,380),490,490,theta1=0,theta2=180,color="white",lw=2))
+    ax.add_patch(patches.Rectangle((-750,-200),1500,1400, lw=2, ec="#444", fc="none"))
+    ax.add_patch(patches.Rectangle((-245,-200), 490, 580, lw=2, ec="#444", fc="none"))
+    ax.plot([-245,245],[380,380], color="#444", lw=2)
+    ax.add_patch(patches.Arc((0,380),490,490,theta1=0,theta2=180,color="#444",lw=2))
     # Línea de triple: tramos laterales + arco superior
     triple_x = 675
     triple_y_inicio = -200
@@ -85,8 +127,8 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
 
     theta_union = np.degrees(np.arctan2(triple_y_union, triple_x))
 
-    ax.plot([-triple_x, -triple_x], [triple_y_inicio, triple_y_union], color="white", lw=2)
-    ax.plot([ triple_x,  triple_x], [triple_y_inicio, triple_y_union], color="white", lw=2)
+    ax.plot([-triple_x, -triple_x], [triple_y_inicio, triple_y_union], color="#444", lw=2)
+    ax.plot([ triple_x,  triple_x], [triple_y_inicio, triple_y_union], color="#444", lw=2)
 
     ax.add_patch(
         patches.Arc(
@@ -95,12 +137,12 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
             2 * triple_radio,
             theta1=theta_union,
             theta2=180 - theta_union,
-            color="white",
+            color="#444",
             lw=2
         )
     )
-    ax.add_patch(plt.Circle((0,0),23, color="orange", fill=False, lw=2))
-    ax.plot([-90,90],[-52,-52], color="white", lw=3)
+    ax.add_patch(plt.Circle((0,0),23, color="#E8500A", fill=False, lw=2))
+    ax.plot([-90,90],[-52,-52], color="#444", lw=3)
 
     by_zone = df_shots.groupby("zone").agg(
         intentos=("action_id","count"),
@@ -111,7 +153,7 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
     by_zone = by_zone[by_zone["intentos"] >= min_intentos]
 
     if by_zone.empty:
-        ax.text(0, 500, "Sin datos suficientes", color="white", ha="center", fontsize=11)
+        ax.text(0, 500, "Sin datos suficientes", color="#333", ha="center", fontsize=11)
     else:
         by_zone["pct"] = by_zone["aciertos"] / by_zone["intentos"]
         mx = by_zone["intentos"].max()
@@ -139,11 +181,11 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
 
     for c, lbl in [("#e74c3c","≤29%"),("#f39c12","30–49%"),("#2ecc71","≥50%")]:
         ax.scatter([],[], color=c, s=80, label=lbl)
-    ax.legend(loc="lower right", facecolor="#1a1a2e", labelcolor="white", fontsize=8)
+    ax.legend(loc="lower right", facecolor="#ffffff", edgecolor="#e3e7ef", labelcolor="#333", fontsize=8)
 
     ax.set_xlim(-820,820); ax.set_ylim(-300,1100)
     ax.set_aspect("equal"); ax.axis("off")
-    ax.set_title("Mapa de Aciertos — Media Cancha", color="white", fontsize=12, pad=8)
+    ax.set_title("Mapa de Aciertos — Media Cancha", color="#14140f", fontsize=12, pad=8)
     return fig
 
 
@@ -183,10 +225,10 @@ def make_radar(df: pd.DataFrame, pa: str, pb: str, modo: str):
     fig.update_layout(
         polar=dict(
             radialaxis=dict(visible=True, range=[0,1], showticklabels=False),
-            bgcolor="#1a1a2e",
+            bgcolor="#f4f6fa",
         ),
-        paper_bgcolor="#0f0f1a", font_color="white",
-        legend=dict(bgcolor="#1a1a2e"),
+        paper_bgcolor="#ffffff", font_color="#14140f",
+        legend=dict(bgcolor="#f4f6fa"),
         margin=dict(t=40, b=40),
     )
     return fig

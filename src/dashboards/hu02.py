@@ -155,7 +155,7 @@ def render():
                     mode="text",
                     text=top10["pir_total"].round(0).astype(int),
                     textposition="middle center",
-                    textfont=dict(color="white", size=12),
+                    textfont=dict(color="#14140f", size=12),
                     showlegend=False, hoverinfo="skip",
                 ))
                 fig_pir.update_layout(barmode="stack", xaxis_title="PIR total")
@@ -168,7 +168,7 @@ def render():
                 legend=dict(
                     orientation="h", yanchor="bottom", y=-0.25,
                     xanchor="center", x=0.5,
-                    font=dict(color="white", size=12),
+                    font=dict(color="#14140f", size=12),
                 ),
             )
             dark_layout(fig_pir)
@@ -270,7 +270,7 @@ def render():
 
                 def _color_bar(player, ratio):
                     if jugadores_sel:
-                        return color_map.get(player, "rgba(255,255,255,0.15)")
+                        return color_map.get(player, "rgba(20,20,15,0.15)")
                     if ratio >= umbral_alto:  return "#2ecc71"
                     if ratio >= umbral_medio: return "#f39c12"
                     return "#e74c3c"
@@ -299,8 +299,8 @@ def render():
                     ),
                 ))
                 fig_bar.add_vline(
-                    x=1.0, line_dash="dash", line_color="rgba(255,255,255,0.35)",
-                    annotation_text="AST/TO = 1", annotation_font_color="rgba(255,255,255,0.55)",
+                    x=1.0, line_dash="dash", line_color="rgba(20,20,15,0.35)",
+                    annotation_text="AST/TO = 1", annotation_font_color="rgba(20,20,15,0.55)",
                     annotation_position="top right",
                 )
                 fig_bar.update_layout(
@@ -339,7 +339,7 @@ def render():
                     mode="markers+text", name="Jugadores",
                     text=df_scatter["player"].apply(lambda n: n.split()[-1] if isinstance(n, str) else n),
                     textposition="top center",
-                    textfont=dict(size=9, color=f"rgba(255,255,255,{base_opacity})"),
+                    textfont=dict(size=9, color=f"rgba(20,20,15,{base_opacity})"),
                     marker=dict(
                         size=size_vals,
                         color=df_scatter["ast_to_ratio"],
@@ -347,12 +347,12 @@ def render():
                         colorbar=dict(
                             title=dict(
                                 text="AST/TO",
-                                font=dict(color="white")
+                                font=dict(color="#14140f")
                             ),
-                            tickfont=dict(color="white"),
+                            tickfont=dict(color="#14140f"),
                         ),
                         showscale=True, opacity=base_opacity,
-                        line=dict(width=0.5, color="rgba(255,255,255,0.2)"),
+                        line=dict(width=0.5, color="rgba(20,20,15,0.2)"),
                     ),
                     customdata=df_scatter[["player", "team_name", "ast_to_ratio"]].values,
                     hovertemplate=(
@@ -375,7 +375,7 @@ def render():
                             text=df_jug["player"].apply(lambda n: n.split()[-1] if isinstance(n, str) else n),
                             textposition="top center",
                             textfont=dict(size=11, color=color_jug),
-                            marker=dict(size=sz_jug + 4, color=color_jug, line=dict(width=2, color="white")),
+                            marker=dict(size=sz_jug + 4, color=color_jug, line=dict(width=2, color="#14140f")),
                             customdata=df_jug[["player", "team_name", "ast_to_ratio"]].values,
                             hovertemplate=(
                                 "<b>%{customdata[0]}</b><br>Equipo: %{customdata[1]}<br>"
@@ -384,14 +384,14 @@ def render():
                             ),
                         ))
                 fig_scatter.add_hline(
-                    y=avg_ast, line_dash="dot", line_color="rgba(255,255,255,0.25)",
+                    y=avg_ast, line_dash="dot", line_color="rgba(20,20,15,0.25)",
                     annotation_text=f"Prom. AST {avg_ast:.1f}",
-                    annotation_font_color="rgba(255,255,255,0.45)", annotation_position="right",
+                    annotation_font_color="rgba(20,20,15,0.45)", annotation_position="right",
                 )
                 fig_scatter.add_vline(
-                    x=avg_to, line_dash="dot", line_color="rgba(255,255,255,0.25)",
+                    x=avg_to, line_dash="dot", line_color="rgba(20,20,15,0.25)",
                     annotation_text=f"Prom. TO {avg_to:.1f}",
-                    annotation_font_color="rgba(255,255,255,0.45)", annotation_position="top",
+                    annotation_font_color="rgba(20,20,15,0.45)", annotation_position="top",
                 )
                 fig_scatter.update_layout(
                     xaxis_title="Pérdidas (TO)", yaxis_title="Asistencias (AST)",
@@ -439,7 +439,7 @@ def render():
                         margin=dict(t=20, r=20), height=430,
                         legend=dict(
                             orientation="h", yanchor="bottom", y=-0.28,
-                            xanchor="center", x=0.5, font=dict(color="white", size=11),
+                            xanchor="center", x=0.5, font=dict(color="#14140f", size=11),
                         ),
                     )
                     dark_layout(fig_comp)

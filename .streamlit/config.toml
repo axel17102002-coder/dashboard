@@ -1,0 +1,12 @@
+[theme]
+base = "light"
+primaryColor = "#E8500A"
+backgroundColor = "#ffffff"
+secondaryBackgroundColor = "#f4f6fa"
+textColor = "#14140f"
+font = "sans serif"
+
+[server]
+headless = true
+# Permite subir CSV grandes desde el panel de admin (en MB)
+maxUploadSize = 2000

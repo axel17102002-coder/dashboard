@@ -3,7 +3,7 @@ import streamlit as st
 import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
-from db import load_game_headers, load_season_players, load_season_teams, build_winrate_df, dark_layout
+from db import load_game_headers, load_season_players, load_season_teams, build_winrate_df, dark_layout, format_season
 
 _NO_WR   = "No hay datos suficientes para calcular el porcentaje de victorias."
 _NO_DISP = "No hay datos suficientes para calcular la disponibilidad del jugador."
@@ -30,26 +30,26 @@ def _render_winrate(df_hdr, team, seasons_sel):
     if wrh.empty:
         return st.warning(_NO_WR)
 
-    # KPI: promedios globales
-    total_p  = wrh["partidos"].sum()
-    total_v  = wrh["victorias"].sum()
+    total_p   = wrh["partidos"].sum()
+    total_v   = wrh["victorias"].sum()
     wr_global = round(total_v / total_p * 100, 1) if total_p else 0
     k1, k2, k3 = st.columns(3)
-    k1.metric("Partidos totales",    int(total_p))
-    k2.metric("Victorias totales",   int(total_v))
-    k3.metric("Win Rate promedio",   f"{wr_global}%")
+    k1.metric("Partidos totales",  int(total_p))
+    k2.metric("Victorias totales", int(total_v))
+    k3.metric("Win Rate promedio", f"{wr_global}%")
     pass  # divider removed
 
+    wrh["season_label"] = wrh["season_code"].apply(format_season)
     fig = px.bar(
-        wrh, x="season_code", y="win_rate", color="phase", barmode="group",
+        wrh, x="season_label", y="win_rate", color="phase", barmode="group",
         text="win_rate",
-        labels={"season_code": "Temporada", "win_rate": "Win Rate (%)", "phase": "Fase"},
+        labels={"season_label": "Temporada", "win_rate": "Win Rate (%)", "phase": "Fase"},
         color_discrete_sequence=px.colors.qualitative.Set2,
         custom_data=["victorias", "partidos"],
     )
     fig.update_traces(
         texttemplate="%{text:.1f}%", textposition="outside",
-        textfont=dict(color="white"),
+        textfont=dict(color="#14140f"),
         hovertemplate=(
             "<b>%{x}</b><br>Fase: %{fullData.name}<br>"
             "Win Rate: %{y:.1f}%<br>Victorias: %{customdata[0]} / %{customdata[1]}<extra></extra>"
@@ -58,7 +58,7 @@ def _render_winrate(df_hdr, team, seasons_sel):
     fig.update_layout(
         xaxis=dict(tickangle=45, categoryorder="category ascending"),
         yaxis=dict(range=[0, 115], title="Win Rate (%)"),
-        legend=dict(bgcolor="#1a1a2e", font=dict(color="white", size=13)),
+        legend=dict(bgcolor="#f4f6fa", font=dict(color="#14140f", size=13)),
         margin=dict(t=30),
     )
     dark_layout(fig)
@@ -85,9 +85,10 @@ def _render_pir(df_teams, team, seasons_sel):
     k3.metric("Variación",            f"{delta_pir:+.1f}", delta=delta_pir)
     pass  # divider removed
 
+    df_tpir["season_label"] = df_tpir["season_code"].apply(format_season)
     fig = px.line(
-        df_tpir, x="season_code", y="valuation_per_game", markers=True,
-        labels={"season_code": "Temporada", "valuation_per_game": "PIR promedio/partido"},
+        df_tpir, x="season_label", y="valuation_per_game", markers=True,
+        labels={"season_label": "Temporada", "valuation_per_game": "PIR promedio/partido"},
     )
     fig.update_traces(line_color="#f39c12", marker_color="#f39c12", marker_size=8)
     fig.update_layout(xaxis=dict(tickangle=45), margin=dict(t=20))
@@ -124,20 +125,19 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
     if df_disp.empty:
         return st.warning(_NO_DISP)
 
-    # KPI disponibilidad
-    avg_disp   = df_disp["disponibilidad"].mean()
-    alta_disp  = (df_disp["disponibilidad"] >= 80).sum()
-    baja_disp  = (df_disp["disponibilidad"] < 50).sum()
+    avg_disp  = df_disp["disponibilidad"].mean()
+    alta_disp = (df_disp["disponibilidad"] >= 80).sum()
+    baja_disp = (df_disp["disponibilidad"] < 50).sum()
     k1, k2, k3 = st.columns(3)
-    k1.metric("Disponibilidad promedio", f"{avg_disp:.1f}%")
-    k2.metric("Alta disponibilidad (≥80%)", int(alta_disp),  help="Filas jugador-temporada con ≥80%")
-    k3.metric("Baja disponibilidad (<50%)", int(baja_disp),  help="Filas jugador-temporada con <50%")
+    k1.metric("Disponibilidad promedio",    f"{avg_disp:.1f}%")
+    k2.metric("Alta disponibilidad (≥80%)", int(alta_disp), help="Filas jugador-temporada con ≥80%")
+    k3.metric("Baja disponibilidad (<50%)", int(baja_disp), help="Filas jugador-temporada con <50%")
     pass  # divider removed
 
     jugador_sel = st.multiselect(
         "Filtrar por jugador (opcional — vacío = todos)",
         options=sorted(df_disp["player"].unique()), default=[],
-        key="h4_jugador",
+        key="h4v2_jugador",
     )
     if jugador_sel:
         df_disp = df_disp[df_disp["player"].isin(jugador_sel)]
@@ -148,9 +148,14 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
     pivot_gp  = df_disp.pivot_table(index="player", columns="season_code", values="games_played",   aggfunc="sum").fillna(0).reindex_like(pivot).fillna(0)
     pivot_tot = df_disp.pivot_table(index="player", columns="season_code", values="total",           aggfunc="mean").fillna(0).reindex_like(pivot).fillna(0)
 
+    # Etiquetas legibles para columnas
+    pivot.columns     = [format_season(c) for c in pivot.columns]
+    pivot_gp.columns  = pivot.columns
+    pivot_tot.columns = pivot.columns
+
     fig = go.Figure(go.Heatmap(
         z=pivot.values.tolist(),
-        x=list(pivot.columns.astype(str)),
+        x=list(pivot.columns),
         y=list(pivot.index),
         customdata=np.dstack([pivot_gp.values, pivot_tot.values]),
         colorscale=[(0, "#e74c3c"), (0.5, "#f39c12"), (0.85, "#2ecc71"), (1, "#27ae60")],
@@ -158,8 +163,8 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
         text=[[f"{v:.0f}" for v in row] for row in pivot.values.tolist()],
         texttemplate="%{text}", textfont=dict(color="white"),
         colorbar=dict(
-            title=dict(text="Disp. %", font=dict(color="white")),
-            tickfont=dict(color="white"),
+            title=dict(text="Disp. %", font=dict(color="#14140f")),
+            tickfont=dict(color="#14140f"),
         ),
         hovertemplate=(
             "<b>%{y}</b><br>Temporada: %{x}<br>"
@@ -169,9 +174,9 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
         ),
     ))
     fig.update_layout(
-        paper_bgcolor="#0f0f1a", font_color="white", margin=dict(t=20),
-        xaxis=dict(tickfont=dict(color="white")),
-        yaxis=dict(tickfont=dict(color="white"), autorange="reversed"),
+        paper_bgcolor="#ffffff", font_color="#14140f", margin=dict(t=20),
+        xaxis=dict(tickfont=dict(color="#14140f")),
+        yaxis=dict(tickfont=dict(color="#14140f"), autorange="reversed"),
     )
     st.plotly_chart(fig, use_container_width=True)
 
@@ -180,7 +185,7 @@ def render():
     with st.sidebar:
         st.markdown("### Filtros")
         comp = st.selectbox(
-            "Competición", ["EuroLeague", "EuroCup", "Ambas"], key="h4_comp",
+            "Competición", ["EuroLeague", "EuroCup", "Ambas"], key="h4v2_comp",
             help="Filtra todos los módulos por competición",
         )
     try:
@@ -214,17 +219,33 @@ def render():
         zip(df_team_names["team_name"], df_team_names["team_id"])
     )
 
-    all_seasons = sorted(df_sp["season_code"].unique())
     with st.sidebar:
-        team_label = st.selectbox("Equipo", sorted(team_label_to_id.keys()), key="h4_team")
+        team_label = st.selectbox("Equipo", sorted(team_label_to_id.keys()), key="h4v2_team")
         team = team_label_to_id[team_label]
-        season_desde = st.selectbox("Desde temporada", all_seasons, key="h4_desde",
-                                    help="Inicio del rango a analizar")
-        opciones_hasta = [s for s in all_seasons if s >= season_desde]
-        season_hasta   = st.selectbox("Hasta temporada", opciones_hasta,
-                                      index=len(opciones_hasta) - 1, key="h4_hasta",
-                                      help="Fin del rango a analizar")
-    seasons_sel = [s for s in all_seasons if season_desde <= s <= season_hasta]
+
+    seas_sp    = set(df_sp   [df_sp   ["team_id"] == team]["season_code"].unique())
+    seas_hdr   = set(df_hdr  [(df_hdr ["team_id_a"] == team) | (df_hdr["team_id_b"] == team)]["season_code"].unique())
+    seas_teams = set(df_teams[df_teams["team_id"] == team]["season_code"].unique())
+    seasons_for_team = sorted(seas_sp & seas_hdr & seas_teams)
+
+    season_label_map = {format_season(s): s for s in seasons_for_team}
+    season_labels    = list(season_label_map.keys())
+
+    with st.sidebar:
+        season_desde = season_label_map[st.selectbox(
+            "Desde temporada", season_labels, key="h4v2_desde",
+            help="Inicio del rango a analizar",
+        )]
+        opciones_hasta        = [s for s in seasons_for_team if s >= season_desde]
+        opciones_hasta_labels = [format_season(s) for s in opciones_hasta]
+        season_hasta = season_label_map[st.selectbox(
+            "Hasta temporada", opciones_hasta_labels,
+            index=len(opciones_hasta_labels) - 1, key="h4v2_hasta",
+            help="Fin del rango a analizar",
+        )]
+
+    idx_hasta   = seasons_for_team.index(season_hasta)
+    seasons_sel = seasons_for_team[seasons_for_team.index(season_desde): idx_hasta + 2]
 
     if not seasons_sel:
         st.warning("Seleccioná al menos una temporada para visualizar los módulos.")
