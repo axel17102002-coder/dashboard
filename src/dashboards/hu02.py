@@ -2,7 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 from db import load_box_scores, load_season_players, load_game_headers, dark_layout, format_season
-from report_utils import render_table_report, render_styled_table_report
+from report_utils import render_table_report
 
 
 def render():
@@ -507,7 +507,7 @@ def render():
                     )
                     
 
-                    render_styled_table_report(
+                    render_table_report(
                         df_tabla_comp,
                         title="Tabla comparativa de jugadores",
                         style_fn=lambda table: (
