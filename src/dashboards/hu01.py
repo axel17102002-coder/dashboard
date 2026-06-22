@@ -10,6 +10,7 @@ from db import (
     dark_layout,
     format_season,
 )
+from report_utils import render_table_report
 
 
 def _build_team_name_map(df_hdr):
@@ -165,6 +166,19 @@ def render():
                     dark_layout(fig_t)
                     st.plotly_chart(fig_t, use_container_width=True)
 
+                    render_table_report(
+                        df_tiro,
+                        title="Datos del perfil de tiro",
+                        columns=["season_code", "fga", "two_pm", "three_pm", "fta"],
+                        rename_columns={
+                            "season_code": "Temporada",
+                            "fga": "FGA",
+                            "two_pm": "2PM",
+                            "three_pm": "3PM",
+                            "fta": "FTA",
+                        },
+                    )
+
     # ══════════════════════════════════════════════════════════════════════════
     # TAB 2 — Consistencia Competitiva
     # ══════════════════════════════════════════════════════════════════════════
@@ -185,7 +199,7 @@ def render():
             k3.metric("Win Rate global",  f"{wr_global}%")
             pass  # divider removed
 
-        col_filtros2, col_wr, col_q3 = st.columns([1, 2, 2])
+        col_filtros2, col_info_q3 = st.columns([1, 4])
 
         with col_filtros2:
             st.markdown("##### Filtros")
@@ -197,17 +211,62 @@ def render():
                 help="Solo se consideran partidos donde el equipo tuvo esta ventaja al terminar el Q3",
             )
 
+        wr = None
+        df_q3_resumen = None
+
+        if not df_tw.empty:
+            wr = (
+                df_tw.groupby("phase")
+                .agg(p=("won", "count"), v=("won", "sum"))
+                .reset_index()
+            )
+            wr["win_rate"] = (wr["v"] / wr["p"] * 100).round(1)
+
+        dh = df_hdr[df_hdr["season_code"] == season].copy()
+        for lado in ["a", "b"]:
+            dh[f"sq3_{lado}"] = (
+                dh[f"score_quarter_1_{lado}"] +
+                dh[f"score_quarter_2_{lado}"] +
+                dh[f"score_quarter_3_{lado}"]
+            )
+
+        da = dh[dh["team_id_a"] == team].copy()
+        da["lead_q3"] = da["sq3_a"] - da["sq3_b"]
+        da["won"] = (da["score_a"] > da["score_b"]).astype(int)
+
+        db_ = dh[dh["team_id_b"] == team].copy()
+        db_["lead_q3"] = db_["sq3_b"] - db_["sq3_a"]
+        db_["won"] = (db_["score_b"] > db_["score_a"]).astype(int)
+
+        dq3 = pd.concat([da[["lead_q3", "won"]], db_[["lead_q3", "won"]]], ignore_index=True)
+        sub = dq3[dq3["lead_q3"] >= umbral]
+
+        with col_info_q3:
+            st.markdown("##### Cierre con ventaja en Q3")
+            if sub.empty:
+                st.info(f"Sin partidos con ventaja ≥{umbral} pts en Q3 esta temporada.")
+            else:
+                victorias = int(sub["won"].sum())
+                derrotas = len(sub) - victorias
+                efectividad = round(sub["won"].mean() * 100, 1)
+
+                m1, m2, m3 = st.columns(3)
+                m1.metric("Partidos", len(sub), help=f"Con ≥{umbral} pts al cierre del Q3")
+                m2.metric("Victorias", victorias)
+                m3.metric("Efectividad", f"{efectividad}%")
+
+                df_q3_resumen = pd.DataFrame({
+                    "Resultado": ["Victoria", "Derrota"],
+                    "Partidos": [victorias, derrotas],
+                })
+
+        col_wr, col_q3 = st.columns(2)
+
         with col_wr:
             st.markdown("##### Win Rate por Fase")
-            if df_tw.empty:
+            if wr is None or wr.empty:
                 st.info("Sin datos de resultados para la temporada seleccionada.")
             else:
-                wr = (
-                    df_tw.groupby("phase")
-                    .agg(p=("won", "count"), v=("won", "sum"))
-                    .reset_index()
-                )
-                wr["win_rate"] = (wr["v"] / wr["p"] * 100).round(1)
                 fig_wr = px.bar(
                     wr, x="phase", y="win_rate", color="phase", text="win_rate",
                     labels={"phase": "Fase", "win_rate": "Win Rate %"},
@@ -217,49 +276,57 @@ def render():
                     texttemplate="%{text:.1f}%", textposition="outside",
                     hovertemplate="<b>%{x}</b><br>Win Rate: %{y:.1f}%<extra></extra>",
                 )
-                fig_wr.update_layout(showlegend=False, yaxis=dict(range=[0, 115]), margin=dict(t=20))
+                fig_wr.update_layout(
+                    showlegend=False,
+                    yaxis=dict(range=[0, 115]),
+                    margin=dict(t=20),
+                    height=420,
+                )
                 dark_layout(fig_wr)
                 st.plotly_chart(fig_wr, use_container_width=True)
 
         with col_q3:
             st.markdown("##### Cierre con ventaja en Q3")
-            dh = df_hdr[df_hdr["season_code"] == season].copy()
-            for lado in ["a", "b"]:
-                dh[f"sq3_{lado}"] = (
-                    dh[f"score_quarter_1_{lado}"] +
-                    dh[f"score_quarter_2_{lado}"] +
-                    dh[f"score_quarter_3_{lado}"]
-                )
-            da  = dh[dh["team_id_a"] == team].copy()
-            da["lead_q3"] = da["sq3_a"] - da["sq3_b"]
-            da["won"]     = (da["score_a"] > da["score_b"]).astype(int)
-            db_ = dh[dh["team_id_b"] == team].copy()
-            db_["lead_q3"] = db_["sq3_b"] - db_["sq3_a"]
-            db_["won"]     = (db_["score_b"] > db_["score_a"]).astype(int)
-            dq3 = pd.concat([da[["lead_q3", "won"]], db_[["lead_q3", "won"]]], ignore_index=True)
-            sub = dq3[dq3["lead_q3"] >= umbral]
-
-            if sub.empty:
+            if df_q3_resumen is None:
                 st.info(f"Sin partidos con ventaja ≥{umbral} pts en Q3 esta temporada.")
             else:
-                victorias   = int(sub["won"].sum())
-                derrotas    = len(sub) - victorias
-                efectividad = round(sub["won"].mean() * 100, 1)
-                m1, m2, m3  = st.columns(3)
-                m1.metric("Partidos", len(sub),          help=f"Con ≥{umbral} pts al cierre del Q3")
-                m2.metric("Victorias", victorias)
-                m3.metric("Efectividad", f"{efectividad}%")
                 fig_q3 = px.bar(
-                    pd.DataFrame({"Resultado": ["Victoria", "Derrota"], "Partidos": [victorias, derrotas]}),
+                    df_q3_resumen,
                     x="Resultado", y="Partidos", color="Resultado",
                     color_discrete_map={"Victoria": "#2ecc71", "Derrota": "#e74c3c"},
                     text="Partidos",
                 )
                 fig_q3.update_traces(textposition="outside")
+                max_partidos = max(df_q3_resumen["Partidos"].max(), 1)
                 fig_q3.update_layout(
                     showlegend=False,
-                    yaxis=dict(range=[0, max(victorias, derrotas) * 1.3]),
+                    yaxis=dict(range=[0, max_partidos * 1.3]),
                     margin=dict(t=20),
+                    height=420,
                 )
                 dark_layout(fig_q3)
                 st.plotly_chart(fig_q3, use_container_width=True)
+
+        col_tabla_wr, col_tabla_q3 = st.columns(2)
+
+        with col_tabla_wr:
+            if wr is not None and not wr.empty:
+                render_table_report(
+                    wr,
+                    title="Datos de win rate por fase",
+                    columns=["phase", "p", "v", "win_rate"],
+                    rename_columns={
+                        "phase": "Fase",
+                        "p": "Partidos",
+                        "v": "Victorias",
+                        "win_rate": "Win Rate %",
+                    },
+                )
+
+        with col_tabla_q3:
+            if df_q3_resumen is not None:
+                render_table_report(
+                    df_q3_resumen,
+                    title="Datos de cierre con ventaja en Q3",
+                    columns=["Resultado", "Partidos"],
+                )

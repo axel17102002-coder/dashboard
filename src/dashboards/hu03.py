@@ -15,6 +15,7 @@ from db import (
     make_radar,
     format_season
 )
+from report_utils import render_table_report
 
 
 def render():
@@ -129,6 +130,37 @@ def render():
                         fig_court = draw_shot_map(df_shots, min_int)
                         st.pyplot(fig_court, use_container_width=True)
                         plt.close(fig_court)
+
+                        tabla_shot = (
+                            df_shots.groupby("zone")
+                            .agg(
+                                intentos=("action_id", "count"),
+                                aciertos=("action_id", lambda x: x.str.endswith("M").sum()),
+                            )
+                            .reset_index()
+                        )
+                        tabla_shot = tabla_shot[tabla_shot["intentos"] >= min_int].copy()
+
+                        if not tabla_shot.empty:
+                            tabla_shot["efectividad"] = (
+                                tabla_shot["aciertos"] / tabla_shot["intentos"] * 100
+                            ).round(1)
+                            tabla_shot = tabla_shot.sort_values(
+                                ["efectividad", "intentos"],
+                                ascending=[False, False]
+                            )
+
+                            render_table_report(
+                                tabla_shot,
+                                title="Datos del mapa de aciertos",
+                                columns=["zone", "intentos", "aciertos", "efectividad"],
+                                rename_columns={
+                                    "zone": "Zona",
+                                    "intentos": "Intentos",
+                                    "aciertos": "Aciertos",
+                                    "efectividad": "Efectividad %",
+                                },
+                            )
                 except Exception as e:
                     st.error(f"Error cargando tiros: {e}")
 
@@ -357,3 +389,18 @@ def render():
             )
 
             st.plotly_chart(fig_sc, use_container_width=True)
+            tabla_scatter = df_sc.copy()
+            tabla_scatter["usg_pct"] = (tabla_scatter["usg_pct"] * 100).round(1)
+            tabla_scatter["ts_pct"] = (tabla_scatter["ts_pct"] * 100).round(1)
+            render_table_report(
+                tabla_scatter,
+                title="Datos de volumen ofensivo",
+                columns=["player", "team_id", "usg_pct", "ts_pct", "perfil_scatter"],
+                rename_columns={
+                    "player": "Jugador",
+                    "team_id": "Equipo",
+                    "usg_pct": "USG%",
+                    "ts_pct": "TS%",
+                    "perfil_scatter": "Perfil ofensivo",
+                },
+            )
