@@ -4,6 +4,7 @@ import plotly.express as px
 import numpy as np
 import plotly.graph_objects as go
 from db import load_game_headers, load_season_players, load_season_teams, build_winrate_df, dark_layout, format_season
+from report_utils import render_table_report
 
 _NO_WR   = "No hay datos suficientes para calcular el porcentaje de victorias."
 _NO_DISP = "No hay datos suficientes para calcular la disponibilidad del jugador."
@@ -64,6 +65,20 @@ def _render_winrate(df_hdr, team, seasons_sel):
     dark_layout(fig)
     st.plotly_chart(fig, use_container_width=True)
 
+    tabla_wr = wrh.copy()
+    render_table_report(
+        tabla_wr,
+        title="Datos de win rate por temporada y fase",
+        columns=["season_label", "phase", "partidos", "victorias", "win_rate"],
+        rename_columns={
+            "season_label": "Temporada",
+            "phase": "Fase",
+            "partidos": "Partidos",
+            "victorias": "Victorias",
+            "win_rate": "Win Rate %",
+        },
+    )
+
 
 def _render_pir(df_teams, team, seasons_sel):
     st.subheader("Evolución Anual — PIR Global del Equipo")
@@ -94,6 +109,16 @@ def _render_pir(df_teams, team, seasons_sel):
     fig.update_layout(xaxis=dict(tickangle=45), margin=dict(t=20))
     dark_layout(fig)
     st.plotly_chart(fig, use_container_width=True)
+
+    render_table_report(
+        df_tpir,
+        title="Datos de evolución PIR",
+        columns=["season_label", "valuation_per_game"],
+        rename_columns={
+            "season_label": "Temporada",
+            "valuation_per_game": "PIR promedio/partido",
+        },
+    )
 
 
 def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
@@ -179,6 +204,22 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
         yaxis=dict(tickfont=dict(color="#14140f"), autorange="reversed"),
     )
     st.plotly_chart(fig, use_container_width=True)
+
+    tabla_disp = df_disp.copy()
+    tabla_disp["season_label"] = tabla_disp["season_code"].apply(format_season)
+
+    render_table_report(
+        tabla_disp,
+        title="Datos de disponibilidad histórica",
+        columns=["player", "season_label", "games_played", "total", "disponibilidad"],
+        rename_columns={
+            "player": "Jugador",
+            "season_label": "Temporada",
+            "games_played": "Partidos jugados",
+            "total": "Partidos totales",
+            "disponibilidad": "Disponibilidad %",
+        },
+    )
 
 
 def render():

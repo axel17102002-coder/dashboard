@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 from db import load_box_scores, load_season_players, load_game_headers, dark_layout, format_season
+from report_utils import render_table_report, render_styled_table_report
 
 
 def render():
@@ -60,7 +61,7 @@ def render():
 
     pass  # divider removed
 
-    tab1, tab2 = st.tabs(["🏅 Ranking PIR", "🎯 Creación de Juego — AST/TO"])
+    tab1, tab2 = st.tabs(["🏅 Ranking PIR", "🎯 Creacion de Juego - AST/TO"])
 
     # ══════════════════════════════════════════════════════════════════════════
     # TAB 1 — Ranking TOP 10 PIR
@@ -174,6 +175,28 @@ def render():
             dark_layout(fig_pir)
             st.plotly_chart(fig_pir, use_container_width=True)
 
+            tabla_pir = top10.sort_values("pir_total", ascending=False).copy()
+            render_table_report(
+                tabla_pir,
+                title="Datos del ranking PIR",
+                columns=[
+                    "player",
+                    "team_id",
+                    "games_played",
+                    "pir_total",
+                    "offensive_valuation",
+                    "defensive_valuation",
+                ],
+                rename_columns={
+                    "player": "Jugador",
+                    "team_id": "Equipo",
+                    "games_played": "Partidos jugados",
+                    "pir_total": "PIR total",
+                    "offensive_valuation": "PIR ofensivo",
+                    "defensive_valuation": "PIR defensivo",
+                },
+            )
+
     # ══════════════════════════════════════════════════════════════════════════
     # TAB 2 — AST/TO
     # ══════════════════════════════════════════════════════════════════════════
@@ -234,7 +257,7 @@ def render():
 
             inner_tab1, inner_tab2, inner_tab3 = st.tabs([
                 "📊 Ranking AST/TO",
-                "🎯 Mapa AST vs Pérdidas",
+                "🎯 Mapa AST vs Perdidas",
                 "⚖️ Comparativa de Jugadores",
             ])
 
@@ -312,9 +335,23 @@ def render():
                 dark_layout(fig_bar)
                 st.plotly_chart(fig_bar, use_container_width=True)
                 st.caption(
-                    "🟢 Alta eficiencia (tercil superior)  "
-                    "🟡 Eficiencia media  "
-                    "🔴 Baja eficiencia (tercil inferior)"
+                    "Alta eficiencia (tercil superior) - "
+                    "Eficiencia media - "
+                    "Baja eficiencia (tercil inferior)"
+                )
+
+                tabla_ranking_asto = df_plot.sort_values("ast_to_ratio", ascending=False).copy()
+                render_table_report(
+                    tabla_ranking_asto,
+                    title="Datos del ranking AST/TO",
+                    columns=["player", "team_name", "assists", "turnovers", "ast_to_ratio"],
+                    rename_columns={
+                        "player": "Jugador",
+                        "team_name": "Equipo",
+                        "assists": "Asistencias",
+                        "turnovers": "Perdidas",
+                        "ast_to_ratio": "AST/TO",
+                    },
                 )
 
             with inner_tab2:
@@ -400,6 +437,20 @@ def render():
                 dark_layout(fig_scatter)
                 st.plotly_chart(fig_scatter, use_container_width=True)
 
+                tabla_scatter_asto = df_scatter.copy()
+                render_table_report(
+                    tabla_scatter_asto,
+                    title="Datos del mapa AST vs perdidas",
+                    columns=["player", "team_name", "assists", "turnovers", "ast_to_ratio"],
+                    rename_columns={
+                        "player": "Jugador",
+                        "team_name": "Equipo",
+                        "assists": "Asistencias",
+                        "turnovers": "Perdidas",
+                        "ast_to_ratio": "AST/TO",
+                    },
+                )
+
             with inner_tab3:
                 jugadores_lista = sorted(df_asto["player"].dropna().unique().tolist())
                 default_comp    = jugadores_sel if jugadores_sel else jugadores_lista[:min(4, len(jugadores_lista))]
@@ -454,11 +505,15 @@ def render():
                         .sort_values("AST/TO", ascending=False)
                         .reset_index(drop=True)
                     )
-                    st.dataframe(
-                        df_tabla_comp.style
-                        .format({"Asistencias": "{:.0f}", "Pérdidas": "{:.0f}", "AST/TO": "{:.2f}"})
-                        .highlight_max(subset=["AST/TO", "Asistencias"], color="#1a4a2e")
-                        .highlight_min(subset=["Pérdidas"], color="#1a4a2e"),
-                        use_container_width=True,
-                        hide_index=True,
+                    
+
+                    render_styled_table_report(
+                        df_tabla_comp,
+                        title="Tabla comparativa de jugadores",
+                        style_fn=lambda table: (
+                            table.style
+                            .format({"Asistencias": "{:.0f}", "Pérdidas": "{:.0f}", "AST/TO": "{:.2f}"})
+                            .highlight_max(subset=["AST/TO", "Asistencias"], color="#1a4a2e")
+                            .highlight_min(subset=["Pérdidas"], color="#1a4a2e")
+                        ),
                     )
