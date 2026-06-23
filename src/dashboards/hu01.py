@@ -47,7 +47,8 @@ def render():
     season_labels = {format_season(s): s for s in season_codes}
 
     if not season_labels:
-        st.warning("No hay datos disponibles para la competición seleccionada.")
+        st.warning("No hay datos disponibles. Pedile al administrador que cargue los datos "
+            "desde el panel de Administración.")
         st.stop()
 
     with st.sidebar:

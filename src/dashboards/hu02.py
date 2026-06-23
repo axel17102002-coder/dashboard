@@ -24,6 +24,13 @@ def render():
     season_codes  = sorted(df_box["season_code"].dropna().unique())
     season_labels = {format_season(s): s for s in season_codes}
 
+    if not season_labels:
+        st.warning(
+            "No hay datos disponibles. Pedile al administrador que cargue los datos "
+            "desde el panel de Administración."
+        )
+        st.stop()
+
     with st.sidebar:
         season = season_labels[st.selectbox(
             "Temporada", list(season_labels.keys()), key="h1_sea",

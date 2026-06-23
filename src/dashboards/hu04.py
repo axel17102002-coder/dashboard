@@ -237,6 +237,13 @@ def render():
         st.error(f"Error al conectar con la base de datos: {e}")
         st.stop()
 
+    if df_sp.empty or df_hdr.empty:
+        st.warning(
+            "No hay datos disponibles. Pedile al administrador que cargue los datos "
+            "desde el panel de Administración."
+        )
+        st.stop()
+
     team_a = (
         df_hdr[["team_id_a", "team_a"]]
         .dropna()
