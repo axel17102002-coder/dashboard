@@ -67,8 +67,14 @@ def render():
         team_label = st.selectbox("Equipo", list(team_label_to_id.keys()), key="h1_team")
         team       = team_label_to_id[team_label]
 
-        fases = ["Todas"] + sorted(df_box["phase"].dropna().unique().tolist())
-        st.selectbox("Fase", fases, key="h1_fase", help="Filtra por fase del torneo")
+        # Normaliza variantes de fase con el mismo nombre canónico
+        _FASE_NORM = {
+            "TOP SIXTEEN": "TOP 16",
+            "PLAY OFF":    "PLAYOFFS",
+        }
+        fases_raw = df_box["phase"].dropna().unique().tolist()
+        fases_unicas = sorted({_FASE_NORM.get(f, f) for f in fases_raw})
+        fase_sel = st.selectbox("Fase", ["Todas"] + fases_unicas, key="h1_fase", help="Filtra por fase del torneo")
 
     # ── Tabs de módulos ───────────────────────────────────────────────────────
     tab1, tab2 = st.tabs(["📈 Perfil de Tiro", "🏆 Consistencia Competitiva"])
@@ -129,8 +135,10 @@ def render():
                             three_pm=("three_points_made_per_game", "mean"),
                             fta=("free_throws_attempted_per_game", "mean"),
                         )
-                        .sort_values("season_code")
                     )
+                    df_tiro["year"] = df_tiro["season_code"].str[1:].astype(int)
+                    df_tiro = df_tiro.sort_values("year").reset_index(drop=True)
+                    df_tiro["temporada_label"] = df_tiro["year"].astype(str)
 
                     ultima = df_tiro.iloc[-1]
                     k1, k2, k3, k4 = st.columns(4)
@@ -149,7 +157,7 @@ def render():
                         ("fta",      "FTA",  "#f39c12"),
                     ]:
                         fig_t.add_trace(go.Scatter(
-                            x=df_tiro["season_code"], y=df_tiro[col],
+                            x=df_tiro["temporada_label"], y=df_tiro[col],
                             mode="lines+markers", name=name,
                             line=dict(color=color, width=2), marker=dict(size=7),
                             hovertemplate=f"Temporada: %{{x}}<br>{name}: %{{y:.2f}}<extra></extra>",
@@ -157,6 +165,7 @@ def render():
 
                     fig_t.update_layout(
                         xaxis_title="Temporada", yaxis_title="Promedio por temporada",
+                        xaxis=dict(type="category"),
                         legend=dict(
                             orientation="h", yanchor="bottom", y=1.05,
                             xanchor="center", x=0.5, font=dict(color="#14140f"),
@@ -169,9 +178,9 @@ def render():
                     render_table_report(
                         df_tiro,
                         title="Datos del perfil de tiro",
-                        columns=["season_code", "fga", "two_pm", "three_pm", "fta"],
+                        columns=["temporada_label", "fga", "two_pm", "three_pm", "fta"],
                         rename_columns={
-                            "season_code": "Temporada",
+                            "temporada_label": "Temporada",
                             "fga": "FGA",
                             "two_pm": "2PM",
                             "three_pm": "3PM",
@@ -187,7 +196,10 @@ def render():
         st.caption("Win Rate por fase · Capacidad de cierre con ventaja en Q3")
 
         df_wr = build_winrate_df(df_hdr)
+        df_wr["phase"] = df_wr["phase"].replace(_FASE_NORM)
         df_tw = df_wr[(df_wr["team"] == team) & (df_wr["season_code"] == season)]
+        if fase_sel != "Todas":
+            df_tw = df_tw[df_tw["phase"] == fase_sel]
 
         if not df_tw.empty:
             total_partidos  = len(df_tw)
@@ -223,6 +235,9 @@ def render():
             wr["win_rate"] = (wr["v"] / wr["p"] * 100).round(1)
 
         dh = df_hdr[df_hdr["season_code"] == season].copy()
+        dh["phase"] = dh["phase"].replace(_FASE_NORM)
+        if fase_sel != "Todas":
+            dh = dh[dh["phase"] == fase_sel]
         for lado in ["a", "b"]:
             dh[f"sq3_{lado}"] = (
                 dh[f"score_quarter_1_{lado}"] +
