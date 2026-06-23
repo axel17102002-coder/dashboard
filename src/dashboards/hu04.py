@@ -106,7 +106,15 @@ def _render_pir(df_teams, team, seasons_sel):
         labels={"season_label": "Temporada", "valuation_per_game": "PIR promedio/partido"},
     )
     fig.update_traces(line_color="#f39c12", marker_color="#f39c12", marker_size=8)
-    fig.update_layout(xaxis=dict(tickangle=45), margin=dict(t=20))
+    fig.update_layout(
+        xaxis=dict(
+            tickangle=45,
+            type="category",
+            categoryorder="array",
+            categoryarray=df_tpir["season_label"].tolist(),
+        ),
+        margin=dict(t=20),
+    )
     dark_layout(fig)
     st.plotly_chart(fig, use_container_width=True)
 
@@ -199,9 +207,19 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
         ),
     ))
     fig.update_layout(
-        paper_bgcolor="#ffffff", font_color="#14140f", margin=dict(t=20),
-        xaxis=dict(tickfont=dict(color="#14140f")),
-        yaxis=dict(tickfont=dict(color="#14140f"), autorange="reversed"),
+        paper_bgcolor="#ffffff",
+        font_color="#14140f",
+        margin=dict(t=20),
+        xaxis=dict(
+            tickfont=dict(color="#14140f"),
+            type="category",
+            categoryorder="array",
+            categoryarray=list(pivot.columns),
+        ),
+        yaxis=dict(
+            tickfont=dict(color="#14140f"),
+            autorange="reversed",
+        ),
     )
     st.plotly_chart(fig, use_container_width=True)
 
