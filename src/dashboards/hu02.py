@@ -24,6 +24,13 @@ def render():
     season_codes  = sorted(df_box["season_code"].dropna().unique())
     season_labels = {format_season(s): s for s in season_codes}
 
+    if not season_labels:
+        st.warning(
+            "No hay datos disponibles. Pedile al administrador que cargue los datos "
+            "desde el panel de Administración."
+        )
+        st.stop()
+
     with st.sidebar:
         season = season_labels[st.selectbox(
             "Temporada", list(season_labels.keys()), key="h1_sea",
@@ -459,10 +466,40 @@ def render():
 
             with inner_tab3 if inner_tab3 is not None else st.empty():
                 jugadores_lista = sorted(df_asto["player"].dropna().unique().tolist())
-                default_comp    = jugadores_sel if jugadores_sel else jugadores_lista[:min(4, len(jugadores_lista))]
-                seleccionados   = st.multiselect(
+
+                # Jugadores destacados arriba (multiselect general) que SÍ están
+                # disponibles en esta vista
+                sel_disponibles = [j for j in jugadores_sel if j in jugadores_lista]
+                sel_faltantes   = [j for j in jugadores_sel if j not in jugadores_lista]
+
+                if sel_faltantes:
+                    st.warning(
+                        "Estos jugadores destacados no están disponibles con los filtros "
+                        "actuales y no se pueden comparar: " + ", ".join(sel_faltantes)
+                    )
+
+                # Inicializa la selección de la comparativa la primera vez
+                if "h2_comp_players" not in st.session_state:
+                    st.session_state["h2_comp_players"] = (
+                        sel_disponibles or jugadores_lista[:min(4, len(jugadores_lista))]
+                    )
+
+                # Sincroniza con el multiselect general: cuando cambia la selección
+                # de arriba, la comparativa adopta esos mismos jugadores
+                if st.session_state.get("_h2_prev_sel") != jugadores_sel:
+                    st.session_state["_h2_prev_sel"] = list(jugadores_sel)
+                    if jugadores_sel:
+                        st.session_state["h2_comp_players"] = sel_disponibles
+
+                # Descarta jugadores que ya no son una opción válida
+                # (evita el error de Streamlit por valores fuera de las opciones)
+                st.session_state["h2_comp_players"] = [
+                    j for j in st.session_state["h2_comp_players"] if j in jugadores_lista
+                ]
+
+                seleccionados = st.multiselect(
                     "Seleccioná hasta 6 jugadores para comparar",
-                    jugadores_lista, default=default_comp, max_selections=6,
+                    jugadores_lista, max_selections=6,
                     key="h2_comp_players",
                 )
                 if not seleccionados:

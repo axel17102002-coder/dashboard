@@ -47,7 +47,8 @@ def render():
     season_labels = {format_season(s): s for s in season_codes}
 
     if not season_labels:
-        st.warning("No hay datos disponibles para la competición seleccionada.")
+        st.warning("No hay datos disponibles. Pedile al administrador que cargue los datos "
+            "desde el panel de Administración.")
         st.stop()
 
     with st.sidebar:
@@ -113,14 +114,14 @@ def render():
                 .nunique().reset_index(name="n_temporadas")
             )
             jugadores = sorted(
-                jugadores_validos[jugadores_validos["n_temporadas"] >= 2]["player"].tolist()
+                jugadores_validos[jugadores_validos["n_temporadas"] >= 1]["player"].tolist()
             )
             if jugadores:
                 jugador = st.selectbox("Jugador", jugadores, key="h1_jug")
 
         with col_graf:
             if not jugadores:
-                st.info("No hay jugadores con al menos 2 temporadas registradas para los filtros seleccionados.")
+                st.info("No hay jugadores con al menos 1 temporada registrada para los filtros seleccionados.")
             else:
                 df_jug = df_players_team[df_players_team["player"] == jugador].copy()
                 if df_jug.empty:
@@ -139,9 +140,9 @@ def render():
                             fta=("free_throws_attempted_per_game", "mean"),
                         )
                     )
-                    df_tiro["year"] = df_tiro["season_code"].str[1:].astype(int)
-                    df_tiro = df_tiro.sort_values("year").reset_index(drop=True)
-                    df_tiro["temporada_label"] = df_tiro["year"].astype(str)
+
+                    df_tiro["temporada"] = df_tiro["season_code"].apply(format_season)
+                    df_tiro = df_tiro.sort_values("temporada")
 
                     ultima = df_tiro.iloc[-1]
                     k1, k2, k3, k4 = st.columns(4)
@@ -160,20 +161,26 @@ def render():
                         ("fta",      "FTA",  "#f39c12"),
                     ]:
                         fig_t.add_trace(go.Scatter(
-                            x=df_tiro["temporada_label"], y=df_tiro[col],
+                            x=df_tiro["temporada"], y=df_tiro[col],
                             mode="lines+markers", name=name,
                             line=dict(color=color, width=2), marker=dict(size=7),
                             hovertemplate=f"Temporada: %{{x}}<br>{name}: %{{y:.2f}}<extra></extra>",
                         ))
 
                     fig_t.update_layout(
-                        xaxis_title="Temporada", yaxis_title="Promedio por temporada",
-                        xaxis=dict(type="category"),
+                        xaxis=dict(
+                            title="Temporada",
+                            type="category",
+                            categoryorder="array",
+                            categoryarray=df_tiro["temporada"].tolist(),
+                        ),
+                        yaxis_title="Promedio por temporada",
                         legend=dict(
                             orientation="h", yanchor="bottom", y=1.05,
                             xanchor="center", x=0.5, font=dict(color="#14140f"),
                         ),
-                        margin=dict(t=30), height=420,
+                        margin=dict(t=30),
+                        height=420,
                     )
                     dark_layout(fig_t)
                     st.plotly_chart(fig_t, use_container_width=True)
@@ -181,9 +188,9 @@ def render():
                     render_table_report(
                         df_tiro,
                         title="Datos del perfil de tiro",
-                        columns=["temporada_label", "fga", "two_pm", "three_pm", "fta"],
+                        columns=["temporada", "fga", "two_pm", "three_pm", "fta"],
                         rename_columns={
-                            "temporada_label": "Temporada",
+                            "temporada": "Temporada",
                             "fga": "FGA",
                             "two_pm": "2PM",
                             "three_pm": "3PM",
