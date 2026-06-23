@@ -69,8 +69,11 @@ def render():
 
         # Normaliza variantes de fase con el mismo nombre canónico
         _FASE_NORM = {
-            "TOP SIXTEEN": "TOP 16",
-            "PLAY OFF":    "PLAYOFFS",
+            "PLAY OFF":     "PLAYOFFS",
+            "TOP SIXTEEN":  "TOP 16",
+            "FINAL":        "FINALS",
+            "QUARTER FINAL":"QUARTERFINALS",
+            "SEMI-FINAL":   "SEMIFINALS",
         }
         fases_raw = df_box["phase"].dropna().unique().tolist()
         fases_unicas = sorted({_FASE_NORM.get(f, f) for f in fases_raw})

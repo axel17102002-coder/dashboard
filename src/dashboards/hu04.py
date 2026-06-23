@@ -14,7 +14,15 @@ def _render_winrate(df_hdr, team, seasons_sel):
     st.subheader("Win Rate por Temporada y Fase")
     st.caption("Solo se muestran temporadas con datos completos (Regular + Playoffs)")
 
+    _FASE_NORM = {
+        "PLAY OFF":     "PLAYOFFS",
+        "TOP SIXTEEN":  "TOP 16",
+        "FINAL":        "FINALS",
+        "QUARTER FINAL":"QUARTERFINALS",
+        "SEMI-FINAL":   "SEMIFINALS",
+    }
     df_wr = build_winrate_df(df_hdr)
+    df_wr["phase"] = df_wr["phase"].replace(_FASE_NORM)
     wrh = (
         df_wr[(df_wr["team"] == team) & (df_wr["season_code"].isin(seasons_sel))]
         .groupby(["season_code", "phase"])

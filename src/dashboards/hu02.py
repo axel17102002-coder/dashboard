@@ -207,6 +207,11 @@ def render():
             "Solo se incluyen jugadores con al menos una pérdida registrada"
         )
 
+        OPCIONES_TAB = ["📊 Ranking AST/TO", "🎯 Mapa AST vs Perdidas", "⚖️ Comparativa de Jugadores"]
+        tab_sel = st.radio("", OPCIONES_TAB, horizontal=True, key="h2_inner_tab", label_visibility="collapsed")
+        st.divider()
+        en_comparativa = tab_sel == "⚖️ Comparativa de Jugadores"
+
         c4, c5 = st.columns(2)
         min_gp_asto = c4.slider(
             "Mín. partidos jugados", 1, 20, 5, key="h2_asto_mingp",
@@ -224,11 +229,14 @@ def render():
             df_asto_base = df_asto_base[df_asto_base["perfil_ofensivo"] == perfil]
 
         jugadores_disponibles = sorted(df_asto_base["player"].dropna().unique().tolist())
-        jugadores_sel = c5.multiselect(
-            "Destacar jugadores", jugadores_disponibles, default=[], max_selections=6,
-            key="h2_player",
-            help="Seleccioná hasta 6 para resaltarlos en el gráfico",
-        )
+        if not en_comparativa:
+            jugadores_sel = c5.multiselect(
+                "Destacar jugadores", jugadores_disponibles, default=[], max_selections=6,
+                key="h2_player",
+                help="Seleccioná hasta 6 para resaltarlos en el gráfico",
+            )
+        else:
+            jugadores_sel = st.session_state.get("h2_player", [])
 
         df_asto = df_asto_base.copy()
         df_asto["assists"]   = pd.to_numeric(df_asto["assists"],   errors="coerce").fillna(0)
@@ -255,11 +263,9 @@ def render():
 
             pass  # divider removed
 
-            inner_tab1, inner_tab2, inner_tab3 = st.tabs([
-                "📊 Ranking AST/TO",
-                "🎯 Mapa AST vs Perdidas",
-                "⚖️ Comparativa de Jugadores",
-            ])
+            inner_tab1 = st.container() if tab_sel == "📊 Ranking AST/TO" else None
+            inner_tab2 = st.container() if tab_sel == "🎯 Mapa AST vs Perdidas" else None
+            inner_tab3 = st.container() if tab_sel == "⚖️ Comparativa de Jugadores" else None
 
             COLORES_SEL = [
                 "#f39c12", "#3498db", "#2ecc71",
@@ -267,7 +273,7 @@ def render():
             ]
             color_map = {j: COLORES_SEL[i] for i, j in enumerate(jugadores_sel)}
 
-            with inner_tab1:
+            with inner_tab1 if inner_tab1 is not None else st.empty():
                 max_jugadores = st.slider(
                     "Máx. jugadores a mostrar", 5,
                     min(30, max(5, len(df_asto))), min(15, len(df_asto)),
@@ -354,7 +360,7 @@ def render():
                     },
                 )
 
-            with inner_tab2:
+            with inner_tab2 if inner_tab2 is not None else st.empty():
                 st.caption(
                     "Cada punto es un jugador. "
                     "Arriba a la izquierda = muchas asistencias y pocas pérdidas (perfil ideal)."
@@ -451,7 +457,7 @@ def render():
                     },
                 )
 
-            with inner_tab3:
+            with inner_tab3 if inner_tab3 is not None else st.empty():
                 jugadores_lista = sorted(df_asto["player"].dropna().unique().tolist())
                 default_comp    = jugadores_sel if jugadores_sel else jugadores_lista[:min(4, len(jugadores_lista))]
                 seleccionados   = st.multiselect(
