@@ -61,6 +61,7 @@ def render():
         team_label = st.selectbox(
             "Equipo", _opts_team,
             index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            format_func=str.title,
             key="h2_team",
         )
         team       = team_label_to_id[team_label]
@@ -249,6 +250,7 @@ def render():
         if not en_comparativa:
             jugadores_sel = c5.multiselect(
                 "Destacar jugadores", jugadores_disponibles, default=[], max_selections=6,
+                format_func=str.title,
                 key="h2_player",
                 help="Seleccioná hasta 6 para resaltarlos en el gráfico",
             )
@@ -513,6 +515,7 @@ def render():
                 seleccionados = st.multiselect(
                     "Seleccioná hasta 6 jugadores para comparar",
                     jugadores_lista, max_selections=6,
+                    format_func=str.title,
                     key="h2_comp_players",
                 )
                 if not seleccionados:

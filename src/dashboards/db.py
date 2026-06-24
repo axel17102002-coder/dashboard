@@ -210,6 +210,132 @@ def draw_shot_map(df_shots: pd.DataFrame, min_intentos: int):
     return fig
 
 
+@st.cache_data(ttl=600)
+def load_league_zone_avg(comp: str, season: str) -> pd.DataFrame:
+    """Efectividad promedio de toda la liga por zona (para comparación relativa)."""
+    where = (
+        "action_id IN ('2FGM','2FGA','3FGM','3FGA') "
+        f"AND season_code = '{season}'"
+    )
+    if comp != "Ambas":
+        where += f" AND competition = '{comp}'"
+    q = f"""
+        SELECT zone,
+               SUM(CASE WHEN action_id LIKE '%%M' THEN 1 ELSE 0 END) AS aciertos,
+               COUNT(*) AS intentos
+        FROM game_points
+        WHERE {where}
+        GROUP BY zone
+    """
+    df = pd.read_sql(q, get_engine())
+    df["pct_liga"] = df["aciertos"] / df["intentos"]
+    return df[["zone", "pct_liga"]]
+
+
+def _court_shapes():
+    """Genera las líneas de la media cancha como trazas de Plotly (sin hover)."""
+    line = dict(color="#888", width=1.5)
+    traces = []
+
+    def seg(xs, ys):
+        traces.append(go.Scatter(x=xs, y=ys, mode="lines", line=line,
+                                 hoverinfo="skip", showlegend=False))
+
+    def arc(cx, cy, r, t0, t1, n=80):
+        t = np.linspace(np.radians(t0), np.radians(t1), n)
+        seg((cx + r * np.cos(t)).tolist(), (cy + r * np.sin(t)).tolist())
+
+    # Límite de cancha y zona pintada
+    seg([-750, 750, 750, -750, -750], [-200, -200, 1200, 1200, -200])
+    seg([-245, 245, 245, -245, -245], [-200, -200, 380, 380, -200])
+    seg([-245, 245], [380, 380])                 # línea de tiros libres
+    arc(0, 380, 245, 0, 180)                      # círculo de tiros libres
+    # Triple
+    triple_x, triple_y_union = 675, 140
+    triple_r = (triple_x**2 + triple_y_union**2) ** 0.5
+    th = np.degrees(np.arctan2(triple_y_union, triple_x))
+    seg([-triple_x, -triple_x], [-200, triple_y_union])
+    seg([triple_x, triple_x], [-200, triple_y_union])
+    arc(0, 0, triple_r, th, 180 - th)
+    arc(0, 0, 23, 0, 360)                          # aro
+    seg([-90, 90], [-52, -52])                     # tablero
+    return traces
+
+
+def make_shot_map(df_shots: pd.DataFrame, min_intentos: int, df_liga: pd.DataFrame = None):
+    """Mapa de aciertos interactivo (Plotly). Si se pasa df_liga, colorea por
+    diferencia respecto al promedio de la liga en cada zona."""
+    by_zone = df_shots.groupby("zone").agg(
+        intentos=("action_id", "count"),
+        aciertos=("action_id", lambda x: x.str.endswith("M").sum()),
+        cx=("coord_x", "mean"),
+        cy=("coord_y", "mean"),
+    ).reset_index()
+    by_zone = by_zone[by_zone["intentos"] >= min_intentos].copy()
+
+    fig = go.Figure()
+    for t in _court_shapes():
+        fig.add_trace(t)
+
+    if by_zone.empty:
+        fig.add_annotation(text="Sin zonas con suficientes intentos",
+                           x=0, y=500, showarrow=False, font=dict(color="#888", size=13))
+    else:
+        by_zone["pct"] = by_zone["aciertos"] / by_zone["intentos"]
+        relativo = df_liga is not None
+        if relativo:
+            by_zone = by_zone.merge(df_liga, on="zone", how="left")
+            by_zone["pct_liga"] = by_zone["pct_liga"].fillna(by_zone["pct"])
+            by_zone["valor"] = by_zone["pct"] - by_zone["pct_liga"]
+            cmin, cmax, cbar_title = -0.20, 0.20, "vs liga"
+        else:
+            by_zone["valor"] = by_zone["pct"]
+            cmin, cmax, cbar_title = 0.0, 1.0, "Efectividad"
+
+        # Tamaño proporcional al volumen de intentos
+        mx = by_zone["intentos"].max()
+        sizes = 20 + (by_zone["intentos"] / mx) * 55
+
+        custom = np.column_stack([
+            by_zone["aciertos"], by_zone["intentos"], by_zone["pct"] * 100,
+            (by_zone["pct_liga"] * 100 if relativo else by_zone["pct"] * 100),
+        ])
+        if relativo:
+            htmpl = ("<b>%{text}</b><br>Intentos: %{customdata[1]:.0f}<br>"
+                     "Aciertos: %{customdata[0]:.0f}<br>Efectividad: %{customdata[2]:.0f}%<br>"
+                     "Liga: %{customdata[3]:.0f}%<extra></extra>")
+        else:
+            htmpl = ("<b>%{text}</b><br>Intentos: %{customdata[1]:.0f}<br>"
+                     "Aciertos: %{customdata[0]:.0f}<br>Efectividad: %{customdata[2]:.0f}%<extra></extra>")
+
+        fig.add_trace(go.Scatter(
+            x=by_zone["cx"], y=by_zone["cy"], mode="markers+text",
+            text=by_zone["zone"],
+            texttemplate=by_zone["pct"].apply(lambda p: f"{p:.0%}"),
+            textposition="middle center",
+            textfont=dict(color="#14140f", size=10, family="sans-serif"),
+            marker=dict(
+                size=sizes, sizemode="diameter",
+                color=by_zone["valor"], colorscale="RdYlGn",
+                cmin=cmin, cmax=cmax,
+                line=dict(color="#ffffff", width=1.5),
+                colorbar=dict(title=cbar_title, tickfont=dict(color="#14140f")),
+            ),
+            customdata=custom,
+            hovertemplate=htmpl,
+            showlegend=False,
+        ))
+
+    fig.update_xaxes(visible=False, range=[-820, 820],
+                     scaleanchor="y", scaleratio=1)
+    fig.update_yaxes(visible=False, range=[-300, 1100])
+    fig.update_layout(
+        paper_bgcolor="#ffffff", plot_bgcolor="#ffffff",
+        margin=dict(t=10, b=10, l=10, r=10), height=560,
+    )
+    return fig
+
+
 def make_radar(df: pd.DataFrame, pa: str, pb: str, modo: str):
     if modo == "Ofensivo":
         cols   = ["points_per_game","assists_per_game","efg_pct","ts_pct",

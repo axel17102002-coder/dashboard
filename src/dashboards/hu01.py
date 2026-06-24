@@ -69,6 +69,7 @@ def render():
         team_label = st.selectbox(
             "Equipo", _opts_team,
             index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            format_func=str.title,
             key="h1_team",
         )
         team       = team_label_to_id[team_label]
@@ -104,15 +105,17 @@ def render():
                 df_players_team["player"].notna() &
                 (df_players_team["player"].astype(str).str.strip() != "")
             ]
-            posiciones = ["Todas"] + sorted(
-                df_players_team["perfil_ofensivo"].dropna().unique().tolist()
-            )
-            pos_sel = st.selectbox(
-                "Posición / Perfil", posiciones, key="h1_pos",
+            posiciones_raw = sorted(df_players_team["perfil_ofensivo"].dropna().unique().tolist())
+            # Label legible (capitalizado) -> valor real para el filtro
+            pos_label_to_val = {p.title(): p for p in posiciones_raw}
+            pos_label = st.selectbox(
+                "Posición / Perfil", ["Todas"] + list(pos_label_to_val.keys()), key="h1_pos",
                 help="Filtrá por posición antes de seleccionar jugador",
             )
-            if pos_sel != "Todas":
-                df_players_team = df_players_team[df_players_team["perfil_ofensivo"] == pos_sel]
+            if pos_label != "Todas":
+                df_players_team = df_players_team[
+                    df_players_team["perfil_ofensivo"] == pos_label_to_val[pos_label]
+                ]
 
             jugadores_validos = (
                 df_players_team.groupby("player")["season_code"]
@@ -122,7 +125,7 @@ def render():
                 jugadores_validos[jugadores_validos["n_temporadas"] >= 1]["player"].tolist()
             )
             if jugadores:
-                jugador = st.selectbox("Jugador", jugadores, key="h1_jug")
+                jugador = st.selectbox("Jugador", jugadores, format_func=str.title, key="h1_jug")
 
         with col_graf:
             if not jugadores:

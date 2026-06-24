@@ -178,6 +178,7 @@ def _render_disponibilidad(df_sp, df_hdr, team, seasons_sel):
     jugador_sel = st.multiselect(
         "Filtrar por jugador (opcional — vacío = todos)",
         options=sorted(df_disp["player"].unique()), default=[],
+        format_func=str.title,
         key="h4v2_jugador",
     )
     if jugador_sel:
@@ -298,6 +299,7 @@ def render():
         team_label = st.selectbox(
             "Equipo", _opts_team,
             index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            format_func=str.title,
             key="h4v2_team",
         )
         team = team_label_to_id[team_label]

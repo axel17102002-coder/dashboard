@@ -64,14 +64,38 @@ section[data-testid="stSidebar"] {
     background-color: #f4f6fa;
     border-right: 1px solid #e3e7ef;
 }
-/* Cards de métricas */
-div[data-testid="metric-container"] {
-    background-color: #ffffff;
+/* Cards de métricas — bloques de colores */
+div[data-testid="stMetric"], div[data-testid="metric-container"] {
+    border-radius: 12px;
+    padding: 14px 16px;
     border: 1px solid #e3e7ef;
-    border-radius: 10px;
-    padding: 12px 16px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+    background-color: #f4f6fa;
 }
+div[data-testid="stMetricValue"] {
+    font-size: 26px;
+    font-weight: 600;
+}
+div[data-testid="stMetricLabel"] p {
+    font-weight: 600;
+    color: #5f5e5a;
+}
+/* Acento de color por posición de columna (cicla cada 4) */
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+1) div[data-testid="stMetric"] {
+    background-color: #eaf2fb; border-color: #cfe3f7;
+}
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+1) div[data-testid="stMetricValue"] { color: #185FA5; }
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+2) div[data-testid="stMetric"] {
+    background-color: #eaf6ee; border-color: #cfe9d8;
+}
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+2) div[data-testid="stMetricValue"] { color: #2e7d32; }
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+3) div[data-testid="stMetric"] {
+    background-color: #fdecea; border-color: #f7cfca;
+}
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+3) div[data-testid="stMetricValue"] { color: #A32D2D; }
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+4) div[data-testid="stMetric"] {
+    background-color: #fef5e7; border-color: #f7e3c2;
+}
+div[data-testid="stHorizontalBlock"] > div:nth-of-type(4n+4) div[data-testid="stMetricValue"] { color: #B26A00; }
 /* Tabs más marcados */
 div[data-testid="stTabs"] button {
     font-size: 14px;

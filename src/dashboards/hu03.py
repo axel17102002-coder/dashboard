@@ -9,9 +9,10 @@ import matplotlib.pyplot as plt
 from db import (
     load_season_players,
     load_shot_data,
+    load_league_zone_avg,
     load_game_headers,
     dark_layout,
-    draw_shot_map,
+    make_shot_map,
     make_radar,
     format_season
 )
@@ -87,6 +88,7 @@ def render():
         team_label = st.selectbox(
             "Equipo", _opts_team,
             index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            format_func=str.title,
             key="h3_team",
         )
         team = None if team_label == "Todos" else team_label_to_id[team_label]
@@ -120,6 +122,7 @@ def render():
                 jug_shot = st.selectbox(
                     "Jugador", jugadores,
                     index=jugadores.index("MUMBRU, ALEX") if "MUMBRU, ALEX" in jugadores else 0,
+                    format_func=str.title,
                     key="h3_sjug",
                     help="Jugador a analizar",
                 )
@@ -127,10 +130,20 @@ def render():
                     "Mín. intentos por zona", 1, 20, 5, key="h3_mint",
                     help="Zonas con menos intentos se ocultan del mapa",
                 )
+                vs_liga = st.toggle(
+                    "Comparar vs promedio de liga", value=False, key="h3_vsliga",
+                    help="Colorea cada zona según cuánto mejor/peor tira el jugador "
+                         "respecto a la media de la liga",
+                )
                 pass  # divider removed
-                st.caption("🔴 Efectividad ≤ 29%")
-                st.caption("🟡 Efectividad 30% – 49%")
-                st.caption("🟢 Efectividad ≥ 50%")
+                if vs_liga:
+                    st.caption("🟢 Tira mejor que la liga")
+                    st.caption("🟡 Cerca de la media")
+                    st.caption("🔴 Tira peor que la liga")
+                else:
+                    st.caption("🔴 Efectividad ≤ 29%")
+                    st.caption("🟡 Efectividad 30% – 49%")
+                    st.caption("🟢 Efectividad ≥ 50%")
                 st.caption("Tamaño del círculo = volumen de intentos")
 
             with col_mapa:
@@ -139,9 +152,9 @@ def render():
                     if df_shots.empty:
                         st.info("Sin datos de tiros para este jugador/temporada.")
                     else:
-                        fig_court = draw_shot_map(df_shots, min_int)
-                        st.pyplot(fig_court, use_container_width=True)
-                        plt.close(fig_court)
+                        df_liga = load_league_zone_avg(comp, season) if vs_liga else None
+                        fig_court = make_shot_map(df_shots, min_int, df_liga)
+                        st.plotly_chart(fig_court, use_container_width=True)
 
                         tabla_shot = (
                             df_shots.groupby("zone")
@@ -225,10 +238,11 @@ def render():
         else:
             c_pa, c_pb = st.columns(2)
 
-            pa = c_pa.selectbox("Jugador A", all_players, key="h3_pa")
+            pa = c_pa.selectbox("Jugador A", all_players, format_func=str.title, key="h3_pa")
             pb = c_pb.selectbox(
                 "Jugador B",
                 [p for p in all_players if p != pa],
+                format_func=str.title,
                 key="h3_pb"
             )
 
