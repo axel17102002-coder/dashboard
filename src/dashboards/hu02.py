@@ -57,7 +57,12 @@ def render():
             "Todos": "Todos",
             **dict(zip(df_team_names_fil["team_name"], df_team_names_fil["team_id"])),
         }
-        team_label = st.selectbox("Equipo", list(team_label_to_id.keys()), key="h2_team")
+        _opts_team = list(team_label_to_id.keys())
+        team_label = st.selectbox(
+            "Equipo", _opts_team,
+            index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            key="h2_team",
+        )
         team       = team_label_to_id[team_label]
 
         perfs  = ["Todos"] + sorted(df_sp["perfil_ofensivo"].dropna().unique().tolist())
@@ -286,11 +291,14 @@ def render():
             color_map = {j: COLORES_SEL[i] for i, j in enumerate(jugadores_sel)}
 
             with inner_tab1 if inner_tab1 is not None else st.empty():
-                max_jugadores = st.slider(
-                    "Máx. jugadores a mostrar", 5,
-                    min(30, max(5, len(df_asto))), min(15, len(df_asto)),
-                    key="h2_asto_max",
-                )
+                if len(df_asto) > 5:
+                    max_jugadores = st.slider(
+                        "Máx. jugadores a mostrar", 5,
+                        min(30, len(df_asto)), min(15, len(df_asto)),
+                        key="h2_asto_max",
+                    )
+                else:
+                    max_jugadores = len(df_asto)
                 df_sorted = df_asto.sort_values("ast_to_ratio", ascending=True)
                 df_top    = df_sorted.tail(max_jugadores)
 
@@ -607,11 +615,14 @@ def render():
             k3.metric("Promedio",   f"{df_pm['pm'].mean():+.1f}")
             k4.metric("Menor +/-",  f"{peor['pm']:+.1f}", help=peor["player"])
 
-            max_jug = st.slider(
-                "Máx. jugadores a mostrar", 5,
-                min(30, max(5, len(df_pm))), min(15, len(df_pm)),
-                key="h2_pm_max",
-            )
+            if len(df_pm) > 5:
+                max_jug = st.slider(
+                    "Máx. jugadores a mostrar", 5,
+                    min(30, len(df_pm)), min(15, len(df_pm)),
+                    key="h2_pm_max",
+                )
+            else:
+                max_jug = len(df_pm)
             # Tomamos los de mayor magnitud (positivos y negativos) y los ordenamos
             df_plot = df_pm.reindex(
                 df_pm["pm"].abs().sort_values(ascending=False).index
@@ -702,11 +713,14 @@ def render():
             k2.metric("Puntos clutch (líder)", int(df_cl.nlargest(1, "clutch_points").iloc[0]["clutch_points"]))
             k3.metric("Promedio",            f"{df_cl['clutch_pct'].mean():.1f}%")
 
-            max_jug_c = st.slider(
-                "Máx. jugadores a mostrar", 5,
-                min(30, max(5, len(df_cl))), min(15, len(df_cl)),
-                key="h2_clutch_max",
-            )
+            if len(df_cl) > 5:
+                max_jug_c = st.slider(
+                    "Máx. jugadores a mostrar", 5,
+                    min(30, len(df_cl)), min(15, len(df_cl)),
+                    key="h2_clutch_max",
+                )
+            else:
+                max_jug_c = len(df_cl)
             df_plot_c = df_cl.nlargest(max_jug_c, "clutch_pct").sort_values("clutch_pct")
 
             fig_cl = go.Figure(go.Bar(

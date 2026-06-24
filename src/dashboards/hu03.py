@@ -83,8 +83,11 @@ def render():
     )
 
     with st.sidebar:
+        _opts_team = ["Todos"] + list(team_label_to_id.keys())
         team_label = st.selectbox(
-            "Equipo", ["Todos"] + list(team_label_to_id.keys()), key="h3_team",
+            "Equipo", _opts_team,
+            index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            key="h3_team",
         )
         team = None if team_label == "Todos" else team_label_to_id[team_label]
 
@@ -115,7 +118,9 @@ def render():
             with col_filtros:
                 st.markdown("##### Filtros")
                 jug_shot = st.selectbox(
-                    "Jugador", jugadores, key="h3_sjug",
+                    "Jugador", jugadores,
+                    index=jugadores.index("MUMBRU, ALEX") if "MUMBRU, ALEX" in jugadores else 0,
+                    key="h3_sjug",
                     help="Jugador a analizar",
                 )
                 min_int = st.slider(

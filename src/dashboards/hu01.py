@@ -65,7 +65,12 @@ def render():
             .sort_values("team_name")
         )
         team_label_to_id = dict(zip(df_teams_sel["team_name"], df_teams_sel["team_id"]))
-        team_label = st.selectbox("Equipo", list(team_label_to_id.keys()), key="h1_team")
+        _opts_team = list(team_label_to_id.keys())
+        team_label = st.selectbox(
+            "Equipo", _opts_team,
+            index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            key="h1_team",
+        )
         team       = team_label_to_id[team_label]
 
         # Normaliza variantes de fase con el mismo nombre canónico

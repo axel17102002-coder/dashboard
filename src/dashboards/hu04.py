@@ -294,7 +294,12 @@ def render():
     )
 
     with st.sidebar:
-        team_label = st.selectbox("Equipo", sorted(team_label_to_id.keys()), key="h4v2_team")
+        _opts_team = sorted(team_label_to_id.keys())
+        team_label = st.selectbox(
+            "Equipo", _opts_team,
+            index=_opts_team.index("REAL MADRID") if "REAL MADRID" in _opts_team else 0,
+            key="h4v2_team",
+        )
         team = team_label_to_id[team_label]
 
     seas_sp    = set(df_sp   [df_sp   ["team_id"] == team]["season_code"].unique())
@@ -307,14 +312,18 @@ def render():
 
     with st.sidebar:
         season_desde = season_label_map[st.selectbox(
-            "Desde temporada", season_labels, key="h4v2_desde",
+            "Desde temporada", season_labels,
+            index=season_labels.index("2008") if "2008" in season_labels else 0,
+            key="h4v2_desde",
             help="Inicio del rango a analizar",
         )]
         opciones_hasta        = [s for s in seasons_for_team if s >= season_desde]
         opciones_hasta_labels = [format_season(s) for s in opciones_hasta]
         season_hasta = season_label_map[st.selectbox(
             "Hasta temporada", opciones_hasta_labels,
-            index=len(opciones_hasta_labels) - 1, key="h4v2_hasta",
+            index=(opciones_hasta_labels.index("2025") if "2025" in opciones_hasta_labels
+                   else len(opciones_hasta_labels) - 1),
+            key="h4v2_hasta",
             help="Fin del rango a analizar",
         )]
 
