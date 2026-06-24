@@ -346,8 +346,8 @@ def render():
                 hover_data={
                     "player": True,
                     "team_id": True,
-                    "usg_pct": ":.3f",
-                    "ts_pct": ":.3f",
+                    "usg_pct": ":.1%",
+                    "ts_pct": ":.1%",
                     "perfil_scatter": True,
                     "perfil_ofensivo": False
                 },
@@ -365,7 +365,7 @@ def render():
                 x=avg_usg,
                 line_dash="dash",
                 line_color="#14140f",
-                annotation_text=f"Media USG% {avg_usg:.3f}",
+                annotation_text=f"Media USG% {avg_usg:.1%}",
                 annotation_font_color="#14140f"
             )
 
@@ -373,14 +373,15 @@ def render():
                 y=avg_ts,
                 line_dash="dash",
                 line_color="#14140f",
-                annotation_text=f"Media TS% {avg_ts:.3f}",
+                annotation_text=f"Media TS% {avg_ts:.1%}",
                 annotation_font_color="#14140f"
             )
 
             fig_sc.update_traces(
                 marker=dict(size=8)
             )
-
+            fig_sc.update_xaxes(tickformat=".0%")
+            fig_sc.update_yaxes(tickformat=".0%")
             dark_layout(fig_sc)
 
             fig_sc.update_layout(
