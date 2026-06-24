@@ -296,22 +296,22 @@ def make_shot_map(df_shots: pd.DataFrame, min_intentos: int, df_liga: pd.DataFra
         mx = by_zone["intentos"].max()
         sizes = 20 + (by_zone["intentos"] / mx) * 55
 
-        custom = np.column_stack([
-            by_zone["aciertos"], by_zone["intentos"], by_zone["pct"] * 100,
-            (by_zone["pct_liga"] * 100 if relativo else by_zone["pct"] * 100),
-        ])
+        by_zone["pct100"]  = by_zone["pct"] * 100
+        by_zone["liga100"] = (by_zone["pct_liga"] * 100) if relativo else by_zone["pct100"]
+        custom = by_zone[["zone", "aciertos", "intentos", "pct100", "liga100"]].values
+        text_labels = by_zone["pct"].apply(lambda p: f"{p:.0%}").tolist()
+
         if relativo:
-            htmpl = ("<b>%{text}</b><br>Intentos: %{customdata[1]:.0f}<br>"
-                     "Aciertos: %{customdata[0]:.0f}<br>Efectividad: %{customdata[2]:.0f}%<br>"
-                     "Liga: %{customdata[3]:.0f}%<extra></extra>")
+            htmpl = ("<b>%{customdata[0]}</b><br>Intentos: %{customdata[2]:.0f}<br>"
+                     "Aciertos: %{customdata[1]:.0f}<br>Efectividad: %{customdata[3]:.0f}%<br>"
+                     "Liga: %{customdata[4]:.0f}%<extra></extra>")
         else:
-            htmpl = ("<b>%{text}</b><br>Intentos: %{customdata[1]:.0f}<br>"
-                     "Aciertos: %{customdata[0]:.0f}<br>Efectividad: %{customdata[2]:.0f}%<extra></extra>")
+            htmpl = ("<b>%{customdata[0]}</b><br>Intentos: %{customdata[2]:.0f}<br>"
+                     "Aciertos: %{customdata[1]:.0f}<br>Efectividad: %{customdata[3]:.0f}%<extra></extra>")
 
         fig.add_trace(go.Scatter(
             x=by_zone["cx"], y=by_zone["cy"], mode="markers+text",
-            text=by_zone["zone"],
-            texttemplate=by_zone["pct"].apply(lambda p: f"{p:.0%}"),
+            text=text_labels,
             textposition="middle center",
             textfont=dict(color="#14140f", size=10, family="sans-serif"),
             marker=dict(
