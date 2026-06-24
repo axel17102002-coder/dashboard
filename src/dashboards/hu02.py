@@ -1,7 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
-from db import load_box_scores, load_season_players, load_game_headers, dark_layout, format_season
+from db import load_box_scores, load_season_players, load_game_headers, load_clutch_points, dark_layout, format_season
 from report_utils import render_table_report
 
 
@@ -68,7 +68,12 @@ def render():
 
     pass  # divider removed
 
-    tab1, tab2 = st.tabs(["🏅 Ranking PIR", "🎯 Creacion de Juego - AST/TO"])
+    tab1, tab2, tab3, tab4 = st.tabs([
+        "🏅 Ranking PIR",
+        "🎯 Creacion de Juego - AST/TO",
+        "➕➖ Plus/Minus",
+        "🕐 Clutch",
+    ])
 
     # ══════════════════════════════════════════════════════════════════════════
     # TAB 1 — Ranking TOP 10 PIR
@@ -560,3 +565,184 @@ def render():
                             .highlight_min(subset=["Pérdidas"], color="#1a4a2e")
                         ),
                     )
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # TAB 3 — Plus/Minus (impacto en el marcador)
+    # ══════════════════════════════════════════════════════════════════════════
+    with tab3:
+        st.subheader("Impacto en el marcador — Plus/Minus")
+        st.caption(
+            "Diferencia de puntos del equipo mientras el jugador está en cancha "
+            "(promedio por partido)"
+        )
+
+        min_gp_pm = st.slider(
+            "Mín. partidos jugados", 1, 20, 5, key="h2_pm_mingp",
+            help="Evita jugadores con muy poca muestra",
+        )
+
+        df_pm = df_sp[df_sp["season_code"] == season].copy()
+        if team != "Todos":
+            df_pm = df_pm[df_pm["team_id"] == team]
+        if perfil != "Todos":
+            df_pm = df_pm[df_pm["perfil_ofensivo"] == perfil]
+
+        df_pm = df_pm[
+            df_pm["player"].notna() &
+            (df_pm["player"].astype(str).str.strip() != "") &
+            (~df_pm["player"].astype(str).str.upper().isin(["TEAM", "TOTAL"]))
+        ].copy()
+        df_pm = df_pm[df_pm["games_played"] >= min_gp_pm].copy()
+        df_pm["pm"] = pd.to_numeric(df_pm["plus_minus_per_game"], errors="coerce")
+        df_pm = df_pm.dropna(subset=["pm"])
+
+        if df_pm.empty:
+            st.info("No existen datos suficientes para generar el ranking de Plus/Minus.")
+        else:
+            mejor = df_pm.nlargest(1, "pm").iloc[0]
+            peor  = df_pm.nsmallest(1, "pm").iloc[0]
+            k1, k2, k3, k4 = st.columns(4)
+            k1.metric("Jugadores evaluados", len(df_pm))
+            k2.metric("Mayor +/-",  f"{mejor['pm']:+.1f}", help=mejor["player"])
+            k3.metric("Promedio",   f"{df_pm['pm'].mean():+.1f}")
+            k4.metric("Menor +/-",  f"{peor['pm']:+.1f}", help=peor["player"])
+
+            max_jug = st.slider(
+                "Máx. jugadores a mostrar", 5,
+                min(30, max(5, len(df_pm))), min(15, len(df_pm)),
+                key="h2_pm_max",
+            )
+            # Tomamos los de mayor magnitud (positivos y negativos) y los ordenamos
+            df_plot = df_pm.reindex(
+                df_pm["pm"].abs().sort_values(ascending=False).index
+            ).head(max_jug).sort_values("pm")
+
+            colores = ["#1D9E75" if v >= 0 else "#E24B4A" for v in df_plot["pm"]]
+            fig_pm = go.Figure(go.Bar(
+                y=df_plot["player"],
+                x=df_plot["pm"],
+                orientation="h",
+                marker_color=colores,
+                text=df_plot["pm"].apply(lambda v: f"{v:+.1f}"),
+                textposition="outside",
+                hovertemplate="<b>%{y}</b><br>Plus/Minus: %{x:+.1f}<extra></extra>",
+            ))
+            fig_pm.add_vline(x=0, line_color="rgba(20,20,15,0.35)")
+            fig_pm.update_layout(
+                xaxis_title="Plus/Minus (promedio por partido)",
+                margin=dict(t=20, l=200, r=60),
+                height=max(380, len(df_plot) * 32),
+            )
+            dark_layout(fig_pm)
+            st.plotly_chart(fig_pm, use_container_width=True)
+
+            tabla_pm = (
+                df_pm[["player", "games_played", "pm", "plus_minus"]]
+                .sort_values("pm", ascending=False)
+                .reset_index(drop=True)
+            )
+            render_table_report(
+                tabla_pm,
+                title="Datos de Plus/Minus",
+                columns=["player", "games_played", "pm", "plus_minus"],
+                rename_columns={
+                    "player": "Jugador",
+                    "games_played": "Partidos",
+                    "pm": "+/- por partido",
+                    "plus_minus": "+/- total",
+                },
+            )
+
+    # ══════════════════════════════════════════════════════════════════════════
+    # TAB 4 — Clutch (eficiencia en los últimos 5 minutos)
+    # ══════════════════════════════════════════════════════════════════════════
+    with tab4:
+        st.subheader("Eficiencia en momentos decisivos — Clutch")
+        st.caption(
+            "% de los puntos del jugador anotados en los últimos 5 minutos de partido"
+        )
+
+        min_pts = st.slider(
+            "Mín. puntos en la temporada", 10, 300, 50, key="h2_clutch_minpts",
+            help="Filtra jugadores con pocos puntos, que distorsionan el porcentaje",
+        )
+
+        try:
+            df_clutch = load_clutch_points(comp, season)
+        except Exception as e:
+            st.error(f"Error al calcular los datos de clutch: {e}")
+            df_clutch = pd.DataFrame(columns=["player", "clutch_points"])
+
+        base = df_sp[df_sp["season_code"] == season].copy()
+        if team != "Todos":
+            base = base[base["team_id"] == team]
+        if perfil != "Todos":
+            base = base[base["perfil_ofensivo"] == perfil]
+        base = base[
+            base["player"].notna() &
+            (base["player"].astype(str).str.strip() != "") &
+            (~base["player"].astype(str).str.upper().isin(["TEAM", "TOTAL"]))
+        ].copy()
+        base["points"] = pd.to_numeric(base["points"], errors="coerce").fillna(0)
+
+        df_cl = (
+            base[["player", "points"]]
+            .merge(df_clutch, on="player", how="left")
+        )
+        df_cl["clutch_points"] = pd.to_numeric(df_cl["clutch_points"], errors="coerce").fillna(0)
+        df_cl = df_cl[df_cl["points"] >= min_pts].copy()
+        df_cl["clutch_pct"] = (df_cl["clutch_points"] / df_cl["points"] * 100).round(1)
+
+        if df_cl.empty:
+            st.info("No existen datos suficientes para generar el ranking de clutch.")
+        else:
+            mejor = df_cl.nlargest(1, "clutch_pct").iloc[0]
+            k1, k2, k3 = st.columns(3)
+            k1.metric("Más clutch",          f"{mejor['clutch_pct']:.1f}%", help=mejor["player"])
+            k2.metric("Puntos clutch (líder)", int(df_cl.nlargest(1, "clutch_points").iloc[0]["clutch_points"]))
+            k3.metric("Promedio",            f"{df_cl['clutch_pct'].mean():.1f}%")
+
+            max_jug_c = st.slider(
+                "Máx. jugadores a mostrar", 5,
+                min(30, max(5, len(df_cl))), min(15, len(df_cl)),
+                key="h2_clutch_max",
+            )
+            df_plot_c = df_cl.nlargest(max_jug_c, "clutch_pct").sort_values("clutch_pct")
+
+            fig_cl = go.Figure(go.Bar(
+                y=df_plot_c["player"],
+                x=df_plot_c["clutch_pct"],
+                orientation="h",
+                marker_color="#EF9F27",
+                text=df_plot_c["clutch_pct"].apply(lambda v: f"{v:.1f}%"),
+                textposition="outside",
+                customdata=df_plot_c[["clutch_points", "points"]].values,
+                hovertemplate=(
+                    "<b>%{y}</b><br>Clutch: %{x:.1f}%<br>"
+                    "Puntos clutch: %{customdata[0]:.0f} / %{customdata[1]:.0f}<extra></extra>"
+                ),
+            ))
+            fig_cl.update_layout(
+                xaxis_title="% de puntos en los últimos 5 minutos",
+                margin=dict(t=20, l=200, r=60),
+                height=max(380, len(df_plot_c) * 32),
+            )
+            dark_layout(fig_cl)
+            st.plotly_chart(fig_cl, use_container_width=True)
+
+            tabla_cl = (
+                df_cl[["player", "clutch_points", "points", "clutch_pct"]]
+                .sort_values("clutch_pct", ascending=False)
+                .reset_index(drop=True)
+            )
+            render_table_report(
+                tabla_cl,
+                title="Datos de eficiencia clutch",
+                columns=["player", "clutch_points", "points", "clutch_pct"],
+                rename_columns={
+                    "player": "Jugador",
+                    "clutch_points": "Puntos clutch",
+                    "points": "Puntos totales",
+                    "clutch_pct": "% Clutch",
+                },
+            )

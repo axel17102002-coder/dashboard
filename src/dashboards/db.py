@@ -88,6 +88,27 @@ def load_shot_data(player: str, comp: str, season: str) -> pd.DataFrame:
     return pd.read_sql(f"SELECT * FROM game_points {where}", get_engine())
 
 
+@st.cache_data(ttl=600)
+def load_clutch_points(comp: str, season: str) -> pd.DataFrame:
+    """Puntos anotados por jugador en los últimos 5 minutos (clutch) de una temporada.
+
+    Se calcula agregando directamente en PostgreSQL sobre game_points.
+    'minute' es el minuto transcurrido (1-40 en regulación); los últimos 5
+    minutos del 4º cuarto son los minutos 36 a 40. Solo se cuentan conversiones
+    (points > 0). Se excluye la prórroga para un criterio uniforme entre partidos.
+    """
+    where = f"season_code = '{season}' AND minute BETWEEN 36 AND 40 AND points > 0"
+    if comp != "Ambas":
+        where += f" AND competition = '{comp}'"
+    q = f"""
+        SELECT player, SUM(points) AS clutch_points
+        FROM game_points
+        WHERE {where}
+        GROUP BY player
+    """
+    return pd.read_sql(q, get_engine())
+
+
 def build_winrate_df(df_h: pd.DataFrame) -> pd.DataFrame:
     df_a = df_h[["game_id","season_code","phase","team_id_a","score_a","score_b","competition"]].copy()
     df_a.columns = ["game_id","season_code","phase","team","score_own","score_opp","competition"]
