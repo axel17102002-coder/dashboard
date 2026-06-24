@@ -41,7 +41,7 @@ ROL_CONFIG = {
         "icon": "🏆",
         "label": "Directivo",
         "caption": "Consistencia competitiva · Planificación institucional",
-        "opciones": ["Directivo", "Directivo v2"],
+        "opciones": ["Directivo"],
     },
     "admin": {
         "icon": "⚙️",
